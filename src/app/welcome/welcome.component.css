@@ -1,0 +1,31 @@
+h1, h2, h3, h4, h5 {
+    text-align: center;
+    margin: auto;
+}
+
+.le-img {
+    display: block;
+    max-width: 45%;
+    margin: auto;
+}
+
+.container {
+    align-content: center;
+}
+
+.mat-card {
+    border-radius: 20px;
+    width: 70%;
+    margin-right: 50%;
+}
+
+hr.solid {
+    width: 80%;
+    margin: auto;
+    border-top: 3px solid primary;
+}
+
+.mat-button {
+    margin: auto;
+    width: 50%;
+}
