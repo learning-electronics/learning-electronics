@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import * as _moment from 'moment';
+import { SharedService } from '../shared.service';
 const moment = _moment;
 
 export const DATE_FORMAT = {
@@ -17,6 +18,15 @@ export const DATE_FORMAT = {
       monthYearA11yLabel: 'YYYY'
   }
 };
+
+export interface person {
+  email: string,
+  fname: string,
+  lname: string,
+  birth_date: string,
+  date_joined: string,
+  password: string
+}
 
 @Component({
   selector: 'app-register',
@@ -39,7 +49,7 @@ export class RegisterComponent implements OnInit {
     bday: new FormControl('', [Validators.required]),
   });
 
-  constructor(private _snackBar: MatSnackBar) { }
+  constructor(private _snackBar: MatSnackBar, private _service: SharedService) { }
 
   ngOnInit(): void {
   }
@@ -65,16 +75,30 @@ export class RegisterComponent implements OnInit {
 
     /* Only submit if the form is valid */
     if (this.form.valid) {
-      /* Call authentication method here */
-      if (false) {
-        /* Do something */
-        this._snackBar.open('Registo bem sucedido!', 'Close', { "duration": 2500 });
-      } else {
-        this.form.controls['password'].reset();
-        this._snackBar.open('Email ou Password incorretas!', 'Close', { "duration": 2500 });
-      }
+      var person: person = { 
+        email: this.form.controls['email'].value, 
+        fname: this.form.controls['fname'].value, 
+        lname: this.form.controls['lname'].value, 
+        birth_date: moment(this.form.controls['bday'].value).format('DD-MM-YYYY'), 
+        date_joined: moment().format('DD-MM-YYYY'), 
+        password: this.form.controls['password'].value 
+      };
+
+      /* Call registration method */
+      this._service.register(person).subscribe((data: any) => {
+        data.message = false;
+        if (data.message == true) {
+          /* Do something */
+          this._snackBar.open('Registo bem sucedido!', 'Close', { "duration": 2500 });
+        } else {
+          /* Reset Email and Password forms */
+          this.form.controls['email'].reset();
+          this.form.controls['password'].reset();
+          this._snackBar.open('Email já está registado!', 'Close', { "duration": 2500 });
+        }
+      });
     } else {
-      this._snackBar.open('Email ou Password incorreta!', 'Close', { "duration": 2500 });
+      this._snackBar.open('Parametros introduzidos inválidos!', 'Close', { "duration": 2500 });
     }
   }
 

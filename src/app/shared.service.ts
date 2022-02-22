@@ -14,6 +14,15 @@ export interface auth_response {
   token: string
 }
 
+export interface person {
+  email: string,
+  fname: string,
+  lname: string,
+  birth_date: string,
+  date_joined: string,
+  password: string
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -52,5 +61,10 @@ export class SharedService {
     };
 
     return this._http.post(this.ACCOUNT_API + '/logout', this.authResSource, httpOptions);
+  }
+
+  /* Register with person attributes */
+  register(person: person) {
+    return this._http.post(this.ACCOUNT_API + '/register', person);
   }
 }
