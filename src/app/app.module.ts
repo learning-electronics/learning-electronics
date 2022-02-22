@@ -14,7 +14,7 @@ import { MatListModule } from '@angular/material/list';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LoginComponent } from './home/login/login.component';
-import { RegisterComponent } from './home/register/register.component';
+import { RegisterComponent } from './register/register.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
