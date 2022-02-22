@@ -21,6 +21,9 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { HttpClientModule } from '@angular/common/http';
+import { LogedinComponent } from './home/logedin/logedin.component';
+import { LogedoutComponent } from './home/logedout/logedout.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     HomeComponent,
     PageNotFoundComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    LogedinComponent,
+    LogedoutComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +53,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     ReactiveFormsModule,
     MatCheckboxModule,
     MatDatepickerModule,
+    HttpClientModule,
   ],
   providers: [SharedService],
   bootstrap: [AppComponent]

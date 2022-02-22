@@ -13,10 +13,10 @@ export class AppComponent {
   isExpanded: boolean = false;
   loggedIn: boolean = false;
 
-  constructor(private _sharedService: SharedService) { }
+  constructor(private _service: SharedService) { }
 
   ngOnInit() {
-    this.subscription = this._sharedService.currentLogStatus.subscribe(logStatus => this.loggedIn = logStatus);
+    this.subscription = this._service.currentLogStatus.subscribe(logStatus => this.loggedIn = logStatus);
   }
   
   ngOnDestroy() {
@@ -24,6 +24,6 @@ export class AppComponent {
   }
 
   logout() {
-    this._sharedService.changeLogStatus(false);
+    this._service.changeLogStatus(false);
   }
 }

@@ -3,6 +3,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SharedService } from 'src/app/shared.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { MatDialogRef } from '@angular/material/dialog';
 
 export interface auth_response {
   message: boolean,
@@ -26,7 +28,7 @@ export class LoginComponent implements OnInit {
     check: new FormControl(false)
   });
   
-  constructor(private _snackBar: MatSnackBar, private _sharedService: SharedService) { }
+  constructor(private _snackBar: MatSnackBar, private _service: SharedService, private _router: Router, private dialogRef: MatDialogRef<LoginComponent>) { }
 
   ngOnInit(): void {
   }
@@ -53,20 +55,35 @@ export class LoginComponent implements OnInit {
 
     /* Only submit if the form is valid */
     if (this.form.valid) {
-      /* Call authentication method here */
-      if (false) {
-        /* Do something */
-        this._sharedService.changeLogStatus(true);
-        this._snackBar.open('Login bem sucedido!', 'Close', { "duration": 2500 });
-      } else {
-        this._sharedService.changeLogStatus(false);
-        this.form.controls['password'].reset();
-        this._snackBar.open('Email ou Password incorretas!', 'Close', { "duration": 2500 });
-      }
+      var cred = { 
+        'email': this.form.controls['email'].value, 
+        'password': this.form.controls['password'].value
+      };
+      
+      /* Call authentication method */
+      this._service.login(cred).subscribe((data: any) => {
+        if (data.message == true) {
+          /* Get the auth response */
+          this.auth_res = data as auth_response;
+
+          /* Set the auth response and log status in the service */
+          this._service.changeAuthRes(this.auth_res);
+          this._service.changeLogStatus(true);
+
+          /* Close the Dialog */
+          this.dialogRef.close();
+          this._snackBar.open('Login bem sucedido!', 'Close', { "duration": 2500 });
+        } else {
+          /* Set the log status as false and reset the password field */
+          this._service.changeLogStatus(false);
+          this.form.controls['password'].reset();
+          this._snackBar.open('Email ou Password incorretas!', 'Close', { "duration": 2500 });
+        }
+      });
     } else {
-      this._sharedService.changeLogStatus(false);
+      /* Set the log status as false */
+      this._service.changeLogStatus(false);
       this._snackBar.open('Email ou Password incorreta!', 'Close', { "duration": 2500 });
     }
   }
-
 }

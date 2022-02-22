@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { LoginComponent } from './login/login.component';
+import { Subscription } from 'rxjs';
+import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-home',
@@ -8,23 +8,16 @@ import { LoginComponent } from './login/login.component';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  subscription: Subscription = new Subscription();
+  loggedIn: boolean = false;
 
-  constructor(public login_dialog: MatDialog, public register_dialog: MatDialog) { }
+  constructor(private _service: SharedService) { }
 
-  ngOnInit(): void {
+  ngOnInit() :void{
+    this.subscription = this._service.currentLogStatus.subscribe(logStatus => this.loggedIn = logStatus);
   }
-
-  /* Open Login Dialog */
-  login() {
-    const dialogRef = this.login_dialog.open(LoginComponent, {
-      width: '20%',
-      height: '52%'
-    });
-
-    /* After closed should refresh the page and verify its login status */
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+  
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
-
 }
