@@ -1,3 +1,22 @@
 mat-sidenav-container {
     background-image: url('../assets/img/home-background.png');
 }
+
+span {
+    font-size: 1.0em;
+    font-weight: bold;
+}
+
+.chevron-button {
+    transition: 300ms ease-in-out;
+    transform: rotate(0deg);
+    margin-right: auto;
+    margin-left: auto;
+    float: right;
+    position: absolute;
+}
+
+.chevron-button.rotated {
+    right: 10%;
+    transform: rotate(180deg);
+}

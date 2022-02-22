@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +10,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(public login_dialog: MatDialog, public register_dialog: MatDialog) { }
 
   ngOnInit(): void {
+  }
+
+  /* Open Login Dialog */
+  login() {
+    const dialogRef = this.login_dialog.open(LoginComponent, {
+      width: '25%',
+      height: '55%'
+    });
+
+    /* After closed should refresh the page and verify its login status */
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  /* Open Register Dialog */
+  register() {
+    const dialogRef = this.login_dialog.open(RegisterComponent, {
+      
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
 }
