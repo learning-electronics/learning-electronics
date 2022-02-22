@@ -24,6 +24,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { HttpClientModule } from '@angular/common/http';
 import { LogedinComponent } from './home/logedin/logedin.component';
 import { LogedoutComponent } from './home/logedout/logedout.component';
+import { LibraryComponent } from './library/library.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { LogedoutComponent } from './home/logedout/logedout.component';
     LoginComponent,
     RegisterComponent,
     LogedinComponent,
-    LogedoutComponent
+    LogedoutComponent,
+    LibraryComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
