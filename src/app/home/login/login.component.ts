@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { SharedService } from 'src/app/shared.service';
+import { Subscription } from 'rxjs';
 
 export interface auth_response {
   message: boolean,
@@ -14,6 +16,7 @@ export interface auth_response {
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  subscription: Subscription = new Subscription();
   hide: boolean = true;
   auth_res: auth_response = { message: false, email: "", token: "" };
 
@@ -23,9 +26,13 @@ export class LoginComponent implements OnInit {
     check: new FormControl(false)
   });
   
-  constructor(private _snackBar: MatSnackBar) { }
+  constructor(private _snackBar: MatSnackBar, private _sharedService: SharedService) { }
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   /* Error Message for Email validation */
@@ -49,12 +56,15 @@ export class LoginComponent implements OnInit {
       /* Call authentication method here */
       if (false) {
         /* Do something */
+        this._sharedService.changeLogStatus(true);
         this._snackBar.open('Login bem sucedido!', 'Close', { "duration": 2500 });
       } else {
+        this._sharedService.changeLogStatus(false);
         this.form.controls['password'].reset();
         this._snackBar.open('Email ou Password incorretas!', 'Close', { "duration": 2500 });
       }
     } else {
+      this._sharedService.changeLogStatus(false);
       this._snackBar.open('Email ou Password incorreta!', 'Close', { "duration": 2500 });
     }
   }
