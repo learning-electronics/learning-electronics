@@ -15,14 +15,12 @@ export interface auth_response {
 })
 export class LoginComponent implements OnInit {
   hide: boolean = true;
-  token: string = "";
   auth_res: auth_response = { message: false, email: "", token: "" };
 
-  @Input() error: string | undefined;
   form: FormGroup = new FormGroup({
     username: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
-    check: new FormControl('', [Validators.required])
+    check: new FormControl(false)
   });
   
   constructor(private _snackBar: MatSnackBar) { }
@@ -50,11 +48,14 @@ export class LoginComponent implements OnInit {
     if (this.form.valid) {
       /* Call authentication method here */
       if (false) {
-        /* Do something */  
+        /* Do something */
+        this._snackBar.open('Login Sucessful!', 'Close', { "duration": 2500 });
       } else {
-        console.log('error');
-        this.error = "Username or Password incorrect!";
+        this.form.controls['password'].reset();
+        this._snackBar.open('Username or Password incorrect!', 'Close', { "duration": 2500 });
       }
+    } else {
+      this._snackBar.open('Username or Password incorrect!', 'Close', { "duration": 2500 });
     }
   }
 

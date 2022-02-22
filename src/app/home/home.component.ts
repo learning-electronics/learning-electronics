@@ -18,8 +18,8 @@ export class HomeComponent implements OnInit {
   /* Open Login Dialog */
   login() {
     const dialogRef = this.login_dialog.open(LoginComponent, {
-      width: '25%',
-      height: '55%'
+      width: '20%',
+      height: '52%'
     });
 
     /* After closed should refresh the page and verify its login status */

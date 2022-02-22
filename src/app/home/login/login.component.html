@@ -4,7 +4,7 @@
 <mat-dialog-content class="mat-typography">
     <form [formGroup]="form" (ngSubmit)="submit()">
         <div class="col">
-            <div class="row my-2 mx-auto">
+            <div class="row my-3 mx-auto">
                 <mat-form-field>
                     <mat-label>Username</mat-label>
                     <input matInput placeholder="name@example.com" formControlName="username" required>
@@ -12,7 +12,7 @@
                 </mat-form-field>
             </div>
 
-            <div class="row my-2 mx-auto">
+            <div class="row my-3 mx-auto">
                 <mat-form-field >
                     <mat-label>Password</mat-label>
                     <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
@@ -23,18 +23,14 @@
             </div>
 
             <div class="row my-2 mx-auto">
-                <p *ngIf="error" class="error">{{ error }}</p>
-            </div>
-
-            <div class="row my-2 mx-auto">
                 <mat-checkbox color="primary" formControlName="check">Remember me</mat-checkbox>
             </div>
             
             <div class="row mt-4 mb-1 mx-auto">
-                <button mat-button type="submit" mat-button>Entrar</button>
+                <button mat-button color="primary" type="submit" mat-button>Entrar</button>
             </div>
 
-            <div class="row mx-auto">
+            <div class="row mx-auto my-0">
                 <img class="le-img" src="../assets/img/le.png">
             </div>
         </div>
