@@ -1,3 +1,28 @@
-<div class="container-fluid h-100">
-    <app-welcome></app-welcome>
-</div>
+<mat-sidenav-container autosize class="h-100">
+    <mat-sidenav #sidenav mode="side" opened="true">
+        <mat-nav-list>
+            <mat-list-item>
+                <mat-icon mat-list-icon class="chevron-button sidenav-button" (click)="isExpanded = !isExpanded">chevron_right</mat-icon>
+            </mat-list-item>
+    
+            <mat-list-item [routerLink]="">
+                <mat-icon mat-list-icon >home</mat-icon>
+                <span *ngIf="isExpanded">example1</span>
+            </mat-list-item>
+    
+            <mat-list-item [routerLink]="">
+                <mat-icon mat-list-icon>important_devices</mat-icon>
+                <span *ngIf="isExpanded">example2</span>
+            </mat-list-item>
+    
+            <mat-list-item [routerLink]="">
+                <mat-icon mat-list-icon>supervisor_account</mat-icon>
+                <span *ngIf="isExpanded">example3</span>
+            </mat-list-item>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+        <!-- <app-welcome></app-welcome> -->
+    </mat-sidenav-content>
+</mat-sidenav-container>
