@@ -6,9 +6,9 @@
         <div class="col">
             <div class="row my-3 mx-auto">
                 <mat-form-field>
-                    <mat-label>Username</mat-label>
-                    <input matInput placeholder="name@example.com" formControlName="username" required>
-                    <mat-error *ngIf="form.controls['username'].invalid">{{getErrorMessage()}}</mat-error>
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="name@example.com" formControlName="email" required>
+                    <mat-error *ngIf="form.controls['email'].invalid">{{getErrorMessageEmail()}}</mat-error>
                 </mat-form-field>
             </div>
 
@@ -19,11 +19,12 @@
                     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
+                    <mat-error *ngIf="form.controls['password'].invalid">{{'Você deve inserir um valor'}}</mat-error>
                 </mat-form-field>
             </div>
 
             <div class="row my-2 mx-auto">
-                <mat-checkbox color="primary" formControlName="check">Remember me</mat-checkbox>
+                <mat-checkbox color="primary" formControlName="check">Relembrar sessão</mat-checkbox>
             </div>
             
             <div class="row mt-4 mb-1 mx-auto">

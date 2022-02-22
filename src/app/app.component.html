@@ -5,27 +5,32 @@
                 <mat-icon mat-list-icon class="chevron-button sidenav-button" [ngClass]="{'rotated': isExpanded}">chevron_right</mat-icon>
             </mat-list-item>
     
-            <mat-list-item [routerLink]="">
+            <mat-list-item routerLink="">
+                <mat-icon mat-list-icon>home</mat-icon>
+                <span *ngIf="isExpanded">Home</span>
+            </mat-list-item>
+
+            <mat-list-item routerLink="">
                 <mat-icon mat-list-icon>person</mat-icon>
                 <span *ngIf="isExpanded">Perfil</span>
             </mat-list-item>
 
-            <mat-list-item [routerLink]="">
+            <mat-list-item routerLink="">
                 <mat-icon mat-list-icon>class</mat-icon>
                 <span *ngIf="isExpanded">Turmas</span>
             </mat-list-item>
     
-            <mat-list-item [routerLink]="">
+            <mat-list-item routerLink="">
                 <mat-icon mat-list-icon>library_books</mat-icon>
                 <span *ngIf="isExpanded">Biblioteca</span>
             </mat-list-item>
     
-            <mat-list-item [routerLink]="">
+            <mat-list-item routerLink="">
                 <mat-icon mat-list-icon>edit_note</mat-icon>
                 <span *ngIf="isExpanded">Teste Tipo</span>
             </mat-list-item>
 
-            <mat-list-item [routerLink]="">
+            <mat-list-item routerLink="">
                 <mat-icon mat-list-icon>gamepad</mat-icon>
                 <span *ngIf="isExpanded">Jogo 1vs1</span>
             </mat-list-item>

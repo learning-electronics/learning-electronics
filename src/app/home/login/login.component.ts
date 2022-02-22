@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   auth_res: auth_response = { message: false, email: "", token: "" };
 
   form: FormGroup = new FormGroup({
-    username: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
     check: new FormControl(false)
   });
@@ -28,19 +28,19 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  /* Error Message for Username/Email validation */
-  getErrorMessage() {
-    if (this.form.controls['username'].hasError('required')) {
-      return 'You must enter a value';
+  /* Error Message for Email validation */
+  getErrorMessageEmail() {
+    if (this.form.controls['email'].hasError('required')) {
+      return 'Você deve inserir um valor';
     }
 
-    return this.form.controls['username'].hasError('email') ? 'Not a valid username' : '';
+    return this.form.controls['email'].hasError('email') ? 'Email não é válido' : '';
   }
 
   /* Submit form action */
   submit() {
     /* Debug */
-    console.log(this.form.controls['username'].value);
+    console.log(this.form.controls['email'].value);
     console.log(this.form.controls['password'].value);
     console.log(this.form.controls['check'].value);
 
@@ -49,13 +49,13 @@ export class LoginComponent implements OnInit {
       /* Call authentication method here */
       if (false) {
         /* Do something */
-        this._snackBar.open('Login Sucessful!', 'Close', { "duration": 2500 });
+        this._snackBar.open('Login bem sucedido!', 'Close', { "duration": 2500 });
       } else {
         this.form.controls['password'].reset();
-        this._snackBar.open('Username or Password incorrect!', 'Close', { "duration": 2500 });
+        this._snackBar.open('Email ou Password incorretas!', 'Close', { "duration": 2500 });
       }
     } else {
-      this._snackBar.open('Username or Password incorrect!', 'Close', { "duration": 2500 });
+      this._snackBar.open('Email ou Password incorreta!', 'Close', { "duration": 2500 });
     }
   }
 
