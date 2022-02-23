@@ -15,7 +15,7 @@
                 <span *ngIf="isExpanded">Perfil</span>
             </mat-list-item>
 
-            <mat-list-item routerLink="">
+            <mat-list-item (click)="classRouting()">
                 <mat-icon mat-list-icon>class</mat-icon>
                 <span *ngIf="isExpanded">Turmas</span>
             </mat-list-item>
@@ -25,7 +25,7 @@
                 <span *ngIf="isExpanded">Biblioteca</span>
             </mat-list-item>
     
-            <mat-list-item routerLink="">
+            <mat-list-item (click)="quizzRouting()">
                 <mat-icon mat-list-icon>edit_note</mat-icon>
                 <span *ngIf="isExpanded">Teste Tipo</span>
             </mat-list-item>

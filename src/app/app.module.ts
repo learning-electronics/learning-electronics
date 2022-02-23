@@ -26,6 +26,8 @@ import { LogedinComponent } from './home/logedin/logedin.component';
 import { LogedoutComponent } from './home/logedout/logedout.component';
 import { LibraryComponent } from './library/library.component';
 import { ProfileComponent } from './profile/profile.component';
+import { QuizzComponent } from './quizz/quizz.component';
+import { ClassComponent } from './class/class.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { ProfileComponent } from './profile/profile.component';
     LogedinComponent,
     LogedoutComponent,
     LibraryComponent,
-    ProfileComponent
+    ProfileComponent,
+    QuizzComponent,
+    ClassComponent
   ],
   imports: [
     BrowserModule,

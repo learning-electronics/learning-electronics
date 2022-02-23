@@ -35,6 +35,24 @@ export class AppComponent {
     }
   }
 
+  /* Check if the quizz component is available */
+  quizzRouting() {
+    if (this.loggedIn == true) {
+      this._router.navigate(['/quizz']);
+    } else {
+      this.login();
+    }
+  }
+
+  /* Check if the class component is available */
+  classRouting() {
+    if (this.loggedIn == true) {
+      this._router.navigate(['/class']);
+    } else {
+      this.login();
+    }
+  }
+
   /* Open Login Dialog */
   login() {
     const dialogRef = this.login_dialog.open(LoginComponent, {

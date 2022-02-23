@@ -20,3 +20,7 @@ span {
     right: 10%;
     transform: rotate(180deg);
 }
+
+span {
+    margin-left: 25px;
+}

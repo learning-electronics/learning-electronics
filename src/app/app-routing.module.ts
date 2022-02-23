@@ -6,12 +6,16 @@ import { RegisterComponent } from './register/register.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LibraryComponent } from './library/library.component';
 import { ProfileComponent } from './profile/profile.component';
+import { QuizzComponent } from './quizz/quizz.component';
+import { ClassComponent } from './class/class.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'library', component: LibraryComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'class', component: ClassComponent },
+  { path: 'quizz', component: QuizzComponent },
   { path: '',   redirectTo: '/home', pathMatch: 'full' },   /* Default routing to HomeComponent */
   { path: '**' , component: PageNotFoundComponent }         /* 404 not found will be redirected to PageNotFoundComponent */
 ];
