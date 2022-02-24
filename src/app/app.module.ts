@@ -30,6 +30,8 @@ import { QuizzComponent } from './quizz/quizz.component';
 import { ClassComponent } from './class/class.component';
 import { ChangePasswordComponent } from './profile/change-password/change-password.component';
 import { DeleteAccountComponent } from './profile/delete-account/delete-account.component';
+import { ShowInfoComponent } from './profile/show-info/show-info.component';
+import { ShowPhotoComponent } from './profile/show-photo/show-photo.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { DeleteAccountComponent } from './profile/delete-account/delete-account.
     QuizzComponent,
     ClassComponent,
     ChangePasswordComponent,
-    DeleteAccountComponent
+    DeleteAccountComponent,
+    ShowInfoComponent,
+    ShowPhotoComponent
   ],
   imports: [
     BrowserModule,
