@@ -3,9 +3,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import * as _moment from 'moment';
-import { SharedService } from '../shared.service';
 import { Router } from '@angular/router';
+import { account_response, person, SharedService } from '../shared.service';
+import * as _moment from 'moment';
 const moment = _moment;
 
 export const DATE_FORMAT = {
@@ -19,14 +19,6 @@ export const DATE_FORMAT = {
       monthYearA11yLabel: 'YYYY'
   }
 };
-
-export interface person {
-  email: string,
-  first_name: string,
-  last_name: string,
-  birth_date: string,
-  password: string
-}
 
 @Component({
   selector: 'app-register',
@@ -77,7 +69,8 @@ export class RegisterComponent implements OnInit {
 
       /* Call registration method */
       this._service.register(person).subscribe((data: any) => {
-        console.log(data);
+        data as account_response;
+        
         if (data.v == true) {
           /* Redirect to home */
           this._router.navigate(['/home']);

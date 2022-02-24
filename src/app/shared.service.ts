@@ -7,7 +7,12 @@ export interface login {
   password: string
 }
 
-export interface auth_response {
+export interface passwords {
+  old_pwd: string,
+  new_pwd: string
+}
+
+export interface account_response {
   v: boolean,
   m: string,
   t?: string
@@ -44,7 +49,7 @@ export class SharedService {
     return this._http.post(this.ACCOUNT_API + '/login', credentials);
   }
 
-  /* Logout with auth_response */
+  /* Logout with account response */
   logout() {
     var token: any = localStorage.getItem('token');
 
@@ -63,5 +68,19 @@ export class SharedService {
   /* Register with person attributes */
   register(person: person) {
     return this._http.post(this.ACCOUNT_API + '/register', person);
+  }
+
+  /* Change an user's password */
+  changePassword(pwds: passwords) {
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    return this._http.post(this.ACCOUNT_API + '/change_pwd', pwds, httpOptions);
   }
 }
