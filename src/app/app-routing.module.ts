@@ -8,6 +8,7 @@ import { LibraryComponent } from './library/library.component';
 import { ProfileComponent } from './profile/profile.component';
 import { QuizzComponent } from './quizz/quizz.component';
 import { ClassComponent } from './class/class.component';
+import { FaqComponent } from './faq/faq.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'class', component: ClassComponent },
   { path: 'quizz', component: QuizzComponent },
+  { path: 'faq', component: FaqComponent },
   { path: '',   redirectTo: '/home', pathMatch: 'full' },   /* Default routing to HomeComponent */
   { path: '**' , component: PageNotFoundComponent }         /* 404 not found will be redirected to PageNotFoundComponent */
 ];

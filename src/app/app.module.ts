@@ -33,6 +33,7 @@ import { DeleteAccountComponent } from './profile/delete-account/delete-account.
 import { ShowInfoComponent } from './profile/show-info/show-info.component';
 import { ShowPhotoComponent } from './profile/show-photo/show-photo.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { FaqComponent } from './faq/faq.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     ChangePasswordComponent,
     DeleteAccountComponent,
     ShowInfoComponent,
-    ShowPhotoComponent
+    ShowPhotoComponent,
+    FaqComponent
   ],
   imports: [
     BrowserModule,
