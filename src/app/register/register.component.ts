@@ -5,6 +5,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import * as _moment from 'moment';
 import { SharedService } from '../shared.service';
+import { Router } from '@angular/router';
 const moment = _moment;
 
 export const DATE_FORMAT = {
@@ -21,10 +22,9 @@ export const DATE_FORMAT = {
 
 export interface person {
   email: string,
-  fname: string,
-  lname: string,
+  first_name: string,
+  last_name: string,
   birth_date: string,
-  date_joined: string,
   password: string
 }
 
@@ -49,7 +49,7 @@ export class RegisterComponent implements OnInit {
     bday: new FormControl('', [Validators.required]),
   });
 
-  constructor(private _snackBar: MatSnackBar, private _service: SharedService) { }
+  constructor(private _snackBar: MatSnackBar, private _service: SharedService, private _router: Router) { }
 
   ngOnInit(): void {
   }
@@ -65,30 +65,22 @@ export class RegisterComponent implements OnInit {
 
   /* Submit form action */
   submit() {
-    /* Debug */
-    console.log(this.form.controls['email'].value);
-    console.log(this.form.controls['fname'].value);
-    console.log(this.form.controls['lname'].value);
-    console.log(this.form.controls['password'].value);
-    console.log(moment(this.form.controls['bday'].value).format('DD-MM-YYYY'));
-    console.log(moment().format('DD-MM-YYYY'));
-
     /* Only submit if the form is valid */
     if (this.form.valid) {
       var person: person = { 
         email: this.form.controls['email'].value, 
-        fname: this.form.controls['fname'].value, 
-        lname: this.form.controls['lname'].value, 
-        birth_date: moment(this.form.controls['bday'].value).format('DD-MM-YYYY'), 
-        date_joined: moment().format('DD-MM-YYYY'), 
+        first_name: this.form.controls['fname'].value, 
+        last_name: this.form.controls['lname'].value, 
+        birth_date: moment(this.form.controls['bday'].value).format('YYYY-MM-DD'), 
         password: this.form.controls['password'].value 
       };
 
       /* Call registration method */
       this._service.register(person).subscribe((data: any) => {
-        data.message = false;
-        if (data.message == true) {
-          /* Do something */
+        console.log(data);
+        if (data.v == true) {
+          /* Redirect to home */
+          this._router.navigate(['/home']);
           this._snackBar.open('Registo bem sucedido!', 'Close', { "duration": 2500 });
         } else {
           /* Reset Email and Password forms */

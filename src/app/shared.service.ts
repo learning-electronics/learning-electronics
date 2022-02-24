@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export interface login {
   email: string,
@@ -9,17 +8,16 @@ export interface login {
 }
 
 export interface auth_response {
-  message: boolean,
-  email: string,
-  token: string
+  v: boolean,
+  m: string,
+  t?: string
 }
 
 export interface person {
   email: string,
-  fname: string,
-  lname: string,
+  first_name: string,
+  last_name: string,
   birth_date: string,
-  date_joined: string,
   password: string
 }
 
@@ -29,21 +27,16 @@ export interface person {
 export class SharedService {
   readonly ACCOUNT_API = "http://127.0.0.1:8000/account/api";
 
-  private logStatusSource = new BehaviorSubject<boolean>(false);
+  /* Initialize the log status as true or false*/
+  private logStatusSource = new BehaviorSubject<boolean>(localStorage.getItem('loggedIn') === 'true' ? true : false);
   currentLogStatus = this.logStatusSource.asObservable();
-  private authResSource = new BehaviorSubject<auth_response>({message: false, email: "", token: ""});
-  currentAuthRes = this.authResSource.asObservable();
 
   constructor(private _http: HttpClient) { }
 
   /* Change log status used across the app*/
   changeLogStatus(logStatus: boolean) {
     this.logStatusSource.next(logStatus);
-  }
-
-  /* Change Auth Response used across the app*/
-  changeAuthRes(authRes: auth_response) {
-    this.authResSource.next(authRes);
+    localStorage.setItem('loggedIn', logStatus.toString());
   }
 
   /* Login with email and password */
@@ -53,14 +46,18 @@ export class SharedService {
 
   /* Logout with auth_response */
   logout() {
+    var token: any = localStorage.getItem('token');
+
     const httpOptions = {
         headers: new HttpHeaders({
           'Content-Type':  'application/json',
-          Authorization: 'Bearer ' + this.authResSource
+          Authorization: 'Bearer ' + token
         })
     };
 
-    return this._http.post(this.ACCOUNT_API + '/logout', this.authResSource, httpOptions);
+    /* Remove the token from local storage */
+    localStorage.removeItem('token');
+    return this._http.post(this.ACCOUNT_API + '/logout', token, httpOptions);
   }
 
   /* Register with person attributes */

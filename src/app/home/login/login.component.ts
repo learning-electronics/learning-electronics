@@ -2,14 +2,12 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SharedService } from 'src/app/shared.service';
-import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
 import { MatDialogRef } from '@angular/material/dialog';
 
-export interface auth_response {
-  message: boolean,
-  email: string,
-  token: string
+export interface account_response {
+  v: boolean,
+  m: string,
+  t: string
 }
 
 @Component({
@@ -18,9 +16,8 @@ export interface auth_response {
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  subscription: Subscription = new Subscription();
   hide: boolean = true;
-  auth_res: auth_response = { message: false, email: "", token: "" };
+  auth_res: account_response = { v: false, m: "", t: "" };
 
   form: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -28,13 +25,9 @@ export class LoginComponent implements OnInit {
     check: new FormControl(false)
   });
   
-  constructor(private _snackBar: MatSnackBar, private _service: SharedService, private _router: Router, private dialogRef: MatDialogRef<LoginComponent>) { }
+  constructor(private _snackBar: MatSnackBar, private _service: SharedService, private dialogRef: MatDialogRef<LoginComponent>) { }
 
   ngOnInit(): void {
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
   /* Error Message for Email validation */
@@ -62,12 +55,13 @@ export class LoginComponent implements OnInit {
       
       /* Call authentication method */
       this._service.login(cred).subscribe((data: any) => {
-        if (data.message == true) {
+        console.log(data);
+        if (data.v == true) {
           /* Get the auth response */
-          this.auth_res = data as auth_response;
+          this.auth_res = data as account_response;
 
           /* Set the auth response and log status in the service */
-          this._service.changeAuthRes(this.auth_res);
+          localStorage.setItem('token', this.auth_res.t);
           this._service.changeLogStatus(true);
 
           /* Close the Dialog */

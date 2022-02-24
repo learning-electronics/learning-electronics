@@ -28,6 +28,7 @@ import { LibraryComponent } from './library/library.component';
 import { ProfileComponent } from './profile/profile.component';
 import { QuizzComponent } from './quizz/quizz.component';
 import { ClassComponent } from './class/class.component';
+import { ChangePasswordComponent } from './profile/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { ClassComponent } from './class/class.component';
     LibraryComponent,
     ProfileComponent,
     QuizzComponent,
-    ClassComponent
+    ClassComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

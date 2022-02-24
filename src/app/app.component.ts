@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoginComponent } from './home/login/login.component';
@@ -16,7 +17,7 @@ export class AppComponent {
   isExpanded: boolean = false;
   loggedIn: boolean = false;
 
-  constructor(private _service: SharedService, private _router: Router, public login_dialog: MatDialog,) { }
+  constructor(private _service: SharedService, private _router: Router, public login_dialog: MatDialog, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.subscription = this._service.currentLogStatus.subscribe(logStatus => this.loggedIn = logStatus);
@@ -28,11 +29,12 @@ export class AppComponent {
 
   /* Check if the profile component is available */
   profileRouting() {
-    if (this.loggedIn == true) {
+    /* if (this.loggedIn == true) {
       this._router.navigate(['/profile']);
     } else {
       this.login();
-    }
+    } */
+    this._router.navigate(['/profile']);
   }
 
   /* Check if the quizz component is available */
@@ -64,6 +66,17 @@ export class AppComponent {
   /* Remove the login status and redirect to home */
   logout() {
     this._service.changeLogStatus(false);
+    this._service.logout().subscribe((data: any) => {
+      if ("v" in data) {
+        if (data.v == true) {
+          this._snackBar.open('Logout bem sucedido!', 'Close', { "duration": 2500 });
+        } else {
+          this._snackBar.open('Logout falhou!', 'Close', { "duration": 2500 });
+        }
+      } else {
+        this._snackBar.open('Logout falhou!', 'Close', { "duration": 2500 });
+      }  
+    });
     this._router.navigate(['/home']);
   }
 }

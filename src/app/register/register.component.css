@@ -5,7 +5,7 @@ mat-card {
     height: 45%;
 }
 
-.mat-button {
+.mat-raised-button {
     margin: auto;
     width: 20%;
 }
