@@ -31,6 +31,7 @@ export const DATE_FORMAT = {
 })
 export class ShowInfoComponent implements OnInit {
   disabled: boolean = true;
+  progress: number = 0;
 
   form: FormGroup = new FormGroup({
     fname: new FormControl({ value: "", disabled: this.disabled }, [Validators.required], ),
@@ -44,6 +45,7 @@ export class ShowInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.setUserInfo();
+    this.progress = 0;
   }
 
   /* Set's the user info in the correct form controls */

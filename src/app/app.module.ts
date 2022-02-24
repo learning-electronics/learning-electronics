@@ -32,6 +32,7 @@ import { ChangePasswordComponent } from './profile/change-password/change-passwo
 import { DeleteAccountComponent } from './profile/delete-account/delete-account.component';
 import { ShowInfoComponent } from './profile/show-info/show-info.component';
 import { ShowPhotoComponent } from './profile/show-photo/show-photo.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { ShowPhotoComponent } from './profile/show-photo/show-photo.component';
     MatCheckboxModule,
     MatDatepickerModule,
     HttpClientModule,
+    MatProgressBarModule
   ],
   providers: [SharedService],
   bootstrap: [AppComponent]
