@@ -83,4 +83,17 @@ export class SharedService {
 
     return this._http.post(this.ACCOUNT_API + '/change_pwd', pwds, httpOptions);
   }
+
+  deleteAccount(credentials: login) {
+    var token = localStorage.getItem('token');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: 'Bearer ' + token
+      })
+    };
+
+    return this._http.post(this.ACCOUNT_API + '/delete', credentials, httpOptions);
+  }
 }

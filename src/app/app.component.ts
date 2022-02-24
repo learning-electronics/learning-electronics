@@ -29,11 +29,12 @@ export class AppComponent {
 
   /* Check if the profile component is available */
   profileRouting() {
-    if (this.loggedIn == true) {
+    /* if (this.loggedIn == true) {
       this._router.navigate(['/profile']);
     } else {
       this.login();
-    }
+    } */
+    this._router.navigate(['/profile']);
   }
 
   /* Check if the quizz component is available */

@@ -1,0 +1,31 @@
+<div class="row mx-auto">
+    <h2 mat-dialog-title>Eliminar Conta</h2>
+</div>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="col">
+            <div class="row my-3 mx-auto">
+                <mat-form-field>
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="name@example.com" formControlName="email" required>
+                    <mat-error *ngIf="form.controls['email'].invalid">{{getErrorMessageEmail()}}</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="row my-3 mx-auto">
+                <mat-form-field >
+                    <mat-label>Password</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="form.controls['password'].invalid">{{'Você deve inserir um valor'}}</mat-error>
+                </mat-form-field>
+            </div>
+            
+            <div class="row mt-4 mb-1 mx-auto">
+                <button mat-raised-button color="warn" type="submit">Eliminar</button>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>

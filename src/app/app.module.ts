@@ -29,6 +29,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { QuizzComponent } from './quizz/quizz.component';
 import { ClassComponent } from './class/class.component';
 import { ChangePasswordComponent } from './profile/change-password/change-password.component';
+import { DeleteAccountComponent } from './profile/delete-account/delete-account.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ChangePasswordComponent } from './profile/change-password/change-passwo
     ProfileComponent,
     QuizzComponent,
     ClassComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    DeleteAccountComponent
   ],
   imports: [
     BrowserModule,
