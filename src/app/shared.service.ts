@@ -23,7 +23,8 @@ export interface person {
   first_name: string,
   last_name: string,
   birth_date: string,
-  password: string
+  password?: string,
+  joined?: string
 }
 
 @Injectable({
@@ -84,6 +85,7 @@ export class SharedService {
     return this._http.post(this.ACCOUNT_API + '/change_pwd', pwds, httpOptions);
   }
 
+  /* Deactive the user's account */
   deleteAccount(credentials: login) {
     var token = localStorage.getItem('token');
 
@@ -95,5 +97,33 @@ export class SharedService {
     };
 
     return this._http.post(this.ACCOUNT_API + '/delete', credentials, httpOptions);
+  }
+
+  /* Retrieve the user's information */
+  getAccount() {
+    var token = localStorage.getItem('token');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: 'Bearer ' + token
+      })
+    };
+
+    return this._http.get(this.ACCOUNT_API + '/user', httpOptions);
+  }
+
+  /* Update user's first name and/or last name and/or birth date */
+  updateAccount(person: person) {
+    var token = localStorage.getItem('token');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: 'Bearer ' + token
+      })
+    };
+
+    return this._http.post(this.ACCOUNT_API + '/update_user', person, httpOptions);
   }
 }

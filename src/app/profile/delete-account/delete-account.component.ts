@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { account_response, login, SharedService } from 'src/app/shared.service';
 
 @Component({
@@ -18,7 +19,7 @@ export class DeleteAccountComponent implements OnInit {
   });
 
 
-  constructor(private _snackBar: MatSnackBar, private _service: SharedService, private dialogRef: MatDialogRef<DeleteAccountComponent>) { }
+  constructor(private _snackBar: MatSnackBar, private _service: SharedService, private dialogRef: MatDialogRef<DeleteAccountComponent>, private _router: Router) { }
 
   ngOnInit(): void {
   }
@@ -51,12 +52,13 @@ export class DeleteAccountComponent implements OnInit {
           /* Get the account response */
           data as account_response;
 
-          /* Set the token and log status in the service */
+          /* remove the token and log status in the service */
           this._service.changeLogStatus(false);
           localStorage.removeItem('token');
-
+          
           /* Close the Dialog */
           this.dialogRef.close();
+          this._router.navigate(['/home']);
           this._snackBar.open('Conta eliminada com sucesso!', 'Close', { "duration": 2500 });
         } else {
           /* Reset the password field */

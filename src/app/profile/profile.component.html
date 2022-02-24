@@ -1,6 +1,6 @@
 <div class="row d-flex justify-content-center w-100 h-100">      
     <div class="col-2 my-auto mx-5">
-        <app-show-photo></app-show-photo>
+        <app-show-photo [user_info]="user_info"></app-show-photo>
         <div class="row mx-auto mt-4 mb-2">
             <button mat-raised-button color="accent" (click)="changePassword()">Mudar Password</button>
         </div>
@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="col my-auto mx-5">
-        <app-show-info></app-show-info>  
+        <app-show-info [user_info]="user_info"></app-show-info>  
     </div>
 </div>
 
