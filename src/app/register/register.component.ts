@@ -83,7 +83,7 @@ export class RegisterComponent implements OnInit {
         }
       });
     } else {
-      this._snackBar.open('Parametros introduzidos inválidos!', 'Close', { "duration": 2500 });
+      this._snackBar.open('Parâmetros introduzidos inválidos!', 'Close', { "duration": 2500 });
     }
   }
 

@@ -1,10 +1,15 @@
 <div class="row d-flex justify-content-center w-100 h-100">      
-    <div class="col-2 my-auto">
+    <div class="col-2 my-auto mx-5">
         <app-show-photo></app-show-photo>
-        <button mat-raised-button color="accent" (click)="changePassword()">Mudar Password</button>
-        <button mat-raised-button color="warn" (click)="deleteAccount()">Eliminar Conta</button>
+        <div class="row mx-auto mt-4 mb-2">
+            <button mat-raised-button color="accent" (click)="changePassword()">Mudar Password</button>
+        </div>
+
+        <div class="row mx-auto my-2">
+            <button mat-raised-button color="warn" (click)="deleteAccount()">Eliminar Conta</button>
+        </div>
     </div>
-    <div class="col my-auto">
+    <div class="col my-auto mx-5">
         <app-show-info></app-show-info>  
     </div>
 </div>
