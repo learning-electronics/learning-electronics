@@ -39,6 +39,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { MatTableModule } from '@angular/material/table';
 import { ShowClassComponent } from './classes/show-class/show-class.component';
+import { EditPhotoComponent } from './profile/show-photo/edit-photo/edit-photo.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 
 @NgModule({
   declarations: [
@@ -59,7 +62,8 @@ import { ShowClassComponent } from './classes/show-class/show-class.component';
     ShowPhotoComponent,
     FaqComponent,
     StatisticsComponent,
-    ShowClassComponent
+    ShowClassComponent,
+    EditPhotoComponent
   ],
   imports: [
     BrowserModule,
@@ -83,6 +87,8 @@ import { ShowClassComponent } from './classes/show-class/show-class.component';
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatTableModule,
+    ImageCropperModule,
+    MaterialFileInputModule,
     NgCircleProgressModule.forRoot({
       radius: 90,
       outerStrokeWidth: 12,

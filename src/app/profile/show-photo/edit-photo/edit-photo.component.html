@@ -1,0 +1,27 @@
+<div class="row mx-auto">
+    <h2 mat-dialog-title>Imagem de Perfil</h2>
+</div>
+<mat-dialog-content class="mat-typography">
+    <div class="col my-auto mx-auto">
+        <div class="row">
+            <image-cropper
+            [imageURL]="data"
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="1 / 1"
+            format="png"
+            (imageCropped)="imageCropped($event)"
+            ></image-cropper>
+        </div>
+
+        <div class="row">
+            <mat-form-field>
+                <ngx-mat-file-input placeholder="Escolher Imagem" (change)="fileChangeEvent($event)"></ngx-mat-file-input>
+                <mat-icon matSuffix>folder</mat-icon>
+            </mat-form-field>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button cdkFocusInitial (click)="uploadPhoto()">Salvar</button>
+</mat-dialog-actions>

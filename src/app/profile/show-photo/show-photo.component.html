@@ -1,13 +1,13 @@
 <mat-card>
     <mat-card-content>
         <div class="row my-4 mx-auto">
-            <img [src]="imgPath" alt="Profile Picture">
+            <img [src]="imgPath" alt="Profile Picture"/>
             <p>{{user_info?.first_name}}</p>
         </div>
         <div class="row w-100">
             <div class="col"></div>
             <div class="col-1">
-                <button mat-mini-fab color="primary"><mat-icon>edit</mat-icon></button>
+                <button mat-mini-fab color="primary" (click)="editPhoto()"><mat-icon>edit</mat-icon></button>
             </div>
             <div class="col-1"></div>
         </div>

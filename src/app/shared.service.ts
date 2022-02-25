@@ -24,7 +24,8 @@ export interface person {
   last_name: string,
   birth_date: string,
   password?: string,
-  joined?: string
+  joined?: string,
+  avatar?: string
 }
 
 @Injectable({
@@ -125,5 +126,16 @@ export class SharedService {
     };
 
     return this._http.post(this.ACCOUNT_API + '/update_user', person, httpOptions);
+  }
+
+  /* Update user's avatar */
+  uploadPhoto(file: FormData) {
+    var token = localStorage.getItem('token');
+
+    const httpOptions = {
+      headers: new HttpHeaders({ Authorization: 'Bearer ' + token })
+    };
+
+    return this._http.post(this.ACCOUNT_API + '/upload_avatar', file, httpOptions);
   }
 }
