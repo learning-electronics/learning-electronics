@@ -34,6 +34,9 @@ import { ShowInfoComponent } from './profile/show-info/show-info.component';
 import { ShowPhotoComponent } from './profile/show-photo/show-photo.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FaqComponent } from './faq/faq.component';
+import { StatisticsComponent } from './profile/statistics/statistics.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 @NgModule({
   declarations: [
@@ -52,7 +55,8 @@ import { FaqComponent } from './faq/faq.component';
     DeleteAccountComponent,
     ShowInfoComponent,
     ShowPhotoComponent,
-    FaqComponent
+    FaqComponent,
+    StatisticsComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +77,19 @@ import { FaqComponent } from './faq/faq.component';
     MatCheckboxModule,
     MatDatepickerModule,
     HttpClientModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    NgCircleProgressModule.forRoot({
+      radius: 90,
+      outerStrokeWidth: 12,
+      innerStrokeWidth: 5,
+      titleFontSize: '25',
+      subtitleFontSize: '15',
+      outerStrokeColor: "#536DFE",
+      innerStrokeColor: "#673AB7",
+      animationDuration: 300,
+      subtitle: "progresso"
+    })
   ],
   providers: [SharedService],
   bootstrap: [AppComponent]
