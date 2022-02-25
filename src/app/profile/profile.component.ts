@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SharedService, person } from '../shared.service';
 import { ChangePasswordComponent } from './change-password/change-password.component';
@@ -10,7 +10,7 @@ import { DeleteAccountComponent } from './delete-account/delete-account.componen
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  user_info: person | undefined;
+  user_info!: person;
 
   constructor(public change_pw_dialog: MatDialog, public delete_acc_dialog: MatDialog, private _service: SharedService) {
     this._service.getAccount().subscribe((data: any) => {
@@ -37,5 +37,10 @@ export class ProfileComponent implements OnInit {
       width: '20%',
       height: '40%'
     });
+  }
+
+  /* Smooth Scroll to element */
+  scrollToElement($element: any) {
+    $element.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
   }
 }

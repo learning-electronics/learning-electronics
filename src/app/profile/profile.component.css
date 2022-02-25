@@ -7,3 +7,13 @@ h1, h2, h3, h4, h5 {
     margin: auto;
     width: 60%;
 }
+
+.mat-icon-button {
+    margin: auto;
+    transform: scale(1.5);
+}
+
+.mat-icon{
+    margin: auto;
+    transform: scale(1.7);
+}

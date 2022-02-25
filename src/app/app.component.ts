@@ -48,7 +48,7 @@ export class AppComponent {
   /* Check if the class component is available */
   classRouting() {
     if (this.loggedIn == true) {
-      this._router.navigate(['/class']);
+      this._router.navigate(['/classes']);
     } else {
       this.login();
     }

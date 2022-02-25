@@ -7,7 +7,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { LibraryComponent } from './library/library.component';
 import { ProfileComponent } from './profile/profile.component';
 import { QuizzComponent } from './quizz/quizz.component';
-import { ClassComponent } from './class/class.component';
+import { ClassesComponent } from './classes/classes.component';
 import { FaqComponent } from './faq/faq.component';
 
 const routes: Routes = [
@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'library', component: LibraryComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'class', component: ClassComponent },
+  { path: 'classes', component: ClassesComponent },
   { path: 'quizz', component: QuizzComponent },
   { path: 'faq', component: FaqComponent },
   { path: '',   redirectTo: '/home', pathMatch: 'full' },   /* Default routing to HomeComponent */

@@ -1,0 +1,12 @@
+table {
+    margin: auto;
+    width: 60%;
+}
+  
+th.mat-sort-header-sorted {
+    color: black;
+}
+
+form {
+    margin: auto;
+}

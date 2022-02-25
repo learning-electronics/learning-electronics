@@ -27,7 +27,7 @@ import { LogedoutComponent } from './home/logedout/logedout.component';
 import { LibraryComponent } from './library/library.component';
 import { ProfileComponent } from './profile/profile.component';
 import { QuizzComponent } from './quizz/quizz.component';
-import { ClassComponent } from './class/class.component';
+import { ClassesComponent } from './classes/classes.component';
 import { ChangePasswordComponent } from './profile/change-password/change-password.component';
 import { DeleteAccountComponent } from './profile/delete-account/delete-account.component';
 import { ShowInfoComponent } from './profile/show-info/show-info.component';
@@ -37,6 +37,8 @@ import { FaqComponent } from './faq/faq.component';
 import { StatisticsComponent } from './profile/statistics/statistics.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { MatTableModule } from '@angular/material/table';
+import { ShowClassComponent } from './classes/show-class/show-class.component';
 
 @NgModule({
   declarations: [
@@ -50,13 +52,14 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     LibraryComponent,
     ProfileComponent,
     QuizzComponent,
-    ClassComponent,
+    ClassesComponent,
     ChangePasswordComponent,
     DeleteAccountComponent,
     ShowInfoComponent,
     ShowPhotoComponent,
     FaqComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    ShowClassComponent
   ],
   imports: [
     BrowserModule,
@@ -79,6 +82,7 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     HttpClientModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    MatTableModule,
     NgCircleProgressModule.forRoot({
       radius: 90,
       outerStrokeWidth: 12,

@@ -1,4 +1,6 @@
-<div class="row d-flex justify-content-center w-100 h-100">      
+<div class="row d-flex justify-content-center w-100 h-100">
+    <div #targetUp class="row"></div>
+
     <div class="col-2 my-auto mx-5">
         <app-show-photo [user_info]="user_info"></app-show-photo>
         <div class="row mx-auto mt-4 mb-2">
@@ -9,13 +11,25 @@
             <button mat-raised-button color="warn" (click)="deleteAccount()">Eliminar Conta</button>
         </div>
     </div>
+
     <div class="col my-auto mx-5">
         <app-show-info [user_info]="user_info"></app-show-info>  
     </div>
+
+    <div class="row">
+        <button mat-icon-button (click)="scrollToElement(targetDown)"><mat-icon>expand_more</mat-icon></button>
+    </div>
 </div>
-<div class="row d-flex justify-content-center w-100 h-100">      
-    <div class="col my-auto mx-auto">
+
+<div class="row d-flex justify-content-center w-100 h-100">
+    <div class="row"></div>
+
+    <div #targetDown class="col my-auto mx-auto">
         <app-statistics></app-statistics>
+    </div>
+
+    <div class="row">
+        <button mat-icon-button (click)="scrollToElement(targetUp)"><mat-icon>expand_less</mat-icon></button>
     </div>
 </div>
 
