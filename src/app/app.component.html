@@ -1,6 +1,10 @@
 <mat-sidenav-container autosize class="h-100">
     <mat-sidenav #sidenav mode="side" opened="true">
         <mat-nav-list>
+            <mat-list-item>
+                <mat-slide-toggle [formControl]="toggleControl"></mat-slide-toggle>
+            </mat-list-item>
+
             <mat-list-item (click)="isExpanded = !isExpanded">
                 <mat-icon mat-list-icon class="chevron-button sidenav-button" [ngClass]="{'rotated': isExpanded}">chevron_right</mat-icon>
             </mat-list-item>

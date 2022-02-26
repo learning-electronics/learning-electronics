@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'app-classes',
   templateUrl: './classes.component.html',
-  styleUrls: ['./classes.component.css']
+  styleUrls: ['./classes.component.scss']
 })
 export class ClassesComponent implements OnInit {
   displayedColumns: string[] = ['name', 'teacher', 'number_students', 'actions'];

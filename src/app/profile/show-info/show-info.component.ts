@@ -23,7 +23,7 @@ export const DATE_FORMAT = {
 @Component({
   selector: 'app-show-info',
   templateUrl: './show-info.component.html',
-  styleUrls: ['./show-info.component.css'],
+  styleUrls: ['./show-info.component.scss'],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

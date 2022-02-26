@@ -5,7 +5,7 @@ import { LoginComponent } from '../login/login.component';
 @Component({
   selector: 'app-logedout',
   templateUrl: './logedout.component.html',
-  styleUrls: ['./logedout.component.css']
+  styleUrls: ['./logedout.component.scss']
 })
 export class LogedoutComponent implements OnInit {
 

@@ -8,7 +8,7 @@ import { account_response, SharedService } from 'src/app/shared.service';
 @Component({
   selector: 'app-edit-photo',
   templateUrl: './edit-photo.component.html',
-  styleUrls: ['./edit-photo.component.css']
+  styleUrls: ['./edit-photo.component.scss']
 })
 export class EditPhotoComponent implements OnInit {
   imageChangedEvent: any = '';

@@ -6,7 +6,7 @@ import { EditPhotoComponent } from './edit-photo/edit-photo.component';
 @Component({
   selector: 'app-show-photo',
   templateUrl: './show-photo.component.html',
-  styleUrls: ['./show-photo.component.css']
+  styleUrls: ['./show-photo.component.scss']
 })
 export class ShowPhotoComponent implements OnInit {
   @Input() user_info!: person;

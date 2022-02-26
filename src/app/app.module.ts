@@ -42,6 +42,7 @@ import { ShowClassComponent } from './classes/show-class/show-class.component';
 import { EditPhotoComponent } from './profile/show-photo/edit-photo/edit-photo.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     MatTableModule,
     ImageCropperModule,
     MaterialFileInputModule,
+    MatSlideToggleModule,
     NgCircleProgressModule.forRoot({
       radius: 90,
       outerStrokeWidth: 12,
