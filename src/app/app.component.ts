@@ -22,16 +22,15 @@ export class AppComponent {
   isExpanded: boolean = false;
   loggedIn: boolean = false;
 
-  constructor(private overlay: OverlayContainer, private _service: SharedService, private _router: Router, public login_dialog: MatDialog, private _snackBar: MatSnackBar) { }
+  constructor(private _overlay: OverlayContainer, private _service: SharedService, private _router: Router, public login_dialog: MatDialog, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.toggleControl.valueChanges.subscribe((darkMode) => {
-      const darkClassName = 'darkMode';
-      this.className = darkMode ? darkClassName : '';
+      this.className = darkMode ? 'darkMode' : '';
       if (darkMode) {
-        this.overlay.getContainerElement().classList.add(darkClassName);
+        this._overlay.getContainerElement().classList.add('darkMode');
       } else {
-        this.overlay.getContainerElement().classList.remove(darkClassName);
+        this._overlay.getContainerElement().classList.remove('darkMode');
       }
     });
 
