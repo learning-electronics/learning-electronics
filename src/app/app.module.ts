@@ -45,6 +45,7 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { SuccessRegisterComponent } from './success-register/success-register.component';
 import { FailedRegisterComponent } from './failed-register/failed-register.component';
+import { TermsConditionsComponent } from './register/terms-conditions/terms-conditions.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { FailedRegisterComponent } from './failed-register/failed-register.compo
     ShowClassComponent,
     EditPhotoComponent,
     SuccessRegisterComponent,
-    FailedRegisterComponent
+    FailedRegisterComponent,
+    TermsConditionsComponent
   ],
   imports: [
     BrowserModule,

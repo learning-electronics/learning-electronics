@@ -48,6 +48,19 @@
                     </mat-form-field>
                 </div>
 
+                <div class="row my-3 mx-auto">
+                    <div class="col"></div>
+                    
+                    <div class="col my-auto mx-auto">
+                        <mat-checkbox class="ml-2" formControlName="terms" color="primary">
+                            <u (click)="openTerms()">Aceito os termos e condições</u>
+                        </mat-checkbox>
+                    </div>
+                    
+                    <div class="col"></div>
+                    <!-- <mat-error *ngIf="form.controls['terms'].invalid">{{'Você tem que aceitar os termos e condições'}}</mat-error> -->
+                </div>
+
                 <div class="row mt-4 mb-1 mx-auto">
                     <button mat-raised-button color="accent" type="submit" mat-button>Registar</button>
                 </div>

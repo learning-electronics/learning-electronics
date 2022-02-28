@@ -6,6 +6,8 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { Router } from '@angular/router';
 import { account_response, person, SharedService } from '../shared.service';
 import * as _moment from 'moment';
+import { MatDialog } from '@angular/material/dialog';
+import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
 const moment = _moment;
 
 export const DATE_FORMAT = {
@@ -39,9 +41,10 @@ export class RegisterComponent implements OnInit {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
     bday: new FormControl('', [Validators.required]),
+    terms: new FormControl(false, [Validators.requiredTrue])
   });
 
-  constructor(private _snackBar: MatSnackBar, private _service: SharedService, private _router: Router) { }
+  constructor(private _snackBar: MatSnackBar, private _service: SharedService, private _router: Router, public terms_dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -85,8 +88,19 @@ export class RegisterComponent implements OnInit {
         }
       });
     } else {
-      this._snackBar.open('Parâmetros introduzidos inválidos!', 'Close', { "duration": 2500 });
+      if (this.form.controls['terms'].value == false) {
+        this._snackBar.open('Os termos e condições têm que ser aceites!', 'Close', { "duration": 2500 });
+      } else {
+        this._snackBar.open('Parâmetros introduzidos inválidos!', 'Close', { "duration": 2500 });
+      }
     }
   }
 
+  openTerms() {
+    this.form.controls['terms'].setValue(!this.form.controls['terms'].value);
+    const dialogRef = this.terms_dialog.open(TermsConditionsComponent, {
+      width: '80%',
+      height: '80%'
+    });
+  }
 }

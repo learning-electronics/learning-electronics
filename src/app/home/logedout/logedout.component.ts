@@ -9,7 +9,7 @@ import { LoginComponent } from '../login/login.component';
 })
 export class LogedoutComponent implements OnInit {
 
-  constructor(public login_dialog: MatDialog, public register_dialog: MatDialog) { }
+  constructor(public login_dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
