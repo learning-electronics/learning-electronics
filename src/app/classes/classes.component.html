@@ -31,8 +31,8 @@
             <ng-container matColumnDef="actions">
               <th mat-header-cell  *matHeaderCellDef>Aceder</th>
               <mat-cell *matCellDef="let row" >
-                <button mat-icon-button type="button" color="accent">
-                  <mat-icon>login</mat-icon>
+                <button mat-icon-button type="button" color="accent" routerLink="/class/" [state]="{ id: value }">
+                  <mat-icon >login</mat-icon>
                 </button>
               </mat-cell>
             </ng-container>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-show-class',
@@ -7,9 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShowClassComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private _location: Location, private route: ActivatedRoute) { }
+  
   ngOnInit(): void {
+    console.log(this._location.getState());
   }
-
 }

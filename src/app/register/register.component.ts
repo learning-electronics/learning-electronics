@@ -64,11 +64,13 @@ export class RegisterComponent implements OnInit {
         first_name: this.form.controls['fname'].value, 
         last_name: this.form.controls['lname'].value, 
         birth_date: moment(this.form.controls['bday'].value).format('YYYY-MM-DD'), 
-        password: this.form.controls['password'].value 
+        password: this.form.controls['password'].value,
+        avatar: null,
       };
 
       /* Call registration method */
       this._service.register(person).subscribe((data: any) => {
+        console.log(data);
         data as account_response;
         
         if (data.v == true) {

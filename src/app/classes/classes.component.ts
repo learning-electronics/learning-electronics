@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-classes',
@@ -9,11 +10,13 @@ import { MatTableDataSource } from '@angular/material/table';
 export class ClassesComponent implements OnInit {
   displayedColumns: string[] = ['name', 'teacher', 'number_students', 'actions'];
   dataSource!: MatTableDataSource<any>;
-  search: string ="";
+  search: string = "";
+  value: number = 0;
 
-  constructor() { }
+  constructor(private _router: Router) { }
 
   ngOnInit(): void {
+    this.value = Math.floor(Math.random() * 10) + 1;
     this.refreshTable();
   }
 

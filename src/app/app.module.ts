@@ -43,6 +43,8 @@ import { EditPhotoComponent } from './profile/show-photo/edit-photo/edit-photo.c
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { SuccessRegisterComponent } from './success-register/success-register.component';
+import { FailedRegisterComponent } from './failed-register/failed-register.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     FaqComponent,
     StatisticsComponent,
     ShowClassComponent,
-    EditPhotoComponent
+    EditPhotoComponent,
+    SuccessRegisterComponent,
+    FailedRegisterComponent
   ],
   imports: [
     BrowserModule,
