@@ -19,7 +19,7 @@
                     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
-                    <mat-error *ngIf="form.controls['password'].invalid">{{'Você deve inserir um valor'}}</mat-error>
+                    <mat-error *ngIf="form.controls['password'].invalid">Você deve inserir uma password</mat-error>
                 </mat-form-field>
             </div>
 

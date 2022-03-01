@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   /* Error Message for Email validation */
   getErrorMessageEmail() {
     if (this.form.controls['email'].hasError('required')) {
-      return 'Você deve inserir um valor';
+      return 'Você deve inserir um email';
     }
 
     return this.form.controls['email'].hasError('email') ? 'Email não é válido' : '';

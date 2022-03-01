@@ -47,7 +47,7 @@
                         <button mat-icon-button matSuffix (click)="hide_confirm = !hide_confirm" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                             <mat-icon>{{hide_confirm ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
-                        <mat-error *ngIf="password2?.hasError('required')">Confirme a sua Password</mat-error>
+                        <mat-error *ngIf="password2?.hasError('required')">Confirme a sua password</mat-error>
                         <mat-error *ngIf="password2?.invalid && !password2?.hasError('required')">As passwords não são iguais</mat-error>
                     </mat-form-field>
                 </div>
