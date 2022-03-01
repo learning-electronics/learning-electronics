@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { passwordMatchValidator } from 'src/app/register/register.component';
 import { SharedService, account_response, passwords } from 'src/app/shared.service';
 
 @Component({
@@ -12,28 +13,39 @@ import { SharedService, account_response, passwords } from 'src/app/shared.servi
 export class ChangePasswordComponent implements OnInit {
   hide_old: boolean = true;
   hide_new: boolean = true;
+  hide_new2: boolean = true;
+  minPw: number = 8;
+  form!: FormGroup;
 
-  form: FormGroup = new FormGroup({
-    password_old: new FormControl('', [Validators.required]),
-    password_new: new FormControl('', [Validators.required]),
-  });
-
-  constructor(private _snackBar: MatSnackBar, private _service: SharedService, private dialogRef: MatDialogRef<ChangePasswordComponent>) { }
+  constructor(private _formBuilder: FormBuilder, private _snackBar: MatSnackBar, private _service: SharedService, private dialogRef: MatDialogRef<ChangePasswordComponent>) { }
 
   ngOnInit(): void {
+    this.form = this._formBuilder.group({
+      password_old: new FormControl('', [Validators.required]),
+      password: ['', [Validators.required, Validators.minLength(this.minPw)]],
+      password2: ['', [Validators.required]],
+    }, {validator: passwordMatchValidator});
   }
   
+  /* Shorthands for form controls (used from within template) */
+  get password() { return this.form.get('password'); }
+  get password2() { return this.form.get('password2'); }
+
+  /* Called on each input in either password field */
+  onPasswordInput() {
+    if (this.form.hasError('passwordMismatch'))
+      this.password2?.setErrors([{'passwordMismatch': true}]);
+    else
+      this.password2?.setErrors(null);
+  }
+
   /* Submit form action */
   submit() {
-    /* Debug */
-    console.log(this.form.controls['password_old'].value);
-    console.log(this.form.controls['password_new'].value);
-
     /* Only submit if the form is valid */
     if (this.form.valid) {
       var passwords: passwords = {
         old_pwd: this.form.controls['password_old'].value,
-        new_pwd: this.form.controls['password_new'].value
+        new_pwd: this.form.controls['password'].value
       }
 
       /* Call change password method */
@@ -55,7 +67,7 @@ export class ChangePasswordComponent implements OnInit {
     } else {
       /* Reset old password field */
       this.form.controls['password_old'].reset();
-      this._snackBar.open('Password antiga incorreta!', 'Close', { "duration": 2500 });
+      this._snackBar.open('Parâmetros introduzidos inválidos!', 'Close', { "duration": 2500 });
     }
   }
 }

@@ -7,7 +7,7 @@
                             <mat-form-field class="mx-auto">
                                 <mat-label>Primeiro Nome</mat-label>
                                 <input matInput appearance="fill" placeholder="John" formControlName="fname" required>
-                                <mat-error *ngIf="form.controls['fname'].invalid">{{'Você deve inserir um valor'}}</mat-error>
+                                <mat-error *ngIf="form.controls['fname'].invalid">Você deve inserir um nome</mat-error>
                             </mat-form-field>
                         </div>
                         
@@ -15,7 +15,7 @@
                             <mat-form-field class="mx-auto">
                                 <mat-label>Último Nome</mat-label>
                                 <input matInput placeholder="Doe" formControlName="lname" required>
-                                <mat-error *ngIf="form.controls['lname'].invalid">{{'Você deve inserir um valor'}}</mat-error>
+                                <mat-error *ngIf="form.controls['lname'].invalid">Você deve inserir um nome</mat-error>
                             </mat-form-field>
                         </div>
                 </div>
@@ -24,18 +24,31 @@
                     <mat-form-field class="mx-auto">
                         <mat-label>Email</mat-label>
                         <input matInput placeholder="name@example.com" formControlName="email" required>
-                        <mat-error *ngIf="form.controls['email'].invalid">{{getErrorMessage()}}</mat-error>
+                        <mat-error *ngIf="form.controls['email'].invalid">{{getErrorMessageEmail()}}</mat-error>
                     </mat-form-field>
                 </div>
 
                 <div class="row my-3 mx-auto">
                     <mat-form-field >
                         <mat-label>Password</mat-label>
-                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
+                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" (input)="onPasswordInput()" required>
                         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
-                        <mat-error *ngIf="form.controls['password'].invalid">{{'Você deve inserir um valor'}}</mat-error>
+                        <mat-error *ngIf="password?.hasError('required')">Você deve inserir uma password</mat-error>
+                        <mat-error *ngIf="password?.hasError('minlength')">A password deve ter no minímo {{minPw}} caracteres</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="row my-3 mx-auto">
+                    <mat-form-field >
+                        <mat-label>Confirmar Password</mat-label>
+                        <input matInput [type]="hide_confirm ? 'password' : 'text'" formControlName="password2" (input)="onPasswordInput()" required>
+                        <button mat-icon-button matSuffix (click)="hide_confirm = !hide_confirm" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide_confirm ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        <mat-error *ngIf="password2?.hasError('required')">Confirme a sua Password</mat-error>
+                        <mat-error *ngIf="password2?.invalid && !password2?.hasError('required')">As passwords não são iguais</mat-error>
                     </mat-form-field>
                 </div>
 
@@ -45,6 +58,7 @@
                         <input matInput [matDatepicker]="picker" formControlName="bday" required>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="form.controls['bday'].invalid">Data introduzida inválida</mat-error>
                     </mat-form-field>
                 </div>
 
@@ -58,7 +72,6 @@
                     </div>
                     
                     <div class="col"></div>
-                    <!-- <mat-error *ngIf="form.controls['terms'].invalid">{{'Você tem que aceitar os termos e condições'}}</mat-error> -->
                 </div>
 
                 <div class="row mt-4 mb-1 mx-auto">

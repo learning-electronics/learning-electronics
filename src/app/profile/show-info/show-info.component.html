@@ -10,7 +10,7 @@
                             <mat-form-field class="mx-auto" appearance="fill">
                                 <mat-label>Primeiro Nome</mat-label>
                                 <input matInput placeholder="John" formControlName="fname" required>
-                                <mat-error *ngIf="form.controls['fname'].invalid">{{'Você deve inserir um valor'}}</mat-error>
+                                <mat-error *ngIf="form.controls['fname'].invalid">Você deve inserir um nome</mat-error>
                             </mat-form-field>
                         </div>
                         
@@ -18,7 +18,7 @@
                             <mat-form-field class="mx-auto" appearance="fill">
                                 <mat-label>Último Nome</mat-label>
                                 <input matInput placeholder="Doe" formControlName="lname" required>
-                                <mat-error *ngIf="form.controls['lname'].invalid">{{'Você deve inserir um valor'}}</mat-error>
+                                <mat-error *ngIf="form.controls['lname'].invalid">Você deve inserir um nome</mat-error>
                             </mat-form-field>
                         </div>
                 </div>
@@ -37,6 +37,7 @@
                             <input matInput [matDatepicker]="picker" formControlName="bday" required>
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
+                            <mat-error *ngIf="form.controls['bday'].invalid">Data introduzida inválida</mat-error>
                         </mat-form-field>
                     </div>
                     

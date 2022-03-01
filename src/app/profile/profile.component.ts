@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit {
   changePassword() {
     const dialogRef = this.change_pw_dialog.open(ChangePasswordComponent, {
       width: '20%',
-      height: '40%'
+      height: '45%'
     });
   }
 
