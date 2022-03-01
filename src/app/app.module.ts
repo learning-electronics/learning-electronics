@@ -46,6 +46,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { SuccessRegisterComponent } from './success-register/success-register.component';
 import { FailedRegisterComponent } from './failed-register/failed-register.component';
 import { TermsConditionsComponent } from './register/terms-conditions/terms-conditions.component';
+import { RecoverPasswordComponent } from './home/recover-password/recover-password.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { TermsConditionsComponent } from './register/terms-conditions/terms-cond
     EditPhotoComponent,
     SuccessRegisterComponent,
     FailedRegisterComponent,
-    TermsConditionsComponent
+    TermsConditionsComponent,
+    RecoverPasswordComponent,
   ],
   imports: [
     BrowserModule,
