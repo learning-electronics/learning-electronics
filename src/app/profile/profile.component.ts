@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SharedService, person } from '../shared.service';
+import { ChangeEmailComponent } from './change-email/change-email.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { DeleteAccountComponent } from './delete-account/delete-account.component';
 
@@ -21,6 +22,14 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  /* Open Change Email Dialog */
+  changeEmail() {
+    const dialogRef = this.change_pw_dialog.open(ChangeEmailComponent, {
+      width: '20%',
+      height: '50%'
+    });
   }
 
   /* Open Change Password Dialog */

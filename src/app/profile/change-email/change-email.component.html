@@ -1,0 +1,47 @@
+<div class="row mx-auto">
+    <h2 mat-dialog-title>Mudar Email</h2>
+</div>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="col">
+            <div class="row my-3 mx-auto">
+                <mat-form-field>
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="name@example.com" formControlName="email_old" required>
+                    <mat-error *ngIf="form.controls['email_old'].invalid">{{getErrorMessageEmail()}}</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="row my-3 mx-auto">
+                <mat-form-field >
+                    <mat-label>Password</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="form.controls['password'].invalid">Você deve inserir uma password</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="row my-3 mx-auto">
+                <mat-form-field>
+                    <mat-label>Email Novo</mat-label>
+                    <input matInput placeholder="name@example.com" formControlName="email" (input)="onEmailInput()"required>
+                    <mat-error *ngIf="form.controls['email'].invalid">{{getErrorMessageEmail()}}</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="row my-3 mx-auto">
+                <mat-form-field>
+                    <mat-label>Confirmar Email</mat-label>
+                    <input matInput placeholder="name@example.com" formControlName="email2" (input)="onEmailInput()" required>
+                    <mat-error *ngIf="email2?.hasError('required')">Confirme o seu email</mat-error>
+                        <mat-error *ngIf="email2?.invalid && !email2?.hasError('required')">Os emails não são iguais</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="row mt-4 mb-1 mx-auto">
+                <button mat-raised-button color="accent" type="submit">Mudar</button>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>

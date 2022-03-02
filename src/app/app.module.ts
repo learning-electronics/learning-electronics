@@ -47,6 +47,7 @@ import { SuccessRegisterComponent } from './success-register/success-register.co
 import { FailedRegisterComponent } from './failed-register/failed-register.component';
 import { TermsConditionsComponent } from './register/terms-conditions/terms-conditions.component';
 import { RecoverPasswordComponent } from './home/recover-password/recover-password.component';
+import { ChangeEmailComponent } from './profile/change-email/change-email.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { RecoverPasswordComponent } from './home/recover-password/recover-passwo
     FailedRegisterComponent,
     TermsConditionsComponent,
     RecoverPasswordComponent,
+    ChangeEmailComponent,
   ],
   imports: [
     BrowserModule,
