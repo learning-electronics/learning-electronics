@@ -25,7 +25,8 @@ export interface person {
   birth_date: string,
   password?: string,
   joined?: string,
-  avatar?: string | null
+  avatar?: string | null,
+  role: number
 }
 
 @Injectable({
