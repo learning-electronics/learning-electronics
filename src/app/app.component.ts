@@ -21,20 +21,35 @@ export class AppComponent {
   title: string = 'learning-electronics';
   isExpanded: boolean = false;
   loggedIn: boolean = false;
+  currentComponent: string = "home";
+  theme: number = 0;
 
   constructor(private _overlay: OverlayContainer, private _service: SharedService, private _router: Router, public login_dialog: MatDialog, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.toggleControl.valueChanges.subscribe((darkMode) => {
-      this.className = darkMode ? 'darkMode' : '';
-      if (darkMode) {
+    this.toggleControl.valueChanges.subscribe((toggled) => {
+      this.className = toggled ? 'darkMode' : '';
+      
+      if (toggled) {
         this._overlay.getContainerElement().classList.add('darkMode');
+        this.theme = 0.5;
       } else {
         this._overlay.getContainerElement().classList.remove('darkMode');
+        this.theme = 0;
       }
     });
 
     this.subscription = this._service.currentLogStatus.subscribe(logStatus => this.loggedIn = logStatus);
+  }
+
+  public onRouterOutletActivate(event : any) {
+    if (event.constructor.name == "ProfileComponent" || event.constructor.name == "RegisterComponent") {
+      this.currentComponent = "profile";
+    }
+
+    if (event.constructor.name == "HomeComponent") {
+      this.currentComponent = "home";
+    }
   }
   
   ngOnDestroy() {
