@@ -39,12 +39,24 @@ export class SharedService {
   private logStatusSource = new BehaviorSubject<boolean>(localStorage.getItem('loggedIn') === 'true' ? true : false);
   currentLogStatus = this.logStatusSource.asObservable();
 
+  /* Initialize the theme status as true or false*/
+  private themeStatusSource = new BehaviorSubject<boolean>(localStorage.getItem('theme') === 'true' ? true : false);
+  currentThemeStatus = this.themeStatusSource.asObservable();
+
   constructor(private _http: HttpClient) { }
 
   /* Change log status used across the app*/
   changeLogStatus(logStatus: boolean) {
     this.logStatusSource.next(logStatus);
     localStorage.setItem('loggedIn', logStatus.toString());
+  }
+
+  /* Change theme status used across the app*/
+  changeThemeStatus(theme: boolean) {
+    if (localStorage.getItem('theme') != theme.toString()) {
+      this.themeStatusSource.next(theme);
+      localStorage.setItem('theme', theme.toString());
+    }
   }
 
   /* Login with email and password */

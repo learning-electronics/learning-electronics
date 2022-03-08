@@ -27,21 +27,39 @@ export class AppComponent {
   constructor(private _overlay: OverlayContainer, private _service: SharedService, private _router: Router, public login_dialog: MatDialog, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    /* Listen for form changes */
     this.toggleControl.valueChanges.subscribe((toggled) => {
       this.className = toggled ? 'darkMode' : '';
       
       if (toggled) {
         this._overlay.getContainerElement().classList.add('darkMode');
         this.theme = 0.5;
+
+        // Storage variable theme
+        this._service.changeThemeStatus(true);
       } else {
         this._overlay.getContainerElement().classList.remove('darkMode');
         this.theme = 0;
+
+        // Storage variable theme
+        this._service.changeThemeStatus(false);
       }
     });
 
+    /* Pre fill the form with the correct theme */
+    this.subscription = this._service.currentThemeStatus.subscribe(theme => {
+      if (theme == true) {
+        this.toggleControl.setValue(true);
+      } else {
+        this.toggleControl.setValue(false);
+      }
+    });
+
+  
     this.subscription = this._service.currentLogStatus.subscribe(logStatus => this.loggedIn = logStatus);
   }
 
+  /* Change the currentComponent status */
   public onRouterOutletActivate(event : any) {
     if (event.constructor.name == "ProfileComponent" || event.constructor.name == "RegisterComponent") {
       this.currentComponent = "profile";
