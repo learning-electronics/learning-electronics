@@ -1,3 +1,4 @@
 # Auto detect text files and perform LF normalization
 * text=auto
-src/app/failed-register/failed-register.component.html linguist-vendored
+src/app/failed-register/* linguist-vendored
+failed-register.component.html linguist-vendored=false
