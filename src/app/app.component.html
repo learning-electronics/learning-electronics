@@ -1,4 +1,7 @@
-<mat-sidenav-container autosize class="h-100">
+<mat-sidenav-container [ngStyle]="{ 'background': 
+    'linear-gradient( rgba(0, 0, 0,' + theme + '), rgba(0, 0, 0,' + theme + ')),'+ 
+    'url(../assets/img/' + currentComponent + '-background' + '.png)'}"
+    autosize class="h-100">
     <mat-sidenav #sidenav mode="side" opened="true">
         <mat-nav-list>
             <mat-list-item>
@@ -51,6 +54,6 @@
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-        <router-outlet></router-outlet>
+        <router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>

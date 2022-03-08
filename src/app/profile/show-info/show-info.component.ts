@@ -31,7 +31,7 @@ export const DATE_FORMAT = {
   ]
 })
 export class ShowInfoComponent implements OnInit {
-  @Input() user_info: person | undefined;
+  @Input() user_info!: person;
   disabled: boolean = true;
   progress: number = 0;
 
@@ -73,6 +73,7 @@ export class ShowInfoComponent implements OnInit {
         first_name: this.form.controls['fname'].value, 
         last_name: this.form.controls['lname'].value, 
         birth_date: moment(this.form.controls['bday'].value).format('YYYY-MM-DD'), 
+        role: this.user_info.role,
       };
 
       /* Call registration method */

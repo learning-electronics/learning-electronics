@@ -83,6 +83,7 @@ export class RegisterComponent implements OnInit {
         birth_date: moment(this.form.controls['bday'].value).format('YYYY-MM-DD'), 
         password: this.form.controls['password'].value,
         avatar: null,
+        role: 1
       };
 
       /* Call registration method */
