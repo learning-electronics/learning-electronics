@@ -18,8 +18,9 @@ export class LogedoutComponent implements OnInit {
   /* Open Login Dialog */
   login() {
     const dialogRef = this.login_dialog.open(LoginComponent, {
-      width: '20%',
-      height: '52%'
+      width: '25%',
+      height: '55%',
+      minWidth: '350px'
     });
   }
 

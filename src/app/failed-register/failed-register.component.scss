@@ -6,30 +6,14 @@ img{
     margin-right: auto;
 }
 
-
-.mat-card {
-    
-    width: fit-content;
-    background: rgb(255, 255, 255);
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-    }
-
-.container {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10%;
-}
-
-.mat-button{
+mat-card {
     border-radius: 20px;
-    
+    width: 90%;
+    margin-right: 50%;
+    min-width: 800px;
 }
 
-.mat-card-content{
-   text-align: center;
-}
-
-.mat-card-actions{
-    text-align: center;
+.mat-button {
+    margin: auto;
+    width: 50%;
 }

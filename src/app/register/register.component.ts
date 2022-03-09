@@ -94,7 +94,7 @@ export class RegisterComponent implements OnInit {
         if (data.v == true) {
           /* Redirect to home */
           this._router.navigate(['/home']);
-          this._snackBar.open('Registo bem sucedido!', 'Close', { "duration": 2500 });
+          this._snackBar.open('Confirme a sua conta acendendo ao Email!', 'Close', { "duration": 2500 });
         } else {
           /* Reset Email and Password forms */
           this.form.controls['email'].reset();

@@ -47,15 +47,12 @@ export class AppComponent {
     });
 
     /* Pre fill the form with the correct theme */
-    this.subscription = this._service.currentThemeStatus.subscribe(theme => {
-      if (theme == true) {
-        this.toggleControl.setValue(true);
-      } else {
-        this.toggleControl.setValue(false);
-      }
-    });
+    if (localStorage.getItem('theme') == 'true') {
+      this.toggleControl.setValue(true);
+    } else {
+      this.toggleControl.setValue(false);
+    }
 
-  
     this.subscription = this._service.currentLogStatus.subscribe(logStatus => this.loggedIn = logStatus);
   }
 
