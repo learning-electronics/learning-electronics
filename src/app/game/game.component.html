@@ -7,7 +7,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <h1>{{selected_room}}</h1>
+      <!-- <h1>{{selected_room}}</h1> -->
 </div>
 
 <app-room *ngIf="room_flag" [socket_id]="socket_id" [socket]="socket" [room_id]="selected_room"></app-room>

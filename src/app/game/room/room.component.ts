@@ -13,7 +13,7 @@ export interface chat_data {
 })
 export class RoomComponent implements OnInit {
 
-  constructor(private _location: Location) { }
+  constructor() { }
 
   // state : any;
   msg! : string;
