@@ -1,2 +1,2 @@
 # learning-electronics
-learning-electronics web service repository
+Learning-Electronics website repository using Angular for deployment
