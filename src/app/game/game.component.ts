@@ -13,11 +13,11 @@ export class GameComponent implements OnInit {
   constructor(private router : Router) { }
 
   socket: any;
-  connections!: string[];
-  rooms!: string[];
-  selected_room!: string;
+  connections: string[] = [];
+  rooms: string[] = [];
+  selected_room: string = "";
   room_flag: boolean = false;
-  socket_id! : string;
+  socket_id: string = "";
 
   ngOnInit(): void {
     this.socket = io("http://localhost:3000");
@@ -25,7 +25,6 @@ export class GameComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-
     this.socket.on("connections", (connections : any) => {
       this.connections = connections;
       console.log(connections); 
@@ -34,7 +33,6 @@ export class GameComponent implements OnInit {
     this.socket.on("socket_id", (id : any) => {
       this.socket_id = id;
     });
-    
   }
 
   ngOnDestroy() {
@@ -51,5 +49,4 @@ export class GameComponent implements OnInit {
     }
     this.socket.emit("change_room", room_id);
   }
-
 }

@@ -16,8 +16,8 @@ export class RoomComponent implements OnInit {
   constructor() { }
 
   // state : any;
-  msg! : string;
-  chat! : chat_data[];
+  msg: string = "";
+  chat!: chat_data[];
 
   @Input() socket_id!: string;
   @Input() socket: any;
@@ -40,5 +40,4 @@ export class RoomComponent implements OnInit {
     console.log(this.room_id);
     this.socket.emit("send_message", this.msg, this.room_id);
   }
-
 }
