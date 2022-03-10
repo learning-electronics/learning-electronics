@@ -8,10 +8,12 @@ import { LibraryComponent } from './library/library.component';
 import { ProfileComponent } from './profile/profile.component';
 import { QuizzComponent } from './quizz/quizz.component';
 import { ClassesComponent } from './classes/classes.component';
+import { GameComponent } from './game/game.component';
 import { FaqComponent } from './faq/faq.component';
 import { SuccessRegisterComponent } from './success-register/success-register.component';
 import { FailedRegisterComponent } from './failed-register/failed-register.component';
 import { ShowClassComponent } from './classes/show-class/show-class.component';
+import { RoomComponent } from './game/room/room.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -21,6 +23,8 @@ const routes: Routes = [
   { path: 'classes', component: ClassesComponent },
   { path: 'class', component: ShowClassComponent },
   { path: 'quizz', component: QuizzComponent },
+  { path: 'game', component: GameComponent },
+  { path: 'game', component: RoomComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'success-register', component: SuccessRegisterComponent },
   { path: 'failed-register', component: FailedRegisterComponent },

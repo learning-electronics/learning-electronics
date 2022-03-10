@@ -48,6 +48,9 @@ import { FailedRegisterComponent } from './failed-register/failed-register.compo
 import { TermsConditionsComponent } from './register/terms-conditions/terms-conditions.component';
 import { RecoverPasswordComponent } from './home/recover-password/recover-password.component';
 import { ChangeEmailComponent } from './profile/change-email/change-email.component';
+import { GameComponent } from './game/game.component';
+import {MatSelectModule} from '@angular/material/select';
+import { RoomComponent } from './game/room/room.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +78,8 @@ import { ChangeEmailComponent } from './profile/change-email/change-email.compon
     TermsConditionsComponent,
     RecoverPasswordComponent,
     ChangeEmailComponent,
+    GameComponent,
+    RoomComponent,
   ],
   imports: [
     BrowserModule,
@@ -101,6 +106,7 @@ import { ChangeEmailComponent } from './profile/change-email/change-email.compon
     ImageCropperModule,
     MaterialFileInputModule,
     MatSlideToggleModule,
+    MatSelectModule,
     NgCircleProgressModule.forRoot({
       radius: 90,
       outerStrokeWidth: 12,

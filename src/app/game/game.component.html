@@ -1,0 +1,13 @@
+<div>
+    <mat-form-field appearance="fill">
+        <mat-label>Select your room</mat-label>
+        <mat-select (selectionChange)="changeRoom($event.value)">
+          <mat-option *ngFor="let room of rooms" [value]="room" routerLink="/game" [state]="{ id: 'estadooo' }">
+            {{room}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <h1>{{selected_room}}</h1>
+</div>
+
+<app-room *ngIf="room_flag" [socket_id]="socket_id" [socket]="socket" [room_id]="selected_room"></app-room>

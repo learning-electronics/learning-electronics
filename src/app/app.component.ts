@@ -98,6 +98,15 @@ export class AppComponent {
     }
   }
 
+  /* Check if the class component is available */
+  gameRouting() {
+    if (this.loggedIn == true) {
+      this._router.navigate(['/game']);
+    } else {
+      this.login();
+    }
+  }
+
   /* Open Login Dialog */
   login() {
     const dialogRef = this.login_dialog.open(LoginComponent, {

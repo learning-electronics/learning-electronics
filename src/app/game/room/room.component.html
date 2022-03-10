@@ -1,0 +1,18 @@
+<mat-form-field class="example-form-field" appearance="fill">
+    <mat-label>Send message</mat-label>
+    <input matInput type="text" [(ngModel)]="msg">
+    <button *ngIf="msg" matSuffix mat-icon-button aria-label="Clear" (click)="sendMessage()">
+        <mat-icon>send</mat-icon>
+    </button>
+</mat-form-field>
+
+<mat-card>
+    {{room_id}}
+
+    <div *ngFor="let item of chat ">
+        Key: <b>{{item.src}}</b> and Value: <b>{{item.data}}</b>
+    </div>
+
+</mat-card>
+
+<h1>{{socket_id}}</h1>
