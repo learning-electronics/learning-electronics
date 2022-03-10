@@ -99,6 +99,7 @@ export class RegisterComponent implements OnInit {
           /* Reset Email and Password forms */
           this.form.controls['email'].reset();
           this.form.controls['password'].reset();
+          this.form.controls['password2'].reset();
           this._snackBar.open('Email já está registado!', 'Close', { "duration": 2500 });
         }
       });

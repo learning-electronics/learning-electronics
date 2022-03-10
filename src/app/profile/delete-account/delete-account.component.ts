@@ -12,12 +12,10 @@ import { account_response, login, SharedService } from 'src/app/shared.service';
 })
 export class DeleteAccountComponent implements OnInit {
   hide: boolean = true;
-
   form: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
-
 
   constructor(private _snackBar: MatSnackBar, private _service: SharedService, private dialogRef: MatDialogRef<DeleteAccountComponent>, private _router: Router) { }
 
@@ -59,7 +57,7 @@ export class DeleteAccountComponent implements OnInit {
           /* Close the Dialog */
           this.dialogRef.close();
           this._router.navigate(['/home']);
-          this._snackBar.open('Conta eliminada com sucesso!', 'Close', { "duration": 2500 });
+          this._snackBar.open('Verifique confirmação via Email!', 'Close', { "duration": 2500 });
         } else {
           /* Reset the password field */
           this.form.controls['password'].reset();
