@@ -51,6 +51,8 @@ import { ChangeEmailComponent } from './profile/change-email/change-email.compon
 import { GameComponent } from './game/game.component';
 import {MatSelectModule} from '@angular/material/select';
 import { RoomComponent } from './game/room/room.component';
+import { MyExercisesComponent } from './my-exercises/my-exercises.component';
+import { AddEditExerciseComponent } from './my-exercises/add-edit-exercise/add-edit-exercise.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +82,8 @@ import { RoomComponent } from './game/room/room.component';
     ChangeEmailComponent,
     GameComponent,
     RoomComponent,
+    MyExercisesComponent,
+    AddEditExerciseComponent,
   ],
   imports: [
     BrowserModule,

@@ -23,8 +23,19 @@ export class AppComponent {
   loggedIn: boolean = false;
   currentComponent: string = "home";
   theme: number = 0;
+  teacher: boolean = false;
 
-  constructor(private _overlay: OverlayContainer, private _service: SharedService, private _router: Router, public login_dialog: MatDialog, private _snackBar: MatSnackBar) { }
+  constructor(private _overlay: OverlayContainer, private _service: SharedService, private _router: Router, public login_dialog: MatDialog, private _snackBar: MatSnackBar) {
+    var token = localStorage.getItem('token');
+    
+    if (token != null) {
+      this._service.getAccount().subscribe((data: any) => {
+        if (data.v == true) {
+          this.teacher = true;
+        }
+      });
+    }
+   }
 
   ngOnInit() {
     /* Listen for form changes */
