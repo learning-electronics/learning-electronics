@@ -12,7 +12,7 @@ const moment = _moment;
 
 export const DATE_FORMAT = {
   parse: {
-      dateInput: 'LL'
+      dateInput: ['DD-MM-YYYY', 'DD/MM/YYYY']
   },
   display: {
       dateInput: 'DD-MM-YYYY',

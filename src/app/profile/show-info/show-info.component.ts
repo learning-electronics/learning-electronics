@@ -5,12 +5,12 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import * as _moment from 'moment';
-import { SharedService, person, account_response } from 'src/app/shared.service';
+import { SharedService, person } from 'src/app/shared.service';
 const moment = _moment;
 
 export const DATE_FORMAT = {
   parse: {
-      dateInput: 'LL'
+      dateInput: ['DD-MM-YYYY', 'DD/MM/YYYY']
   },
   display: {
       dateInput: 'DD-MM-YYYY',
@@ -31,12 +31,13 @@ export const DATE_FORMAT = {
   ]
 })
 export class ShowInfoComponent implements OnInit {
-  @Input() user_info!: person;
+  @Input() user_info: person | undefined;
   disabled: boolean = true;
   progress: number = 0;
+  type: string = 'Aluno';
 
   form: FormGroup = new FormGroup({
-    fname: new FormControl({ value: "", disabled: this.disabled }, [Validators.required], ),
+    fname: new FormControl({ value: "", disabled: this.disabled }, [Validators.required]),
     lname: new FormControl({ value: "", disabled: this.disabled }, [Validators.required]),
     bday: new FormControl({ value: "", disabled: this.disabled }, [Validators.required]),
     email: new FormControl({ value: "", disabled: this.disabled }),
@@ -49,10 +50,18 @@ export class ShowInfoComponent implements OnInit {
     this.setUserInfo();
     this.progress = 0;
   }
-
+  
   /* Update the Input variable changes */
   ngOnChanges() {
     this.setUserInfo();
+
+    if (this.user_info !== undefined) {
+      if (this.user_info.role == 'Student') {
+        this.type = 'Aluno';
+      } else {
+        this.type = 'Professor';
+      }
+    }
   }
 
   /* Set's the user info in the correct form controls */
@@ -73,7 +82,7 @@ export class ShowInfoComponent implements OnInit {
         first_name: this.form.controls['fname'].value, 
         last_name: this.form.controls['lname'].value, 
         birth_date: moment(this.form.controls['bday'].value).format('YYYY-MM-DD'), 
-        role: this.user_info.role,
+        role: this.user_info !== undefined ? this.user_info.role : 'Student',
       };
 
       /* Call registration method */
