@@ -147,5 +147,6 @@ export class AppComponent {
     });
     
     this.teacher = false;
+    this._router.navigate(['/home']);
   }
 }

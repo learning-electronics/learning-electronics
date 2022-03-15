@@ -15,7 +15,8 @@ export interface exercise {
   correct: string,
   unit: string,
   theme: number[],
-  resol: string
+  resol: string,
+  teacher?: number
 }
 
 export interface login {
@@ -177,6 +178,25 @@ export class SharedService {
   /* Get all the units possible */
   getUnits() {
     return this._http.get(this.EXERCISE_API + '/units');
+  }
+
+  /* Get all the exercises in the library database */
+  getExercises() {
+    return this._http.get(this.EXERCISE_API + '/exercises');
+  }
+
+  /* Get all the exercises created by the teacher */
+  getMyExercises() {
+    var token = localStorage.getItem('token');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: 'Bearer ' + token
+      })
+    }
+
+    return this._http.get(this.EXERCISE_API + '/my_exercises', httpOptions);
   }
 
   /* Create the Exercise */
