@@ -26,6 +26,10 @@ export class AppComponent {
   teacher: boolean = false;
 
   constructor(private _overlay: OverlayContainer, private _service: SharedService, private _router: Router, public login_dialog: MatDialog, private _snackBar: MatSnackBar) {
+    this.checkTeacherStatus();
+  }
+
+  checkTeacherStatus() {
     var token = localStorage.getItem('token');
     
     if (token != null) {
@@ -35,7 +39,7 @@ export class AppComponent {
         }
       });
     }
-   }
+  }
 
   ngOnInit() {
     /* Listen for form changes */
@@ -141,6 +145,7 @@ export class AppComponent {
         this._snackBar.open('Logout falhou!', 'Close', { "duration": 2500 });
       }  
     });
-    this._router.navigate(['/home']);
+    
+    this.teacher = false;
   }
 }

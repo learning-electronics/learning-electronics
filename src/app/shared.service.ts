@@ -2,6 +2,22 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+export interface theme {
+  id: number,
+  name: string
+}
+
+export interface exercise {
+  question: string,
+  ans1: string,
+  ans2: string,
+  ans3: string,
+  correct: string,
+  unit: string,
+  theme: number[],
+  resol: string
+}
+
 export interface login {
   email: string,
   password: string
@@ -34,6 +50,7 @@ export interface person {
 })
 export class SharedService {
   readonly ACCOUNT_API = "http://127.0.0.1:8000/account/api";
+  readonly EXERCISE_API = "http://127.0.0.1:8000/exercise/api";
 
   /* Initialize the log status as true or false*/
   private logStatusSource = new BehaviorSubject<boolean>(localStorage.getItem('loggedIn') === 'true' ? true : false);
@@ -150,5 +167,29 @@ export class SharedService {
     };
 
     return this._http.post(this.ACCOUNT_API + '/upload_avatar', file, httpOptions);
+  }
+
+  /* Get all the themes possible*/
+  getThemes() {
+    return this._http.get(this.EXERCISE_API + '/themes');
+  }
+
+  /* Get all the units possible */
+  getUnits() {
+    return this._http.get(this.EXERCISE_API + '/units');
+  }
+
+  /* Create the Exercise */
+  addExercise(ex: exercise) {
+    var token = localStorage.getItem('token');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: 'Bearer ' + token
+      })
+    }
+
+    return this._http.post(this.EXERCISE_API + '/add_exercise', ex, httpOptions);
   }
 }

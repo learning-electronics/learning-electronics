@@ -49,10 +49,13 @@ import { TermsConditionsComponent } from './register/terms-conditions/terms-cond
 import { RecoverPasswordComponent } from './home/recover-password/recover-password.component';
 import { ChangeEmailComponent } from './profile/change-email/change-email.component';
 import { GameComponent } from './game/game.component';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { RoomComponent } from './game/room/room.component';
 import { MyExercisesComponent } from './my-exercises/my-exercises.component';
-import { AddEditExerciseComponent } from './my-exercises/add-edit-exercise/add-edit-exercise.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { ManualComponent } from './my-exercises/add-exercise/manual/manual.component';
+import { AddExerciseComponent } from './my-exercises/add-exercise/add-exercise.component';
+import { EditExerciseComponent } from './my-exercises/edit-exercise/edit-exercise.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +86,9 @@ import { AddEditExerciseComponent } from './my-exercises/add-edit-exercise/add-e
     GameComponent,
     RoomComponent,
     MyExercisesComponent,
-    AddEditExerciseComponent,
+    ManualComponent,
+    AddExerciseComponent,
+    EditExerciseComponent,
   ],
   imports: [
     BrowserModule,
@@ -111,6 +116,7 @@ import { AddEditExerciseComponent } from './my-exercises/add-edit-exercise/add-e
     MaterialFileInputModule,
     MatSlideToggleModule,
     MatSelectModule,
+    MatTabsModule,
     NgCircleProgressModule.forRoot({
       radius: 90,
       outerStrokeWidth: 12,
