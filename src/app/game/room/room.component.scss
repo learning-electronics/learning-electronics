@@ -5,6 +5,11 @@ mat-card {
     height: 800px;
 }
 
+#messages {
+    overflow: auto;
+    height: 85%;
+}
+
 mat-form-field {
 
     position: absolute;

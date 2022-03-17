@@ -1,7 +1,9 @@
 <mat-card>
     <h2>{{room_id}}</h2>
-    <div *ngFor="let item of chat ">
-        <b>{{item.src}}</b> : <b>{{item.data}}</b>
+    <div id="messages">
+        <div *ngFor="let item of chat ">
+            <b>{{item.src}}</b> : <b>{{item.data}}</b>
+        </div>
     </div>
 
     <mat-form-field class="example-form-field" appearance="fill">
