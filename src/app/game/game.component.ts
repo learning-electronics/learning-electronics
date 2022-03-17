@@ -35,9 +35,6 @@ export class GameComponent implements OnInit {
    
   }
 
-  ngOnChanges() {
-  }
-
   ngAfterViewInit() {
     this.socket.on("connections", (connections : any) => {
       this.connections = connections;
@@ -62,9 +59,9 @@ export class GameComponent implements OnInit {
       this.room_flag = false;
       this.selected_room = "";
     } else {
-      this.selected_room = room_id;
       this.room_flag = true;
+      this.selected_room = room_id;
     }
-    this.socket.emit("change_room", room_id);
+    this.socket.emit("change_room", this.selected_room);
   }
 }

@@ -1,0 +1,16 @@
+<mat-card id="main-mat-card">
+    <h2>{{room_id}}</h2>
+    <div *ngIf="!show_answer">
+        <h1>Time left: {{counter}}</h1>
+        <h1>{{question}}</h1>
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="res">
+            <mat-radio-button *ngFor="let option of options" [value]="option">
+                {{option}}
+            </mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <mat-card *ngIf="show_answer && !correct_answer">Correct answer: {{answer}}</mat-card>
+    <mat-card *ngIf="correct_answer && show_answer">Correct!</mat-card>
+    <mat-card *ngIf="!correct_answer && show_answer">Wrong!</mat-card>
+</mat-card>
+

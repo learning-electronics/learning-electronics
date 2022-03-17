@@ -53,6 +53,8 @@ import {MatSelectModule} from '@angular/material/select';
 import { RoomComponent } from './game/room/room.component';
 import { MyExercisesComponent } from './my-exercises/my-exercises.component';
 import { AddEditExerciseComponent } from './my-exercises/add-edit-exercise/add-edit-exercise.component';
+import { ShowGameComponent } from './game/show-game/show-game.component';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -84,6 +86,7 @@ import { AddEditExerciseComponent } from './my-exercises/add-edit-exercise/add-e
     RoomComponent,
     MyExercisesComponent,
     AddEditExerciseComponent,
+    ShowGameComponent,
   ],
   imports: [
     BrowserModule,
@@ -111,6 +114,7 @@ import { AddEditExerciseComponent } from './my-exercises/add-edit-exercise/add-e
     MaterialFileInputModule,
     MatSlideToggleModule,
     MatSelectModule,
+    MatRadioModule,
     NgCircleProgressModule.forRoot({
       radius: 90,
       outerStrokeWidth: 12,

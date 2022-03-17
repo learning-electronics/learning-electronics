@@ -24,20 +24,18 @@ export class RoomComponent implements OnInit {
   @Input() room_id!: string;
 
   ngOnInit(): void {
+    
   }
   
   ngAfterViewInit() {
     //receives the chat data from the server
     this.socket.on("chat", (data : any) => {
-      console.log(data);
       this.chat = data;
-      console.log(this.chat);
     });
   }
 
   // send message to the server
   sendMessage() {
-    console.log(this.room_id);
     this.socket.emit("send_message", this.msg, this.room_id);
   }
 }
