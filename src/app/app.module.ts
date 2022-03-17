@@ -49,10 +49,13 @@ import { TermsConditionsComponent } from './register/terms-conditions/terms-cond
 import { RecoverPasswordComponent } from './home/recover-password/recover-password.component';
 import { ChangeEmailComponent } from './profile/change-email/change-email.component';
 import { GameComponent } from './game/game.component';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { RoomComponent } from './game/room/room.component';
 import { MyExercisesComponent } from './my-exercises/my-exercises.component';
-import { AddEditExerciseComponent } from './my-exercises/add-edit-exercise/add-edit-exercise.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { ManualComponent } from './my-exercises/add-exercise/manual/manual.component';
+import { AddExerciseComponent } from './my-exercises/add-exercise/add-exercise.component';
+import { EditExerciseComponent } from './my-exercises/edit-exercise/edit-exercise.component';
 import { ShowGameComponent } from './game/show-game/show-game.component';
 import {MatRadioModule} from '@angular/material/radio';
 
@@ -85,8 +88,10 @@ import {MatRadioModule} from '@angular/material/radio';
     GameComponent,
     RoomComponent,
     MyExercisesComponent,
-    AddEditExerciseComponent,
     ShowGameComponent,
+    ManualComponent,
+    AddExerciseComponent,
+    EditExerciseComponent,
   ],
   imports: [
     BrowserModule,
@@ -115,6 +120,7 @@ import {MatRadioModule} from '@angular/material/radio';
     MatSlideToggleModule,
     MatSelectModule,
     MatRadioModule,
+    MatTabsModule,
     NgCircleProgressModule.forRoot({
       radius: 90,
       outerStrokeWidth: 12,

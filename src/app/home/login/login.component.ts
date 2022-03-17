@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { login, SharedService, account_response } from 'src/app/shared.service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -59,6 +60,8 @@ export class LoginComponent implements OnInit {
           /* Close the Dialog */
           this.dialogRef.close();
           this._snackBar.open('Login bem sucedido!', 'Close', { "duration": 2500 });
+
+          location.replace("/");
         } else {
           /* Set the log status as false and reset the password field */
           this._service.changeLogStatus(false);

@@ -1,0 +1,76 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="row mx-auto">
+        <div class="col">
+            <div class="row my-3 mx-auto">
+                <mat-form-field class="mx-auto">
+                    <mat-label>Pergunta</mat-label>
+                    <input matInput formControlName="question" required>
+                    <mat-error *ngIf="question?.hasError('required')">Crie uma questão</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="row my-3 mx-auto">
+                <mat-form-field class="mx-auto">
+                    <mat-label>Respostas (R1; R2; R3; RCorreta)</mat-label>
+                    <input matInput formControlName="answers" (input)="onAnswerInput()"required>
+                    <mat-error *ngIf="answer?.hasError('required')">Preencha as respostas da questão</mat-error>
+                    <mat-error *ngIf="answer?.invalid && !answer?.hasError('required')">Formato errado</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="row my-3 mx-auto">
+                <mat-form-field >
+                    <mat-label>Tema</mat-label>
+                    <mat-select formControlName="theme" name="Tema" multiple>
+                        <mat-option [value]="theme.id" *ngFor="let theme of themes">
+                        {{theme.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="row my-3 mx-auto">
+                <mat-form-field >
+                    <mat-label>Unidade</mat-label>
+                    <mat-select formControlName="unit" name="Unidade">
+                        <mat-option [value]="unit" *ngFor="let unit of units">
+                        {{unit}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="row my-3 mx-auto">
+                <mat-form-field >
+                    <mat-label>Resolução</mat-label>
+                    <input matInput formControlName="resolution">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row my-3 mx-auto">
+                <div class="row">
+                    <image-cropper
+                    [imageURL]=""
+                    [imageChangedEvent]="imageChangedEvent"
+                    [maintainAspectRatio]="true"
+                    [aspectRatio]="1 / 1"
+                    format="png"
+                    (imageCropped)="imageCropped($event)"
+                    ></image-cropper>
+                </div>
+        
+                <div class="row">
+                    <mat-form-field>
+                        <ngx-mat-file-input placeholder="Escolher Imagem" (change)="fileChangeEvent($event)"></ngx-mat-file-input>
+                        <mat-icon matSuffix>folder</mat-icon>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+            
+        <div class="row mt-4 mb-1 mx-auto">
+            <button mat-raised-button color="accent" type="submit" mat-button>{{ModalTitle.substring(0, ModalTitle.length - 9)}}</button>
+        </div>
+    </div>
+</form>
