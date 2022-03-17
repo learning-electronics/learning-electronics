@@ -32,7 +32,6 @@ export class GameComponent implements OnInit {
   ngOnInit(): void {
     this.socket = io("http://localhost:3000");
     this.rooms = ["None", "Room1", "Room2", "Room3"];
-   
   }
 
   ngAfterViewInit() {

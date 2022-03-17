@@ -8,7 +8,7 @@
 
     <mat-form-field class="example-form-field" appearance="fill">
         <mat-label>Send message</mat-label>
-        <input matInput type="text" [(ngModel)]="msg">
+        <input matInput type="text" [(ngModel)]="msg" (keyup.enter)="sendMessage()">
         <button *ngIf="msg" matSuffix mat-icon-button aria-label="Clear" (click)="sendMessage()">
             <mat-icon>send</mat-icon>
         </button>

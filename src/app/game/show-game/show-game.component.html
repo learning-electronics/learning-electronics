@@ -9,8 +9,8 @@
             </mat-radio-button>
         </mat-radio-group>
     </div>
+    <button mat-raised-button color="accent" *ngIf="!started" (click)="startGame()">Start</button>
     <mat-card *ngIf="show_answer && !correct_answer">Correct answer: {{answer}}</mat-card>
     <mat-card *ngIf="correct_answer && show_answer">Correct!</mat-card>
     <mat-card *ngIf="!correct_answer && show_answer">Wrong!</mat-card>
 </mat-card>
-
