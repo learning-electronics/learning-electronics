@@ -70,10 +70,16 @@ export class ShowGameComponent implements OnInit {
     this.socket.on("counter", (counter : number) => {
       this.counter = counter;
     });
+    
+    this.socket.on("game_started", (state : boolean, counter : number) => {
+      this.started = state;
+      this.counter = counter;
+      console.log("game started: " + this.started);
+    });
+
   }
 
   startGame() {
-    this.started = true;
     this.socket.emit("start_game", this.room_id);
   }
 
