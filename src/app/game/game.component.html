@@ -6,9 +6,12 @@
                 {{room}}
             </mat-option>
         </mat-select>
+    
     </mat-form-field>
 </div>
-
+<div>
+    <button mat-raised-button color="accent" (click)="createRoom()">Create room</button>
+</div>
 <app-show-game id="showGame" *ngIf="room_flag" [socket]="socket" [room_id]="selected_room"></app-show-game>
 
 <app-room id="chat" *ngIf="room_flag" [socket_id]="socket_id" [socket]="socket" [room_id]="selected_room"></app-room>

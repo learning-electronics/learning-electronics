@@ -31,7 +31,7 @@ export class GameComponent implements OnInit {
 
   ngOnInit(): void {
     this.socket = io("http://localhost:3000");
-    this.rooms = ["None", "Room1", "Room2", "Room3"];
+    this.rooms = ["None"];
   }
 
   ngAfterViewInit() {
@@ -52,7 +52,12 @@ export class GameComponent implements OnInit {
   ngOnDestroy() {
     this.socket.disconnect();
   }
+  createRoom(){
 
+    this.rooms.push("Room"+this.rooms.length);
+    this.socket.emit("createRoom",this.rooms[this.rooms.length-1])
+    //snackbar a dizer se criou com sucesso
+  }
   changeRoom(room_id:any) {    
     if(room_id == "None") {
       this.room_flag = false;
