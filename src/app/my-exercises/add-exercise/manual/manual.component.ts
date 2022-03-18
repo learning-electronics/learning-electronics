@@ -1,8 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { SharedService, theme } from 'src/app/shared.service';
+import { AddExerciseComponent } from '../add-exercise.component';
 
 @Component({
   selector: 'app-manual',
@@ -17,7 +19,13 @@ export class ManualComponent implements OnInit {
   themes: theme[] = [];
   units: string[] = [];
 
-  constructor(private _formBuilder: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: any, private _service: SharedService) {
+  constructor(
+    private _formBuilder: FormBuilder, 
+    @Inject(MAT_DIALOG_DATA) public data: any, 
+    private _service: SharedService,
+    private _snackBar: MatSnackBar,
+    private dialogRef: MatDialogRef<AddExerciseComponent>
+    ) {
     this.ModalTitle = data.ModalTitle;
     this.themes = data.themes;
     this.units = data.units;
@@ -71,7 +79,6 @@ export class ManualComponent implements OnInit {
 
   /* Submit form action */
   submit() {
-    console.log('ola')
     if (this.form.valid) {
       var answers: string[] = this.form.get('answers')?.value.split(";");
     
@@ -84,32 +91,50 @@ export class ManualComponent implements OnInit {
         unit: this.form.get('unit')?.value,
         theme: this.form.get('theme')?.value,
         resol: this.form.get('resolution')?.value,
-        /* image: this.form.get('image')?.value, */
       }
 
-      console.log(exercise)
-
       this._service.addExercise(exercise).subscribe((data: any) => {
-        console.log(data);
-      });
+        if (data.v == true) {
+          console.log('added');
+          var img = this.uploadPhoto();
 
-      /* var photo;
+          if (img != null) {
+            console.log('imagem nao nulla');
+            this._service.uploadExercisePhoto(img, Number(data.m)).subscribe((data: any) => {
+              console.log(data);
+            });
+
+          this._snackBar.open('Exercício adicionado!', 'Close', { "duration": 2500 });
+          }
+        }
+      });  
+    }
+  }
+
+  /* Upload the user's photo */
+  uploadPhoto() {
+    if (this.croppedImage != "") {
+      var photo;
+
       if (this.imageChangedEvent == "") {
-        photo = "";     
+        return null;
       } else {
         photo = this.imageChangedEvent.target.files[0].name;
+      }
 
-        var arr: string[] = photo.split('.');
-        var ext: string = arr[arr.length - 1];
-        var name: string = photo;
-        const file = new File([this.convertDataUrlToBlob(this.croppedImage)], name, {type: 'image/' + ext});
-        const formData: FormData = new FormData();
+      var arr: string[] = photo.split('.');
+      var ext: string = arr[arr.length - 1];
+      var name: string = photo;
 
-        formData.append('img', file, file.name);
-      }  
+      const file = new File([this.convertDataUrlToBlob(this.croppedImage)], name, {type: 'image/' + ext});
+      
+      const formData: FormData = new FormData();
+      formData.append('img', file, file.name);
 
-      console.log(exercise); */
+      return formData;
     }
+
+    return null;
   }
 }
 

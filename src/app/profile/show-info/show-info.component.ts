@@ -77,29 +77,30 @@ export class ShowInfoComponent implements OnInit {
   submit() {
     /* Only submit if the form is valid */
     if (this.form.valid) {
-      var person: person = { 
-        email: this.form.controls['email'].value, 
-        first_name: this.form.controls['fname'].value, 
-        last_name: this.form.controls['lname'].value, 
-        birth_date: moment(this.form.controls['bday'].value).format('YYYY-MM-DD'), 
-        role: this.user_info !== undefined ? this.user_info.role : 'Student',
-      };
+      var person: any = {};
 
-      /* Call registration method */
-      this._service.updateAccount(person).subscribe((data: any) => {
-        console.log(data);
-        if (data.v == true) {
-          /* Realod the Profile Component */
-          let currentUrl = this._router.url;
-          this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-              this._router.navigate([currentUrl]);
-          });
+      // Fill the person object only with updated values
+      if (this.form.controls['fname'].value != this.user_info?.first_name) person['first_name'] = this.form.controls['fname'].value;
+      if (this.form.controls['lname'].value != this.user_info?.last_name) person['last_name'] = this.form.controls['lname'].value;
+      if (moment(this.form.controls['bday'].value).format('YYYY-MM-DD') != this.user_info?.birth_date) person['birth_date'] = moment(this.form.controls['bday'].value).format('YYYY-MM-DD');
+      
+      // Check if the person variable is empty
+      if (Object.keys(person).length != 0) {
+        /* Call registration method */
+        this._service.updateAccount(person).subscribe((data: any) => {
+          if (data.v == true) {
+            /* Realod the Profile Component */
+            let currentUrl = this._router.url;
+            this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+                this._router.navigate([currentUrl]);
+            });
 
-          this._snackBar.open('Dados Atualizados!', 'Close', { "duration": 2500 });
-        } else {
-          this._snackBar.open('Parâmetros introduzidos inválidos!', 'Close', { "duration": 2500 });
-        }
-      });
+            this._snackBar.open('Dados Atualizados!', 'Close', { "duration": 2500 });
+          } else {
+            this._snackBar.open('Parâmetros introduzidos inválidos!', 'Close', { "duration": 2500 });
+          }
+        });
+      }
     } else {
       this._snackBar.open('Parâmetros introduzidos inválidos!', 'Close', { "duration": 2500 })
     } 

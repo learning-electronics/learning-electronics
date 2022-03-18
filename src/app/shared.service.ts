@@ -43,7 +43,7 @@ export interface person {
   password?: string,
   joined?: string,
   avatar?: string | null,
-  role: string | number
+  role?: string | number
 }
 
 @Injectable({
@@ -156,7 +156,7 @@ export class SharedService {
       })
     };
 
-    return this._http.post(this.ACCOUNT_API + '/update_user', person, httpOptions);
+    return this._http.patch(this.ACCOUNT_API + '/update_user', person, httpOptions);
   }
 
   /* Update user's avatar */
@@ -211,5 +211,16 @@ export class SharedService {
     }
 
     return this._http.post(this.EXERCISE_API + '/add_exercise', ex, httpOptions);
+  }
+
+  /* Update exercise's photo */
+  uploadExercisePhoto(file: FormData, id: number) {
+    var token = localStorage.getItem('token');
+
+    const httpOptions = {
+      headers: new HttpHeaders({ Authorization: 'Bearer ' + token })
+    };
+
+    return this._http.post(this.ACCOUNT_API + '/update_ex_img/' + id, file, httpOptions);
   }
 }
