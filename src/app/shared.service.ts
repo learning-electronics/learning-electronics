@@ -221,6 +221,6 @@ export class SharedService {
       headers: new HttpHeaders({ Authorization: 'Bearer ' + token })
     };
 
-    return this._http.post(this.ACCOUNT_API + '/update_ex_img/' + id, file, httpOptions);
+    return this._http.post(this.EXERCISE_API + '/update_ex_img/' + id, file, httpOptions);
   }
 }

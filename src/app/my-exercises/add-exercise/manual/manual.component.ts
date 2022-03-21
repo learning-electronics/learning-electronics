@@ -95,11 +95,9 @@ export class ManualComponent implements OnInit {
 
       this._service.addExercise(exercise).subscribe((data: any) => {
         if (data.v == true) {
-          console.log('added');
           var img = this.uploadPhoto();
 
           if (img != null) {
-            console.log('imagem nao nulla');
             this._service.uploadExercisePhoto(img, Number(data.m)).subscribe((data: any) => {
               console.log(data);
             });
@@ -140,17 +138,25 @@ export class ManualComponent implements OnInit {
 
 export const answerValidator: ValidatorFn = (formGroup: AbstractControl ): ValidationErrors | null  => {
   var answers = formGroup.get('answers')?.value.split(";");
+  answers = answers.map((element: string) => {
+    return element.trim();
+  });
 
   /* Answers not valid if it doesn't have 4 answers separated by a ; */
   if (answers.length === 4) {
     for (let answer of answers) {
       if (answer.length === 0) {
-        return {answerWrong: true};
+        return { answerWrong: true };
       }
     }
     
+    /* Check if all the answers are different */
+    if ((new Set(answers)).size !== answers.length) {
+      return { answerWrong: true };
+    }
+
     return null;
   } else {
-    return {answerWrong: true};
+    return { answerWrong: true };
   }
 }
