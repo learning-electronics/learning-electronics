@@ -8,15 +8,17 @@ export interface theme {
 }
 
 export interface exercise {
+  id?: number,
   question: string,
   ans1: string,
   ans2: string,
   ans3: string,
   correct: string,
   unit: string,
-  theme: number[],
+  theme: number[] | string[],
   resol: string,
-  teacher?: number
+  teacher?: number,
+  date?: any
 }
 
 export interface login {
