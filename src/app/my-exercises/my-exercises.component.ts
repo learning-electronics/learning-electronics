@@ -7,6 +7,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import * as _moment from 'moment';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { SelectionModel } from '@angular/cdk/collections';
+import { DeleteConfirmationComponent } from './delete-confirmation/delete-confirmation.component';
 const moment = _moment;
 
 export const DATE_FORMAT = {
@@ -32,8 +34,9 @@ export const DATE_FORMAT = {
   ]
 })
 export class MyExercisesComponent implements OnInit {
-  displayedColumns: string[] = ['question', 'theme', 'classes', 'date'];
+  displayedColumns: string[] = ['select', 'question', 'theme', 'classes', 'date'];
   dataSource!: MatTableDataSource<any>;
+  selection = new SelectionModel<any>(true, []);
 
   all_themes: theme[] = [];
   all_units: string[] = [];
@@ -42,6 +45,7 @@ export class MyExercisesComponent implements OnInit {
   constructor(public add_edit_ex_dialog: MatDialog, private _service: SharedService) {
     this._service.getThemes().subscribe((data: any) => {
       this.all_themes = data as theme[];
+      this.refreshTable();
     });
 
     this._service.getUnits().subscribe((data: any) => {
@@ -49,25 +53,20 @@ export class MyExercisesComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.refreshTable();
+  ngOnInit(): void {  
   }
 
+  /* Refresh the table content */
   refreshTable() {
     this._service.getMyExercises().subscribe((data: any) => {
-      console.log(data);
       data.forEach((ex: exercise) => {
         // Changing theme ID array to theme name array
         var theme_names: string[] = [];
-
-        console.log(ex);
-        
         ex.theme.forEach((id: any) => {
           theme_names.push(this.all_themes[id - 1].name);
-        });
+        });  
 
         ex.theme = theme_names;
-
         // Get the correct date format
         ex.date = moment(ex.date).format('DD-MM-YYYY');
 
@@ -94,15 +93,42 @@ export class MyExercisesComponent implements OnInit {
 
   /* Open Add or Edit Exercise Dialog */
   editEx(exercise_data: any) {
+    var ex = Object.create(exercise_data);
+    var theme_list: number[] = [];
+
+    exercise_data.theme.forEach((theme: string) => {
+      theme_list.push(this.all_themes.findIndex((t: theme) => t.name == theme) + 1);
+    });
+    ex.theme = theme_list;
+
     const dialogRef = this.add_edit_ex_dialog.open(EditExerciseComponent, {
-      width: '50%',
-      height: '60%', 
       data: {
         'ModalTitle': "Editar Exercício",
         'themes': this.all_themes,
         'units': this.all_units,
-        'exercise': exercise_data
+        'exercise': ex
       }
     });
+  }
+
+  deleteExercises() {
+    const dialogRef = this.add_edit_ex_dialog.open(DeleteConfirmationComponent, {
+
+      data: this.selection.selected
+    });
+  }
+
+  /* Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /* Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
   }
 }

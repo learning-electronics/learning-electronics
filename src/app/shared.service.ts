@@ -225,4 +225,17 @@ export class SharedService {
 
     return this._http.post(this.EXERCISE_API + '/update_ex_img/' + id, file, httpOptions);
   }
+
+  deleteExercise(id: number) {
+    var token = localStorage.getItem('token');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: 'Bearer ' + token
+      })
+    };
+
+    return this._http.delete(this.EXERCISE_API + '/delete_exercise/' + id, httpOptions);
+  }
 }

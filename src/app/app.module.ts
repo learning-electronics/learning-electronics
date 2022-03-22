@@ -57,7 +57,8 @@ import { ManualComponent } from './my-exercises/add-exercise/manual/manual.compo
 import { AddExerciseComponent } from './my-exercises/add-exercise/add-exercise.component';
 import { EditExerciseComponent } from './my-exercises/edit-exercise/edit-exercise.component';
 import { ShowGameComponent } from './game/show-game/show-game.component';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
+import { DeleteConfirmationComponent } from './my-exercises/delete-confirmation/delete-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import {MatRadioModule} from '@angular/material/radio';
     ManualComponent,
     AddExerciseComponent,
     EditExerciseComponent,
+    DeleteConfirmationComponent,
   ],
   imports: [
     BrowserModule,

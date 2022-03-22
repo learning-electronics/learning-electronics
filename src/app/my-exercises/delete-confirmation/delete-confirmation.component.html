@@ -1,0 +1,12 @@
+<mat-dialog-content class="mat-typography">
+    <h2>Tem a certeza que deseja eliminar os seguintes exercícios?</h2>
+    <ul>
+        <li *ngFor="let exercise of data">
+            <h3>{{exercise.question}} - {{exercise.date}}</h3>
+        </li>
+    </ul>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-button color="warn" cdkFocusInitial>Confirmar</button>
+</mat-dialog-actions>

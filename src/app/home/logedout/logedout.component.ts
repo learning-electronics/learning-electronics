@@ -26,9 +26,6 @@ export class LogedoutComponent implements OnInit {
 
   /* Open Recover Password Dialog */
   recoverPassword() {
-    const dialogRef = this.login_dialog.open(RecoverPasswordComponent, {
-      width: '20%',
-      height: '30%'
-    });
+    const dialogRef = this.login_dialog.open(RecoverPasswordComponent);
   }
 }

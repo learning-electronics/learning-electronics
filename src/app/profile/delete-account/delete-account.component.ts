@@ -33,10 +33,6 @@ export class DeleteAccountComponent implements OnInit {
 
   /* Submit form action */
   submit() {
-    /* Debug */
-    console.log(this.form.controls['email'].value);
-    console.log(this.form.controls['password'].value);
-
     /* Only submit if the form is valid */
     if (this.form.valid) {
       var cred: login = {

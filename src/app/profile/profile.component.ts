@@ -26,26 +26,17 @@ export class ProfileComponent implements OnInit {
 
   /* Open Change Email Dialog */
   changeEmail() {
-    const dialogRef = this.change_pw_dialog.open(ChangeEmailComponent, {
-      width: '20%',
-      height: '50%'
-    });
+    const dialogRef = this.change_pw_dialog.open(ChangeEmailComponent);
   }
 
   /* Open Change Password Dialog */
   changePassword() {
-    const dialogRef = this.change_pw_dialog.open(ChangePasswordComponent, {
-      width: '20%',
-      height: '45%'
-    });
+    const dialogRef = this.change_pw_dialog.open(ChangePasswordComponent);
   }
 
   /* Open Delete Account Dialog */
   deleteAccount() {
-    const dialogRef = this.delete_acc_dialog.open(DeleteAccountComponent, {
-      width: '20%',
-      height: '40%'
-    });
+    const dialogRef = this.delete_acc_dialog.open(DeleteAccountComponent);
   }
 
   /* Smooth Scroll to element */
