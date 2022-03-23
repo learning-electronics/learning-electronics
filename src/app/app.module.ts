@@ -59,6 +59,7 @@ import { EditExerciseComponent } from './my-exercises/edit-exercise/edit-exercis
 import { ShowGameComponent } from './game/show-game/show-game.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { DeleteConfirmationComponent } from './my-exercises/delete-confirmation/delete-confirmation.component';
+import { CreateRoomComponent } from './game/create-room/create-room.component';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { DeleteConfirmationComponent } from './my-exercises/delete-confirmation/
     AddExerciseComponent,
     EditExerciseComponent,
     DeleteConfirmationComponent,
+    CreateRoomComponent,
   ],
   imports: [
     BrowserModule,
