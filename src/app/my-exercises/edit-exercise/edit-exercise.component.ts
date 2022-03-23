@@ -16,6 +16,8 @@ export class EditExerciseComponent implements OnInit {
   imageChangedEvent: any = '';
   croppedImage: any = '';
   disabled: boolean = true;
+  DJANGO_SERVER = 'http://127.0.0.1:8000';
+  imgPath: string = "";
   
   constructor(
     private _formBuilder: FormBuilder,
@@ -42,6 +44,12 @@ export class EditExerciseComponent implements OnInit {
       resolution: new FormControl({ value: this.data.exercise.resol, disabled: this.disabled }),
       image: new FormControl(""),   
     }, {validator: answerValidator});
+
+    if (this.data.exercise.img == null) {
+      this.imgPath = "";
+    } else {
+      this.imgPath = this.DJANGO_SERVER + "/../.." + this.data.exercise.img;
+    }
   }
 
   /* Shorthands for form controls (used from within template) */

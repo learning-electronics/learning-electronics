@@ -92,7 +92,8 @@ export class ManualComponent implements OnInit {
         correct: answers[3],
         unit: this.form.get('unit')?.value,
         theme: this.form.get('theme')?.value,
-        resol: this.form.get('resolution')?.value
+        resol: this.form.get('resolution')?.value,
+        img: null
       }
 
       this._service.addExercise(exercise).subscribe((data: any) => {
