@@ -17,6 +17,7 @@ export interface exercise {
   unit: string,
   theme: number[] | string[],
   resol: string,
+  img: string | null,
   teacher?: number,
   date?: any
 }
