@@ -35,7 +35,7 @@ export class RecoverPasswordComponent implements OnInit {
       
     } else {
       /* Set the log status as false and reset the password field */
-      this._snackBar.open('Email introduzido inválido!', 'Close', { "duration": 2500 });
+      this._snackBar.open('Email introduzido inválido!', 'Fechar', { "duration": 2500 });
     }
   }
 }

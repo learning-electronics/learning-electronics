@@ -79,9 +79,9 @@ export class EditPhotoComponent implements OnInit {
           });
           this.dialogRef.close();
 
-          this._snackBar.open('Imagem Atualizada!', 'Close', { "duration": 2500 });
+          this._snackBar.open('Imagem Atualizada!', 'Fechar', { "duration": 2500 });
         } else {
-          this._snackBar.open('Atualização de Imagem falhou!', 'Close', { "duration": 2500 });
+          this._snackBar.open('Atualização de Imagem falhou!', 'Fechar', { "duration": 2500 });
         }
       });
     }

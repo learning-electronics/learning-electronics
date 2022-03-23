@@ -111,9 +111,9 @@ export class MyExercisesComponent implements OnInit {
     });
   }
 
+  /* Open the delete confirmation dialog */
   deleteExercises() {
     const dialogRef = this.add_edit_ex_dialog.open(DeleteConfirmationComponent, {
-
       data: this.selection.selected
     });
   }

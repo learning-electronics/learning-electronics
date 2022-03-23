@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { SharedService, theme } from 'src/app/shared.service';
 import { AddExerciseComponent } from '../add-exercise.component';
@@ -24,7 +25,8 @@ export class ManualComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any, 
     private _service: SharedService,
     private _snackBar: MatSnackBar,
-    private dialogRef: MatDialogRef<AddExerciseComponent>
+    private dialogRef: MatDialogRef<AddExerciseComponent>,
+    private _router: Router
     ) {
     this.ModalTitle = data.ModalTitle;
     this.themes = data.themes;
@@ -94,16 +96,39 @@ export class ManualComponent implements OnInit {
       }
 
       this._service.addExercise(exercise).subscribe((data: any) => {
+        console.log(data);
         if (data.v == true) {
           var img = this.uploadPhoto();
 
           if (img != null) {
             this._service.uploadExercisePhoto(img, Number(data.m)).subscribe((data: any) => {
               console.log(data);
-            });
+              
+              if (data.v == true) {
+                /* Close the dialog */
+                this.dialogRef.close();
 
-          this._snackBar.open('Exercício adicionado!', 'Close', { "duration": 2500 });
+                /* Reload the my_exercises component */
+                let currentUrl = this._router.url;
+                this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+                    this._router.navigate([currentUrl]);
+                });
+                
+                this._snackBar.open('Exercício adicionado!', 'Fechar', { "duration": 2500 });
+              }
+            });
           }
+
+          /* Close the dialog */
+          this.dialogRef.close();
+
+          /* Reload the my_exercises component */
+          let currentUrl = this._router.url;
+          this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+              this._router.navigate([currentUrl]);
+          });
+          
+          this._snackBar.open('Exercício adicionado!', 'Fechar', { "duration": 2500 });
         }
       });  
     }

@@ -25,7 +25,6 @@ export class EditExerciseComponent implements OnInit {
     private _router: Router,
     private dialogRef: MatDialogRef<EditExerciseComponent>
     ) {
-    console.log(data);
   }
 
   ngOnInit(): void {
@@ -77,9 +76,9 @@ export class EditExerciseComponent implements OnInit {
             this._router.navigate([currentUrl]);
         });
 
-        this._snackBar.open('Exercício Eliminado!', 'Close', { "duration": 2500 });
+        this._snackBar.open('Exercício Eliminado!', 'Fechar', { "duration": 2500 });
       } else {
-        this._snackBar.open('Erro ao Eliminar Exercício!', 'Close', { "duration": 2500 });
+        this._snackBar.open('Erro ao Eliminar Exercício!', 'Fechar', { "duration": 2500 });
       }
     });
   }

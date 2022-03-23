@@ -94,20 +94,20 @@ export class RegisterComponent implements OnInit {
         if (data.v == true) {
           /* Redirect to home */
           this._router.navigate(['/home']);
-          this._snackBar.open('Confirme a sua conta acendendo ao Email!', 'Close', { "duration": 2500 });
+          this._snackBar.open('Confirme a sua conta acendendo ao Email!', 'Fechar', { "duration": 2500 });
         } else {
           /* Reset Email and Password forms */
           this.form.controls['email'].reset();
           this.form.controls['password'].reset();
           this.form.controls['password2'].reset();
-          this._snackBar.open('Email já está registado!', 'Close', { "duration": 2500 });
+          this._snackBar.open('Email já está registado!', 'Fechar', { "duration": 2500 });
         }
       });
     } else {
       if (this.form.controls['terms'].value == false) {
-        this._snackBar.open('Os termos e condições têm que ser aceites!', 'Close', { "duration": 2500 });
+        this._snackBar.open('Os termos e condições têm que ser aceites!', 'Fechar', { "duration": 2500 });
       } else {
-        this._snackBar.open('Parâmetros introduzidos inválidos!', 'Close', { "duration": 2500 });
+        this._snackBar.open('Parâmetros introduzidos inválidos!', 'Fechar', { "duration": 2500 });
       }
     }
   }

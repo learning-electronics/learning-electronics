@@ -95,14 +95,14 @@ export class ShowInfoComponent implements OnInit {
                 this._router.navigate([currentUrl]);
             });
 
-            this._snackBar.open('Dados Atualizados!', 'Close', { "duration": 2500 });
+            this._snackBar.open('Dados Atualizados!', 'Fechar', { "duration": 2500 });
           } else {
-            this._snackBar.open('Parâmetros introduzidos inválidos!', 'Close', { "duration": 2500 });
+            this._snackBar.open('Parâmetros introduzidos inválidos!', 'Fechar', { "duration": 2500 });
           }
         });
       }
     } else {
-      this._snackBar.open('Parâmetros introduzidos inválidos!', 'Close', { "duration": 2500 })
+      this._snackBar.open('Parâmetros introduzidos inválidos!', 'Fechar', { "duration": 2500 })
     } 
   }
 

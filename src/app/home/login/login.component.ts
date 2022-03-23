@@ -59,21 +59,21 @@ export class LoginComponent implements OnInit {
 
           /* Close the Dialog */
           this.dialogRef.close();
-          this._snackBar.open('Login bem sucedido!', 'Close', { "duration": 2500 });
+          this._snackBar.open('Login bem sucedido!', 'Fechar', { "duration": 2500 });
 
           location.replace("/");
         } else {
           /* Set the log status as false and reset the password field */
           this._service.changeLogStatus(false);
           this.form.controls['password'].reset();
-          this._snackBar.open('Email ou Password incorretas!', 'Close', { "duration": 2500 });
+          this._snackBar.open('Email ou Password incorretas!', 'Fechar', { "duration": 2500 });
         }
       });
     } else {
       /* Set the log status as false and reset the password field */
       this._service.changeLogStatus(false);
       this.form.controls['password'].reset();
-      this._snackBar.open('Email ou Password incorretas!', 'Close', { "duration": 2500 });
+      this._snackBar.open('Email ou Password incorretas!', 'Fechar', { "duration": 2500 });
     }
   }
 }

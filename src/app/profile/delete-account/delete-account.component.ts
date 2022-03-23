@@ -53,17 +53,17 @@ export class DeleteAccountComponent implements OnInit {
           /* Close the Dialog */
           this.dialogRef.close();
           this._router.navigate(['/home']);
-          this._snackBar.open('Verifique confirmação via Email!', 'Close', { "duration": 2500 });
+          this._snackBar.open('Verifique confirmação via Email!', 'Fechar', { "duration": 2500 });
         } else {
           /* Reset the password field */
           this.form.controls['password'].reset();
-          this._snackBar.open('Email ou Password incorretas!', 'Close', { "duration": 2500 });
+          this._snackBar.open('Email ou Password incorretas!', 'Fechar', { "duration": 2500 });
         }
       });
     } else {
       /* Reset the password field */
       this.form.controls['password'].reset();
-      this._snackBar.open('Email ou Password incorretas!', 'Close', { "duration": 2500 });
+      this._snackBar.open('Email ou Password incorretas!', 'Fechar', { "duration": 2500 });
     }
   }
 }
