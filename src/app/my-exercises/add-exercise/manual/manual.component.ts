@@ -97,13 +97,11 @@ export class ManualComponent implements OnInit {
       }
 
       this._service.addExercise(exercise).subscribe((data: any) => {
-        console.log(data);
         if (data.v == true) {
           var img = this.uploadPhoto();
 
           if (img != null) {
             this._service.uploadExercisePhoto(img, Number(data.m)).subscribe((data: any) => {
-              console.log(data);
               
               if (data.v == true) {
                 /* Close the dialog */

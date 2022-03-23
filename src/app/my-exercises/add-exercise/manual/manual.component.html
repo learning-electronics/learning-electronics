@@ -47,25 +47,24 @@
                 </mat-form-field>
             </div>
         </div>
-        <div class="col">
-            <div class="row my-3 mx-auto">
-                <div class="row">
-                    <image-cropper
-                    [imageURL]=""
-                    [imageChangedEvent]="imageChangedEvent"
-                    [maintainAspectRatio]="true"
-                    [aspectRatio]="1 / 1"
-                    format="png"
-                    (imageCropped)="imageCropped($event)"
-                    ></image-cropper>
-                </div>
-        
-                <div class="row">
-                    <mat-form-field>
-                        <ngx-mat-file-input placeholder="Escolher Imagem" (change)="fileChangeEvent($event)"></ngx-mat-file-input>
-                        <mat-icon matSuffix>folder</mat-icon>
-                    </mat-form-field>
-                </div>
+        <div class="col my-3 mx-auto">
+            <div class="row mx-auto">
+                <image-cropper
+                [ngStyle]="{'opacity': imageChangedEvent == '' ? '0' : '1'}"
+                [imageURL]=""
+                [imageChangedEvent]="imageChangedEvent"
+                [maintainAspectRatio]="true"
+                [aspectRatio]="1 / 1"
+                format="png"
+                (imageCropped)="imageCropped($event)"
+                ></image-cropper>
+            </div>
+    
+            <div class="row mt-3">
+                <mat-form-field>
+                    <ngx-mat-file-input placeholder="Escolher Imagem" (change)="fileChangeEvent($event)"></ngx-mat-file-input>
+                    <mat-icon matSuffix>folder</mat-icon>
+                </mat-form-field>
             </div>
         </div>
             

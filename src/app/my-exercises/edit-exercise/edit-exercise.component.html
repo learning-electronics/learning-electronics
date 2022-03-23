@@ -2,7 +2,7 @@
     <h2 mat-dialog-title>{{data.ModalTitle}}</h2>
 </div>
 <mat-dialog-content class="mat-typography">
-    <form [formGroup]="form" (ngSubmit)="submit()">
+    <form [formGroup]="form">
         <div class="row mx-auto">
             <div class="col">
                 <div class="row my-3 mx-auto">
@@ -51,25 +51,25 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col">
-                <div class="row my-3 mx-auto">
-                    <div class="row">
-                        <image-cropper
-                        [imageURL]="imgPath"
-                        [imageChangedEvent]="imageChangedEvent"
-                        [maintainAspectRatio]="true"
-                        [aspectRatio]="1 / 1"
-                        format="png"
-                        (imageCropped)="imageCropped($event)"
-                        ></image-cropper>
-                    </div>
-            
-                    <div class="row">
-                        <mat-form-field>
-                            <ngx-mat-file-input placeholder="Escolher Imagem" (change)="fileChangeEvent($event)"></ngx-mat-file-input>
-                            <mat-icon matSuffix>folder</mat-icon>
-                        </mat-form-field>
-                    </div>
+            <div class="col my-3 mx-auto">
+                <div class="row mx-auto">
+                    <image-cropper
+                    [ngStyle]="{ 'opacity': imgPath == '' ? '0' : '1' }"
+                    [imageURL]="imgPath"
+                    [imageChangedEvent]="imageChangedEvent"
+                    [maintainAspectRatio]="true"
+                    [aspectRatio]="1 / 1"
+                    format="png"
+                    (imageCropped)="imageCropped($event)"
+                    ></image-cropper>
+                </div>
+        
+                <div class="row mt-3">
+                    <mat-form-field>
+                        <ngx-mat-file-input placeholder="Escolher Imagem" (change)="fileChangeEvent($event)"></ngx-mat-file-input>
+                        <mat-icon matSuffix>folder</mat-icon>
+                    </mat-form-field>
+                    <button mat-mini-fab class="mx-4" color="primary" (click)="uploadPhoto()"><mat-icon>upload</mat-icon></button>  
                 </div>
             </div>
             

@@ -93,7 +93,90 @@ export class EditExerciseComponent implements OnInit {
 
   /* */
   submit() {
+    if (this.form.valid) {
+      var answers: string[] = this.form.get('answers')?.value.split(";");
+    
+      var exercise = {
+        question: this.form.get('question')?.value,
+        ans1: answers[0],
+        ans2: answers[1],
+        ans3: answers[2],
+        correct: answers[3],
+        unit: this.form.get('unit')?.value,
+        theme: this.form.get('theme')?.value,
+        resol: this.form.get('resolution')?.value,
+        img: null
+      }
 
+      this._service.updateExercise(exercise, this.data.exercise.id).subscribe((data: any) => {
+        if (data.v == true) {
+          /* Close the dialog */
+          this.dialogRef.close();
+
+          /* Reload the my_exercises component */
+          let currentUrl = this._router.url;
+          this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+              this._router.navigate([currentUrl]);
+          });
+          
+          this._snackBar.open('Exercício adicionado!', 'Fechar', { "duration": 2500 });
+        } else {
+          console.log(data);
+        }
+      });  
+    }
+  }
+
+  /* Upload the user's photo */
+  uploadPhoto() {
+    if (this.croppedImage != "") {
+      var photo;
+
+      if (this.imageChangedEvent == "") {
+        photo = this.data.exercise.img;
+      } else {
+        photo = this.imageChangedEvent.target.files[0].name;
+      }
+
+      var arr: string[] = photo.split('.');
+      var ext: string = arr[arr.length - 1];
+      var name: string = photo;
+
+      const file = new File([this.convertDataUrlToBlob(this.croppedImage)], name, {type: 'image/' + ext});
+      
+      const formData: FormData = new FormData();
+      formData.append('img', file, file.name);
+
+      this._service.uploadExercisePhoto(formData, this.data.exercise.id).subscribe((data:any)=>{
+        if (data.v) {
+          /* Realod the MyExercises Component */
+          let currentUrl = this._router.url;
+          this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+              this._router.navigate([currentUrl]);
+          });
+          this.dialogRef.close();
+
+          this._snackBar.open('Imagem Atualizada!', 'Fechar', { "duration": 2500 });
+        } else {
+          this._snackBar.open('Atualização de Imagem falhou!', 'Fechar', { "duration": 2500 });
+        }
+      });
+    }
+  }
+
+  /* Transform the base64 to a blob */
+  convertDataUrlToBlob(dataUrl:any): Blob {
+    const arr = dataUrl.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    
+    return new Blob([u8arr], {type: mime});
   }
 
   /* Set's the exercise info in the correct form controls */
