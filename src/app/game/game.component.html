@@ -10,7 +10,7 @@
     </mat-form-field>
 </div>
 <div>
-    <button mat-raised-button color="accent" (click)="createRoom()">Create room</button>
+    <button mat-raised-button color="accent" *ngIf="!room_flag" (click)="createRoom()">Create room</button>
 </div>
 <app-show-game id="showGame" *ngIf="room_flag" [socket]="socket" [room_id]="selected_room"></app-show-game>
 
