@@ -25,11 +25,11 @@ export class ShowGameComponent implements OnInit {
 
   ngOnInit(): void {
     this.socket.emit("client_get_question", this.room_id);
-    this.service.getExercises().subscribe((data: any) => {
-      data.forEach((ex: exercise) => {
-        this.all_exercises.push(ex);
-      });
-    });
+    // this.service.getExercises().subscribe((data: any) => {
+    //   data.forEach((ex: exercise) => {
+    //     this.all_exercises.push(ex);
+    //   });
+    // });
     console.log(this.all_exercises);
   }
 

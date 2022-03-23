@@ -44,7 +44,12 @@ export class GameComponent implements OnInit {
     this.socket.on("socket_id", (id : any) => {
       this.socket_id = id;
       this.socket.emit("nname",this.user_info?.first_name);
+    });
 
+    this.socket.on("loadRooms", (rooms : string[]) => {
+      console.log("LOAD ROOMS");
+      this.rooms = rooms;
+      console.log(rooms);
     });
     
   }
@@ -52,12 +57,14 @@ export class GameComponent implements OnInit {
   ngOnDestroy() {
     this.socket.disconnect();
   }
+
   createRoom(){
 
-    this.rooms.push("Room"+this.rooms.length);
+    // this.rooms.push("Room"+this.rooms.length);
     this.socket.emit("createRoom",this.rooms[this.rooms.length-1])
     //snackbar a dizer se criou com sucesso
   }
+  
   changeRoom(room_id:any) {    
     if(room_id == "None") {
       this.room_flag = false;
