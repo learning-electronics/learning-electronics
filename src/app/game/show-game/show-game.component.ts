@@ -13,10 +13,14 @@ export class ShowGameComponent implements OnInit {
   @Input() room_id! : string;
   @Input() socket : any;
 
+  DJANGO_SERVER = 'http://127.0.0.1:8000';
+  
   question : string = "";
   options : string[] = [];
   answer : string = "";
+  exercise_res : string = "";
   res : string = "";
+  image_url : string = "";
   show_answer : boolean = false;
   correct_answer : boolean = false;
   counter : number = 0;
@@ -25,11 +29,11 @@ export class ShowGameComponent implements OnInit {
 
   ngOnInit(): void {
     this.socket.emit("client_get_question", this.room_id);
-    // this.service.getExercises().subscribe((data: any) => {
-    //   data.forEach((ex: exercise) => {
-    //     this.all_exercises.push(ex);
-    //   });
-    // });
+    this.service.getExercises().subscribe((data: any) => {
+      data.forEach((ex: exercise) => {
+        this.all_exercises.push(ex);
+      });
+    });
     console.log(this.all_exercises);
   }
 
@@ -37,24 +41,65 @@ export class ShowGameComponent implements OnInit {
     this.socket.on("server_get_question", (data : any) => {
       if(data != null) {
         this.question = data['question'];
-        this.options = data['options'];
-        this.answer = data['answer'];
+        this.options = [];
+        this.options.push(data['ans1']);
+        this.options.push(data['ans2']);
+        this.options.push(data['ans3']);
+        this.options.push(data['correct']);
+        
+        this.answer = data['correct'];
+        
+        this.exercise_res = data['res'];
+        
+        if(data['img'] != null) {
+          this.image_url = this.DJANGO_SERVER + data['img'];
+        } else {
+          this.image_url = "";
+        }
+        console.log(this.image_url);
       }
     });
     
     this.socket.on("question_change_room", (data : any) => {
       if(data != null) {
         this.question = data['question'];
-        this.options = data['options'];
-        this.answer = data['answer'];
+        this.options = [];  
+        this.options.push(data['ans1']);
+        this.options.push(data['ans2']);
+        this.options.push(data['ans3']);
+        this.options.push(data['correct']);
+        
+        this.answer = data['correct'];
+        
+        this.exercise_res = data['res'];
+        
+        if(data['img'] != null) {
+          this.image_url = this.DJANGO_SERVER + data['img'];
+        } else {
+          this.image_url = "";
+        }
+        console.log(this.image_url);
       }
     });
     
     this.socket.on("server_get_question", (data : any) => {
       if(data != null) {
         this.question = data['question'];
-        this.options = data['options'];
-        this.answer = data['answer'];
+        this.options = [];    
+        this.options.push(data['ans1']);
+        this.options.push(data['ans2']);
+        this.options.push(data['ans3']);
+        this.options.push(data['correct']);
+        
+        this.answer = data['correct'];
+        
+        this.exercise_res = data['res'];
+        
+        if(data['img'] != null) {
+          this.image_url = this.DJANGO_SERVER + data['img'];
+        } else {
+          this.image_url = "";
+        }
       }
     });
 
@@ -74,7 +119,6 @@ export class ShowGameComponent implements OnInit {
     this.socket.on("game_started", (state : boolean, counter : number) => {
       this.started = state;
       this.counter = counter;
-      console.log("game started: " + this.started);
     });
 
   }
