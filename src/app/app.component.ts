@@ -31,11 +31,15 @@ export class AppComponent {
 
   checkTeacherStatus() {
     var token = localStorage.getItem('token');
-    
+
     if (token != null) {
       this._service.getAccount().subscribe((data: any) => {
         if (data.v == true) {
-          this.teacher = true;
+          if (data.info.role == "Teacher") {
+            this.teacher = true;
+          } else {
+            this.teacher = false;
+          }
         }
       });
     }
