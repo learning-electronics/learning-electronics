@@ -25,6 +25,7 @@ export class GameComponent implements OnInit {
   room_flag: boolean = false;
   socket_id: string = "";
   newRoomName: string = "";
+  owner : string = "None";
 
   constructor(private router : Router,private _service: SharedService, public dialog: MatDialog) {
     this._service.getAccount().subscribe((data: any) => {
@@ -54,7 +55,7 @@ export class GameComponent implements OnInit {
     });
 
     // receives the current list of rooms from the server
-    this.socket.on("loadRooms", (rooms : string[]) => {
+    this.socket.on("loadRooms", (rooms : string[], owner : string) => {
       this.rooms = rooms;
     });
     
@@ -73,7 +74,11 @@ export class GameComponent implements OnInit {
     });
     
     dialogRef.afterClosed().subscribe(result => {
-      this.socket.emit("createRoom", result);
+      console.log(result);
+      
+      if(result != null) {
+        this.socket.emit("createRoom", this.socket_id, result);
+      }
     });
     //snackbar a dizer se criou com sucesso
   }
