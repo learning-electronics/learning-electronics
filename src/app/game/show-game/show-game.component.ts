@@ -12,6 +12,8 @@ export class ShowGameComponent implements OnInit {
 
   @Input() room_id! : string;
   @Input() socket : any;
+  @Input() socket_id! : string;
+  @Input() owner! : string;
 
   DJANGO_SERVER = 'http://127.0.0.1:8000';
   
@@ -46,9 +48,9 @@ export class ShowGameComponent implements OnInit {
         this.options.push(data['ans2']);
         this.options.push(data['ans3']);
         this.options.push(data['correct']);
-        
+        this.shuffleArray(this.options); 
         this.answer = data['correct'];
-        
+
         this.exercise_res = data['res'];
         
         if(data['img'] != null) {
@@ -68,6 +70,7 @@ export class ShowGameComponent implements OnInit {
         this.options.push(data['ans2']);
         this.options.push(data['ans3']);
         this.options.push(data['correct']);
+        this.shuffleArray(this.options); 
         
         this.answer = data['correct'];
         
@@ -90,6 +93,7 @@ export class ShowGameComponent implements OnInit {
         this.options.push(data['ans2']);
         this.options.push(data['ans3']);
         this.options.push(data['correct']);
+        this.shuffleArray(this.options); 
         
         this.answer = data['correct'];
         
@@ -125,6 +129,15 @@ export class ShowGameComponent implements OnInit {
 
   startGame() {
     this.socket.emit("start_game", this.room_id);
+  }
+
+  shuffleArray(array : string[]) {
+    for(var i = array.length-1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i+1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
   }
 
 }
