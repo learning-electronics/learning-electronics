@@ -58,6 +58,10 @@ export class GameComponent implements OnInit {
     this.socket.on("loadRooms", (rooms : string[], owner : string) => {
       this.rooms = rooms;
     });
+
+    this.socket.on("room_already_exists", (roomName : string) => {
+      console.log("room " + roomName + " already exists!!!");
+    });
     
   }
 
@@ -66,7 +70,7 @@ export class GameComponent implements OnInit {
   }
 
   // when creating a room it opens a dialog to insert the values of the new room
-  createRoom(){
+  createRoom() {
     const dialogRef = this.dialog.open(CreateRoomComponent, {
       data: {
         name: "",
