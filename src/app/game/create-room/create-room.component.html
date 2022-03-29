@@ -1,5 +1,9 @@
-<mat-form-field class="example-form-field" appearance="fill">
-    <mat-label>New Room Name</mat-label>
-    <input matInput type="text" [(ngModel)]="data.name">
-    <button mat-icon-button (click)="sendNewRoomData()">Send</button>
-</mat-form-field>
+<form [formGroup]="form">
+    <mat-form-field class="example-form-field" appearance="fill">
+        <mat-label>New Room Name</mat-label>
+        <input matInput formControlName="roomInput" (input)="onRoomInput()" required>
+        <mat-error *ngIf="room?.hasError('required')">Crie uma sala</mat-error>
+        <mat-error *ngIf="room?.invalid && !room?.hasError('required')">Nome já usado</mat-error>
+        <button mat-icon-button (click)="sendNewRoomData()">Send</button>
+    </mat-form-field>
+</form>
