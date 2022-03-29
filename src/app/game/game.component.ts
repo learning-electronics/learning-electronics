@@ -59,10 +59,6 @@ export class GameComponent implements OnInit {
     this.socket.on("loadRooms", (rooms : string[], owner : string) => {
       this.rooms = rooms;
     });
-
-    this.socket.on("room_already_exists", (roomName : string) => {
-      console.log("room " + roomName + " already exists!!!");
-    });
     
   }
 
