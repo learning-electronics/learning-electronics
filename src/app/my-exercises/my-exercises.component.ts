@@ -81,7 +81,7 @@ export class MyExercisesComponent implements OnInit {
   addEx() {
     const dialogRef = this.add_edit_ex_dialog.open(AddExerciseComponent, {
       width: '50%',
-      height: '60%', 
+      height: '65%', 
       minWidth: '500px',
       data: {
         'ModalTitle': "Adicionar Exercício",
@@ -99,14 +99,24 @@ export class MyExercisesComponent implements OnInit {
     exercise_data.theme.forEach((theme: string) => {
       theme_list.push(this.all_themes.findIndex((t: theme) => t.name == theme) + 1);
     });
-    ex.theme = theme_list;
 
     const dialogRef = this.add_edit_ex_dialog.open(EditExerciseComponent, {
       data: {
         'ModalTitle': "Editar Exercício",
         'themes': this.all_themes,
         'units': this.all_units,
-        'exercise': ex
+        'exercise': {
+          'id': ex.id,
+          'question': ex.question,
+          'ans1': ex.ans1,
+          'ans2': ex.ans2,
+          'ans3': ex.ans3,
+          'correct': ex.correct,
+          'unit': ex.unit,
+          'resol': ex.resol,
+          'theme': theme_list,
+          'img': ex.img,
+        }
       }
     });
   }

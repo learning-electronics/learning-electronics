@@ -16,7 +16,7 @@
                 <div class="row my-3 mx-auto">
                     <mat-form-field class="mx-auto">
                         <mat-label>Respostas (R1; R2; R3; RCorreta)</mat-label>
-                        <input matInput formControlName="answers" (input)="onAnswerInput()"required>
+                        <input matInput formControlName="answers" (input)="onAnswerInput()" required>
                         <mat-error *ngIf="answer?.hasError('required')">Preencha as respostas da questão</mat-error>
                         <mat-error *ngIf="answer?.invalid && !answer?.hasError('required')">Formato errado</mat-error>
                     </mat-form-field>
@@ -54,7 +54,7 @@
             <div class="col my-3 mx-auto">
                 <div class="row mx-auto">
                     <image-cropper
-                    [ngStyle]="{ 'opacity': imgPath == '' ? '0' : '1' }"
+                    [ngStyle]="{ 'opacity': (imgPath == '') && (imageChangedEvent == '' && croppedImage == '') ? '0' : '1' }"
                     [imageURL]="imgPath"
                     [imageChangedEvent]="imageChangedEvent"
                     [maintainAspectRatio]="true"
@@ -65,11 +65,18 @@
                 </div>
         
                 <div class="row mt-3">
-                    <mat-form-field>
-                        <ngx-mat-file-input placeholder="Escolher Imagem" (change)="fileChangeEvent($event)"></ngx-mat-file-input>
-                        <mat-icon matSuffix>folder</mat-icon>
-                    </mat-form-field>
-                    <button mat-mini-fab class="mx-4" color="primary" (click)="uploadPhoto()"><mat-icon>upload</mat-icon></button>  
+                    <div class="col">
+                        <div class="row">
+                            <mat-form-field>
+                                <ngx-mat-file-input placeholder="Escolher Imagem" (change)="fileChangeEvent($event)"></ngx-mat-file-input>
+                                <mat-icon matSuffix>folder</mat-icon>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="row mx-auto">
+                            <button mat-raised-button color="primary" (click)="uploadPhoto()">Carregar Imagem <mat-icon>upload</mat-icon></button>  
+                        </div>
+                    </div>
                 </div>
             </div>
             

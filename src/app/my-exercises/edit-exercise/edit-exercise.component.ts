@@ -27,6 +27,11 @@ export class EditExerciseComponent implements OnInit {
     private _router: Router,
     private dialogRef: MatDialogRef<EditExerciseComponent>
     ) {
+    if (this.data.exercise.img == null) {
+      this.imgPath = "";
+    } else {
+      this.imgPath = this.DJANGO_SERVER + "/../.." + this.data.exercise.img;
+    }
   }
 
   ngOnInit(): void {
@@ -43,13 +48,7 @@ export class EditExerciseComponent implements OnInit {
       unit: new FormControl({ value: this.data.exercise.unit, disabled: this.disabled }, [Validators.required]),
       resolution: new FormControl({ value: this.data.exercise.resol, disabled: this.disabled }),
       image: new FormControl(""),   
-    }, {validator: answerValidator});
-
-    if (this.data.exercise.img == null) {
-      this.imgPath = "";
-    } else {
-      this.imgPath = this.DJANGO_SERVER + "/../.." + this.data.exercise.img;
-    }
+    }, {validator: answerValidator}); 
   }
 
   /* Shorthands for form controls (used from within template) */
@@ -65,7 +64,7 @@ export class EditExerciseComponent implements OnInit {
   }
 
   fileChangeEvent(event: any): void {
-    this.imageChangedEvent = event;
+    this.imageChangedEvent = event; 
   }
 
   imageCropped(event: ImageCroppedEvent) {
@@ -91,7 +90,7 @@ export class EditExerciseComponent implements OnInit {
     });
   }
 
-  /* */
+  /* Submit the updated exercise info */
   submit() {
     if (this.form.valid) {
       var answers: string[] = this.form.get('answers')?.value.split(";");

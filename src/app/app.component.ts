@@ -79,9 +79,7 @@ export class AppComponent {
   public onRouterOutletActivate(event : any) {
     if (event.constructor.name == "ProfileComponent" || event.constructor.name == "RegisterComponent") {
       this.currentComponent = "profile";
-    }
-
-    if (event.constructor.name == "HomeComponent") {
+    } else {
       this.currentComponent = "home";
     }
   }
