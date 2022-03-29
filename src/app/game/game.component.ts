@@ -6,6 +6,7 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CreateRoomComponent } from './create-room/create-room.component';
 
 export interface DialogData {
+  rooms: any;
   name: "";
 }
 
@@ -73,7 +74,7 @@ export class GameComponent implements OnInit {
   createRoom() {
     const dialogRef = this.dialog.open(CreateRoomComponent, {
       data: {
-        name: "",
+        rooms: this.rooms
       },
     });
     
@@ -97,7 +98,4 @@ export class GameComponent implements OnInit {
     }
     this.socket.emit("change_room", this.selected_room);
   }
-
 }
-
-

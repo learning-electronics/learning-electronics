@@ -16,7 +16,7 @@ export class CreateRoomComponent implements OnInit {
   ngOnInit(): void {
     this.form = this._formBuilder.group({
       roomInput: new FormControl("", [Validators.required]),
-    }, {validator: roomValidator}); 
+    }, {validator: roomValidator(this.data)}); 
   }
 
   /* Shorthands for form controls (used from within template) */
@@ -39,13 +39,15 @@ export class CreateRoomComponent implements OnInit {
 
 }
 
-export const roomValidator: ValidatorFn = (formGroup: AbstractControl ): ValidationErrors | null  => {
-  /* Check if the room name already exists */
-  var roomName: string = formGroup.get('roomInput')?.value;
+export const roomValidator = (data: DialogData): ValidatorFn => {
+  return (formGroup: AbstractControl ): ValidationErrors | null  => {
+    /* Check if the room name already exists */
+    var roomName: string = formGroup.get('roomInput')?.value;
 
-  if (true) {
-    return { nameWrong: true };
+    if (data.rooms.includes(roomName)) {
+      return { nameWrong: true };
+    }
+
+    return null;
   }
-
-  return null;
 }
