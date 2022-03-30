@@ -18,12 +18,12 @@
                     <button mat-raised-button color="primary" (click)="addEx()">Adicionar Exercício</button>
                 </div>
             </mat-toolbar>
-            
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+             <table  mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)"  class="mat-elevation-z8">
                 <!-- Checkbox Column -->
+
                 <ng-container matColumnDef="select">
-                    <th mat-header-cell *matHeaderCellDef>
-                        <mat-checkbox (change)="$event ? masterToggle() : null"
+                    <th mat-header-cell *matHeaderCellDef >
+                        <mat-checkbox (change)="$event ? masterToggle() : null" 
                                         [checked]="selection.hasValue() && isAllSelected()"
                                         [indeterminate]="selection.hasValue() && !isAllSelected()">
                         </mat-checkbox>
@@ -37,23 +37,23 @@
                 </ng-container>
 
                 <ng-container matColumnDef="question">
-                    <th mat-header-cell *matHeaderCellDef>Pergunta</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name" >Pergunta</th>
                     <td (click)="editEx(element)" mat-cell *matCellDef="let element"> {{element.question}} </td>
                 </ng-container>
               
                 <ng-container matColumnDef="theme">
-                    <th mat-header-cell *matHeaderCellDef>Temas</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Temas</th>
                     <td (click)="editEx(element)" mat-cell *matCellDef="let element"> {{element.theme}} </td>
                 </ng-container>
               
                 <ng-container matColumnDef="classes">
-                    <th mat-header-cell *matHeaderCellDef>Visibilidade</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header >Visibilidade</th>
                     <td (click)="editEx(element)" mat-cell *matCellDef="let element"> {{element.classes}} </td>
                 </ng-container>
             
               
                 <ng-container matColumnDef="date">
-                    <th mat-header-cell *matHeaderCellDef>Data</th>
+                    <th  mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name" >Data</th>
                     <td (click)="editEx(element)" mat-cell *matCellDef="let element"> {{element.date}} </td>
                 </ng-container>
               

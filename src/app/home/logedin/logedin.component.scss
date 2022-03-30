@@ -1,0 +1,41 @@
+.example-card {
+    max-width: 400px;
+  }
+
+  .example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }
+
+  span {
+    display: table;
+    margin: 0 auto;
+}
+
+#welcome{
+    background: #ffffff;
+    height: auto;
+    font-size: large;
+    padding: 100px 100px
+    
+}
+
+#welcome_text{
+    font-size: 200%;
+}
+
+.mat-grid-list{
+    background: #ffffff;
+}
+mat-grid-tile {
+    background: lightblue;
+  }
+
+mat-icon{
+    font-size: 300%;
+}
+
+.img:hover{
+        box-shadow: -1px 10px 29px 0px rgba(0,0,0,0.8);
+}
+

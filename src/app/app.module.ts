@@ -60,6 +60,9 @@ import { ShowGameComponent } from './game/show-game/show-game.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { DeleteConfirmationComponent } from './my-exercises/delete-confirmation/delete-confirmation.component';
 import { CreateRoomComponent } from './game/create-room/create-room.component';
+import {MatSortModule} from '@angular/material/sort';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatExpansionModule} from '@angular/material/expansion'; 
 
 @NgModule({
   declarations: [
@@ -96,6 +99,7 @@ import { CreateRoomComponent } from './game/create-room/create-room.component';
     EditExerciseComponent,
     DeleteConfirmationComponent,
     CreateRoomComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -125,6 +129,9 @@ import { CreateRoomComponent } from './game/create-room/create-room.component';
     MatSelectModule,
     MatRadioModule,
     MatTabsModule,
+    MatSortModule,
+    MatGridListModule,
+    MatExpansionModule,
     NgCircleProgressModule.forRoot({
       radius: 90,
       outerStrokeWidth: 12,

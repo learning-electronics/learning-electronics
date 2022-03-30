@@ -1,19 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,AfterViewInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { exercise, SharedService, theme } from '../shared.service';
 import { AddExerciseComponent } from './add-exercise/add-exercise.component';
 import { EditExerciseComponent } from './edit-exercise/edit-exercise.component';
 import { MatTableDataSource } from '@angular/material/table';
 import * as _moment from 'moment';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { SelectionModel } from '@angular/cdk/collections';
 import { DeleteConfirmationComponent } from './delete-confirmation/delete-confirmation.component';
+import {MatSort, Sort} from '@angular/material/sort';
+
+
+
 const moment = _moment;
 
 export const DATE_FORMAT = {
   parse: {
-      dateInput: ['DD-MM-YYYY', 'DD/MM/YYYY']
+      dateInput: ['DD-MM-YYYY', 'DD/MM/YYYY'] 
   },
   display: {
       dateInput: 'DD-MM-YYYY',
@@ -33,7 +37,7 @@ export const DATE_FORMAT = {
     { provide: MAT_DATE_FORMATS, useValue: DATE_FORMAT },
   ]
 })
-export class MyExercisesComponent implements OnInit {
+export class MyExercisesComponent implements OnInit{
   displayedColumns: string[] = ['select', 'question', 'theme', 'classes', 'date'];
   dataSource!: MatTableDataSource<any>;
   selection = new SelectionModel<any>(true, []);
@@ -41,7 +45,11 @@ export class MyExercisesComponent implements OnInit {
   all_themes: theme[] = [];
   all_units: string[] = [];
   all_exercises: exercise[] = [];
+  sortedData: exercise[];
 
+
+
+  
   constructor(public add_edit_ex_dialog: MatDialog, private _service: SharedService) {
     this._service.getThemes().subscribe((data: any) => {
       this.all_themes = data as theme[];
@@ -51,10 +59,47 @@ export class MyExercisesComponent implements OnInit {
     this._service.getUnits().subscribe((data: any) => {
       this.all_units = data;
     });
+
   }
+
 
   ngOnInit(): void {  
   }
+
+  sortData(sort: Sort) {
+    const data = this.all_exercises.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
+
+    this.sortedData = data.sort((a, b) => {
+      
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'Pergunta':
+          return this.compare(a.question, b.question, isAsc);
+        case 'Temas':
+          return this.compare(a.ans1, b.ans1, isAsc);
+        case 'Visibilidade':
+          return this.compare(a.ans1, b.ans1, isAsc);
+        case 'Data':
+          return this.compare(a.date, b.date, isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
+
+  compare(a: number | string, b: number | string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+
+
+
+  
+
+  
 
   /* Refresh the table content */
   refreshTable() {
