@@ -1,16 +1,23 @@
-<mat-card id="main-mat-card">
+<mat-card id="main-mat-card" style="background-color:transparent;height: 40%;">
     <h2>{{room_id}}</h2>
     <div *ngIf="!show_answer">
         <h1>Time left: {{counter}}</h1>
         <h1>{{question}}</h1>
         <img mat-card-image id="image" *ngIf="image_url != ''" [src]="image_url" alt="Exercise Image">
         <mat-radio-group aria-label="Select an option" [(ngModel)]="res">
-            <mat-radio-button *ngFor="let option of options" [value]="option">
+            <div *ngFor="let option of options" >
+                <button mat-raised-button color="primary" style="font-size: large;width: 100%;border-style:solid; color:white;border-color: black;" [value]="option">
                 {{option}}
-            </mat-radio-button>
+                </button>
+                <br>
+                <br>
+            </div>
+            
         </mat-radio-group>
     </div>
-    <button mat-raised-button color="accent" *ngIf="!started" (click)="startGame()">Start</button>
+    <div style="position: relative;">
+        <mat-icon *ngIf="!started" color="primary" id="play" (click)="startGame()">play_circle</mat-icon>
+    </div>
     <mat-card *ngIf="show_answer && !correct_answer">Correct answer: {{answer}}</mat-card>
     <mat-card *ngIf="correct_answer && show_answer">Correct!</mat-card>
     <mat-card *ngIf="!correct_answer && show_answer">Wrong!</mat-card>
