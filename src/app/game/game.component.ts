@@ -6,7 +6,9 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CreateRoomComponent } from './create-room/create-room.component';
 
 export interface DialogData {
+  rooms: any;
   name: "";
+  numExercises: number; 
 }
 
 @Component({
@@ -55,8 +57,10 @@ export class GameComponent implements OnInit {
     });
 
     // receives the current list of rooms from the server
-    this.socket.on("loadRooms", (rooms : string[], owner : string) => {
+    this.socket.on("loadRooms", (rooms : string[]) => {
       this.rooms = rooms;
+      console.log(this.rooms);
+      
     });
     
   }
@@ -66,15 +70,14 @@ export class GameComponent implements OnInit {
   }
 
   // when creating a room it opens a dialog to insert the values of the new room
-  createRoom(){
+  createRoom() {
     const dialogRef = this.dialog.open(CreateRoomComponent, {
       data: {
-        name: "",
+        rooms: this.rooms
       },
     });
     
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       
       if(result != null) {
         this.socket.emit("createRoom", this.socket_id, result);
@@ -93,7 +96,4 @@ export class GameComponent implements OnInit {
     }
     this.socket.emit("change_room", this.selected_room);
   }
-
 }
-
-

@@ -63,6 +63,10 @@ import { CreateRoomComponent } from './game/create-room/create-room.component';
 import {MatSortModule} from '@angular/material/sort';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatExpansionModule} from '@angular/material/expansion'; 
+import { MatTreeModule } from '@angular/material/tree';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { PopupComponent } from './popup/popup.component';
+import { ViewExerciseComponent } from './popup/view-exercise/view-exercise.component';
 
 @NgModule({
   declarations: [
@@ -100,6 +104,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     DeleteConfirmationComponent,
     CreateRoomComponent,
     
+    PopupComponent,
+    ViewExerciseComponent,
   ],
   imports: [
     BrowserModule,
@@ -132,6 +138,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatSortModule,
     MatGridListModule,
     MatExpansionModule,
+    MatTreeModule,
+    MatButtonToggleModule,
     NgCircleProgressModule.forRoot({
       radius: 90,
       outerStrokeWidth: 12,
