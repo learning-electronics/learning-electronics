@@ -4,6 +4,10 @@
         <input matInput formControlName="roomInput" (input)="onRoomInput()" required>
         <mat-error *ngIf="room?.hasError('required')">Crie uma sala</mat-error>
         <mat-error *ngIf="room?.invalid && !room?.hasError('required')">Nome já usado</mat-error>
-        <button mat-icon-button (click)="sendNewRoomData()">Send</button>
     </mat-form-field>
+    <mat-form-field>
+        <mat-label>Number of Exercises</mat-label>
+        <input matInput formControlName="numExercises" required>
+    </mat-form-field>
+    <button mat-icon-button (click)="sendNewRoomData()">Send</button>
 </form>

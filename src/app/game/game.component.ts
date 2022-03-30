@@ -8,6 +8,7 @@ import { CreateRoomComponent } from './create-room/create-room.component';
 export interface DialogData {
   rooms: any;
   name: "";
+  numExercises: number; 
 }
 
 @Component({
@@ -56,8 +57,10 @@ export class GameComponent implements OnInit {
     });
 
     // receives the current list of rooms from the server
-    this.socket.on("loadRooms", (rooms : string[], owner : string) => {
+    this.socket.on("loadRooms", (rooms : string[]) => {
       this.rooms = rooms;
+      console.log(this.rooms);
+      
     });
     
   }
@@ -75,7 +78,6 @@ export class GameComponent implements OnInit {
     });
     
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       
       if(result != null) {
         this.socket.emit("createRoom", this.socket_id, result);

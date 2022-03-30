@@ -16,6 +16,7 @@ export class CreateRoomComponent implements OnInit {
   ngOnInit(): void {
     this.form = this._formBuilder.group({
       roomInput: new FormControl("", [Validators.required]),
+      numExercises: new FormControl("")
     }, {validator: roomValidator(this.data)}); 
   }
 
@@ -31,9 +32,9 @@ export class CreateRoomComponent implements OnInit {
   }
 
   // sends dialog data to game component(name of the room to be created)
-  sendNewRoomData() {
+  sendNewRoomData() {    
     if (this.form.valid) {
-      this.dialogRef.close({name: this.form.get('roomInput')?.value});
+      this.dialogRef.close({name: this.form.get('roomInput')?.value, numExercises: this.form.get('numExercises')?.value});
     }
   }
 
