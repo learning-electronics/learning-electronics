@@ -1,4 +1,4 @@
-import { Component, OnInit,AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { exercise, SharedService, theme } from '../shared.service';
 import { AddExerciseComponent } from './add-exercise/add-exercise.component';
@@ -9,7 +9,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { SelectionModel } from '@angular/cdk/collections';
 import { DeleteConfirmationComponent } from './delete-confirmation/delete-confirmation.component';
-import {MatSort, Sort} from '@angular/material/sort';
+import { MatSort, Sort} from '@angular/material/sort';
 
 
 
@@ -39,17 +39,15 @@ export const DATE_FORMAT = {
 })
 export class MyExercisesComponent implements OnInit{
   displayedColumns: string[] = ['select', 'question', 'theme', 'classes', 'date'];
-  dataSource!: MatTableDataSource<any>;
+  dataSource = new MatTableDataSource<any>();
   selection = new SelectionModel<any>(true, []);
 
   all_themes: theme[] = [];
   all_units: string[] = [];
   all_exercises: exercise[] = [];
-  sortedData: exercise[];
+  sortedData: exercise[] = [];
+  @ViewChild(MatSort) sort: MatSort;
 
-
-
-  
   constructor(public add_edit_ex_dialog: MatDialog, private _service: SharedService) {
     this._service.getThemes().subscribe((data: any) => {
       this.all_themes = data as theme[];
@@ -59,11 +57,13 @@ export class MyExercisesComponent implements OnInit{
     this._service.getUnits().subscribe((data: any) => {
       this.all_units = data;
     });
-
   }
 
-
   ngOnInit(): void {  
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
   }
 
   sortData(sort: Sort) {
@@ -73,33 +73,35 @@ export class MyExercisesComponent implements OnInit{
       return;
     }
 
-    this.sortedData = data.sort((a, b) => {
-      
+    this.sortedData = data.sort((a, b) => {  
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
-        case 'Pergunta':
+        case 'question':
           return this.compare(a.question, b.question, isAsc);
-        case 'Temas':
+        case 'theme':
           return this.compare(a.ans1, b.ans1, isAsc);
-        case 'Visibilidade':
+        case 'classes':
           return this.compare(a.ans1, b.ans1, isAsc);
-        case 'Data':
-          return this.compare(a.date, b.date, isAsc);
+        case 'date':
+          return this.compareDate(a.date, b.date, isAsc);
         default:
           return 0;
       }
     });
+
+    this.dataSource = new MatTableDataSource(this.sortedData);
   }
 
   compare(a: number | string, b: number | string, isAsc: boolean) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 
+  compareDate(a: string, b: string, isAsc: boolean) {
+    var d1 = moment(a, 'DD-MM-YYYY').utc();
+    var d2 = moment(b, 'DD-MM-YYYY').utc();
 
-
-  
-
-  
+    return (d1.isBefore(d2) ? -1 : 1) * (isAsc ? 1 : -1); 
+  }
 
   /* Refresh the table content */
   refreshTable() {
@@ -119,6 +121,7 @@ export class MyExercisesComponent implements OnInit{
       });
       
       this.dataSource = new MatTableDataSource(this.all_exercises);
+      this.dataSource.sort = this.sort;
     });
   }
 
