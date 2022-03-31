@@ -4,16 +4,16 @@
         <h1>Time left: {{counter}}</h1>
         <h1>{{question}}</h1>
         <img mat-card-image id="image" *ngIf="image_url != ''" [src]="image_url" alt="Exercise Image">
-        <mat-radio-group aria-label="Select an option" [(ngModel)]="res">
+        <div aria-label="Select an option" >
             <div *ngFor="let option of options" >
-                <button mat-raised-button color="primary" style="font-size: large;width: 100%;border-style:solid; color:white;border-color: black;" [value]="option">
+                <button id="options" mat-raised-button color="primary" [value]="option" (click)="getOption(option)">
                 {{option}}
                 </button>
                 <br>
                 <br>
             </div>
             
-        </mat-radio-group>
+        </div>
     </div>
     <div style="position: relative;">
         <mat-icon *ngIf="!started" color="primary" id="play" (click)="startGame()">play_circle_outline</mat-icon>

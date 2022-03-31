@@ -49,7 +49,7 @@ export class ShowGameComponent implements OnInit {
         this.options.push(data['ans3']);
         this.options.push(data['correct']);
         this.shuffleArray(this.options); 
-        this.answer = data['correct'];
+        this.answer = data['correct'];        
 
         this.exercise_res = data['res'];
         
@@ -97,8 +97,7 @@ export class ShowGameComponent implements OnInit {
         
         this.answer = data['correct'];
         
-        this.exercise_res = data['res'];
-        
+        this.exercise_res = data['res'];        
         if(data['img'] != null) {
           this.image_url = this.DJANGO_SERVER + data['img'];
         } else {
@@ -108,6 +107,8 @@ export class ShowGameComponent implements OnInit {
     });
 
     this.socket.on("show_result", (flag : boolean) => {
+      console.log(this.answer);
+      console.log(this.res);
       this.show_answer = flag;
       if(this.res == this.answer) {
         this.correct_answer = true;
@@ -139,5 +140,8 @@ export class ShowGameComponent implements OnInit {
       array[j] = temp;
     }
   }
-
+  getOption(option : string) {
+    this.res = option;
+    //this.socket.emit("client_get_result", this.room_id, this.res);
+  }
 }
