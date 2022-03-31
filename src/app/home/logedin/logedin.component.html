@@ -1,42 +1,65 @@
-<div id="welcome" class="text-center col-12">
-    <h2 id="welcome_text">Bem vindo ao</h2>
-    <a href="/"><img src="../../assets/img/le.png" style="max-height:100px" class="img-fluid"></a>
-    <p></p>
-    <p id="welcome_text" class="text-kerning text-bold">Learning eletronics</p>
-    <p>Queres Saber mais? Consulta o nosso FAQ</p>
-    <button mat-raised-button>FAQ</button>
-</div>
-                            
-
-<div class="row d-flex justify-content-center">
-    <div class="col"></div>
-    <mat-grid-list cols="2" rowHeight="2:1">
-
-        <!-- GRID ONE LEFT->RIGHT TOP->BOTTOM -->
-        <mat-grid-tile>
-            <div class="view overlay zoom">
-                <img src="../../assets/img/Frame1.png" class="img-fluid " alt="smaple image">
-            </div>
-        </mat-grid-tile>
+<div class="col justify-content-center">      
+    <div class="row mx-auto mt-4" style="max-width: fit-content; max-height: fit-content;">
+        <mat-card>
+            <mat-card-content>
+                <div id="welcome" class="text-center col-12">
+                    <h2 id="welcome_text">Bem vindo ao</h2>
+                    <a href="/"><img src="../../assets/img/le.png" style="max-height:100px" class="img-fluid"></a>
+                    <p></p>
+                    <p id="welcome_text" class="text-kerning text-bold">Learning eletronics</p>
+                    <p>Queres Saber mais? Consulta o nosso FAQ</p>
+                    <button mat-raised-button>FAQ</button>
+                </div>
+            </mat-card-content>
+        </mat-card>                 
+    </div>
+    <div class="row">
+        <div class="row d-flex justify-content-center">
+            <div class="col"></div>
+            <mat-grid-list cols="2" rowHeight="2:1">
         
+                <!-- GRID ONE LEFT->RIGHT TOP->BOTTOM -->
+                <!-- <mat-grid-tile>
+                    <mat-card class="mat-elevation-z8">
+                        <mat-card-content align="center">
+                            <div class="col">
+                                <div class="row">
+                                    <h2 style="color: white; text-align: center;">Biblioteca</h2>
+                                </div>
         
-        <mat-grid-tile>
-            <div class="view overlay zoom">
-                <img src="../../assets/img/Frame2.png" class="img-fluid " alt="smaple image">
-            </div>
-        </mat-grid-tile>
-        <mat-grid-tile>
-            <div class="view overlay zoom">
-                <img src="../../assets/img/Frame3.png" class="img-fluid " alt="smaple image">
-            </div>
-        </mat-grid-tile>
-        <mat-grid-tile>
-            <div class="view overlay zoom">
-                <img src="../../assets/img/Frame4.png" class="img-fluid " alt="smaple image">
-            </div>
-        </mat-grid-tile>
-      </mat-grid-list>
-      
-    
-    <div class="col"></div>
+                                <div class="row" style="justify-content: center; align-items:center; ">
+                                    <mat-icon>library_books</mat-icon>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </mat-grid-tile> -->
+        
+                <mat-grid-tile>
+                    <div class="view overlay zoom">
+                        <img src="../../assets/img/Frame1.png" class="img-fluid " alt="sample image">
+                    </div>
+                </mat-grid-tile>
+                
+                <mat-grid-tile>
+                    <div class="view overlay zoom">
+                        <img src="../../assets/img/Frame2.png" class="img-fluid " alt="sample image">
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <div class="view overlay zoom">
+                        <img src="../../assets/img/Frame3.png" class="img-fluid " alt="sample image">
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <div class="view overlay zoom">
+                        <img src="../../assets/img/Frame4.png" class="img-fluid " alt="sample image">
+                    </div>
+                </mat-grid-tile>
+              </mat-grid-list>
+              
+            
+            <div class="col"></div>
+        </div>
+    </div>
 </div>

@@ -110,7 +110,7 @@ export class MyExercisesComponent implements OnInit{
         // Changing theme ID array to theme name array
         var theme_names: string[] = [];
         ex.theme.forEach((id: any) => {
-          theme_names.push(this.all_themes[id - 1].name);
+          theme_names.push(this.all_themes[id - 4 - 1].name);
         });  
 
         ex.theme = theme_names;
