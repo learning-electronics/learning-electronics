@@ -12,13 +12,15 @@
             </div>
             
             <div class="row mt-3">
-                <mat-form-field appearance="fill">
-                    <mat-label>Send message</mat-label>
-                    <input  matInput type="text" [(ngModel)]="msg" (keyup.enter)="sendMessage()">
-                    <button *ngIf="msg" matSuffix mat-icon-button aria-label="Clear" (click)="sendMessage()">
-                        <mat-icon>send</mat-icon>
-                    </button>
-                </mat-form-field>
+                <form [formGroup]="form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Send message</mat-label>
+                        <input  matInput type="text" formControlName="msg" (keyup.enter)="sendMessage()">
+                        <button *ngIf="form.get('msg')?.value" matSuffix mat-icon-button aria-label="Clear" (click)="sendMessage()">
+                            <mat-icon>send</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </form>
             </div>
         </div>
     </mat-card-content>

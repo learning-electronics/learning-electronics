@@ -1,21 +1,43 @@
 <mat-card>
-    <h2>{{room_id}}</h2>
-    <div *ngIf="!show_answer">
-        <h1>Time left: {{counter}}</h1>
-        <h1>{{question}}</h1>
-        <img id="image" *ngIf="image_url != ''" [src]="image_url" alt="Exercise Image">
-        <div aria-label="Select an option" >
-            <div *ngFor="let option of options" >
-                <button id="options" mat-raised-button color="primary" [value]="option" (click)="getOption(option)">
-                {{option}}
-                </button>
-                <br>
-                <br>
-            </div>       
+    <div class="col my-auto mx-auto">
+        <div class="row">
+            <h2>{{room_id}}</h2>
         </div>
-    </div>
-    <div style="position: relative;">
-        <mat-icon *ngIf="!started" color="primary" id="play" (click)="startGame()">play_circle_outline</mat-icon>
+
+        <div class="row" *ngIf="!show_answer">
+            <div class="col">
+                <div class="row">
+                    <h1>Time left: {{counter}}</h1>
+                </div>
+
+                <div class="row">
+                    <h1>{{question}}</h1>
+                </div>
+
+                <div class="row">
+                    <img id="image" *ngIf="image_url != ''" [src]="image_url" alt="Exercise Image">
+                </div>
+
+                <div class="row">
+                    <div aria-label="Select an option" >
+                        <div *ngFor="let option of options" >
+                            <button id="options" mat-raised-button color="primary" [value]="option" (click)="getOption(option)">
+                            {{option}}
+                            </button>
+                            <br>
+                            <br>
+                        </div>       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+
+            <div class="col-2">
+                <mat-icon *ngIf="!started" id="play" color="primary" (click)="startGame()">play_circle_outline</mat-icon>
+            </div>
+        </div>
     </div>
     <mat-card *ngIf="show_answer && !correct_answer">Correct answer: {{answer}}</mat-card>
     <mat-card *ngIf="correct_answer && show_answer">Correct!</mat-card>

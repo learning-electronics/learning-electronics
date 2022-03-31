@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 // import { Location } from '@angular/common';
 
 export interface chat_data {
@@ -12,11 +13,14 @@ export interface chat_data {
   styleUrls: ['./room.component.scss']
 })
 export class RoomComponent implements OnInit {
+  form: FormGroup = new FormGroup({
+    msg: new FormControl(''),
+  });
 
   constructor() { }
 
   // state : any;
-  msg: string = "";
+  //msg: string = "";
   chat!: chat_data[];
 
   @Input() socket_id!: string;
@@ -36,6 +40,8 @@ export class RoomComponent implements OnInit {
 
   // send message to the server
   sendMessage() {
-    this.socket.emit("send_message", this.msg, this.room_id);
+    console.log(this.form.get('msg')?.value);
+    this.socket.emit("send_message", this.form.get('msg')?.value, this.room_id);
+    this.form.reset();
   }
 }

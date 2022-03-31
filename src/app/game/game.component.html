@@ -1,6 +1,6 @@
 <div class="row d-flex justify-content-center w-100 h-100">
     <div class="col">
-        <div class="row-2">
+        <div class="row-2 mt-3 ml-5">
             <mat-form-field appearance="fill">
                 <mat-label>Select your room</mat-label>
                 <mat-select (selectionChange)="changeRoom($event.value)">
@@ -11,7 +11,7 @@
             </mat-form-field>
         </div>
 
-        <div class="row-1">
+        <div class="row-1 ml-5">
             <button mat-raised-button color="accent" *ngIf="!room_flag" (click)="createRoom()">Create room</button>
         </div>
         
