@@ -1,9 +1,9 @@
-<mat-card id="main-mat-card">
+<mat-card>
     <h2>{{room_id}}</h2>
     <div *ngIf="!show_answer">
         <h1>Time left: {{counter}}</h1>
         <h1>{{question}}</h1>
-        <img mat-card-image id="image" *ngIf="image_url != ''" [src]="image_url" alt="Exercise Image">
+        <img id="image" *ngIf="image_url != ''" [src]="image_url" alt="Exercise Image">
         <div aria-label="Select an option" >
             <div *ngFor="let option of options" >
                 <button id="options" mat-raised-button color="primary" [value]="option" (click)="getOption(option)">
@@ -11,8 +11,7 @@
                 </button>
                 <br>
                 <br>
-            </div>
-            
+            </div>       
         </div>
     </div>
     <div style="position: relative;">

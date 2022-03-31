@@ -1,18 +1,28 @@
-<div>
-    <mat-form-field appearance="fill">
-        <mat-label>Select your room</mat-label>
-        <mat-select (selectionChange)="changeRoom($event.value)">
-            <mat-option *ngFor="let room of rooms" [value]="room" routerLink="/game" [state]="{ id: 'estadooo' }">
-                {{room}}
-            </mat-option>
-        </mat-select>
-    
-    </mat-form-field>
-</div>
-<div>
-    <button mat-raised-button color="accent" *ngIf="!room_flag" (click)="createRoom()">Create room</button>
-</div>
+<div class="row d-flex justify-content-center w-100 h-100">
+    <div class="col">
+        <div class="row-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Select your room</mat-label>
+                <mat-select (selectionChange)="changeRoom($event.value)">
+                    <mat-option *ngFor="let room of rooms" [value]="room" routerLink="/game" [state]="{ id: 'estadooo' }">
+                        {{room}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
 
-<app-show-game id="showGame" *ngIf="room_flag" [socket]="socket" [socket_id]="socket_id" [owner]="owner" [room_id]="selected_room" ></app-show-game>
+        <div class="row-1">
+            <button mat-raised-button color="accent" *ngIf="!room_flag" (click)="createRoom()">Create room</button>
+        </div>
+        
+        <div class="row mx-auto">
+            <div class="col ml-5">
+                <app-show-game id="showGame" *ngIf="room_flag" [socket]="socket" [socket_id]="socket_id" [owner]="owner" [room_id]="selected_room" ></app-show-game>
+            </div>
 
-<app-room id="chat" *ngIf="room_flag" [socket_id]="socket_id" [socket]="socket" [room_id]="selected_room"></app-room>
+            <div class="col-3">
+                <app-room id="chat" *ngIf="room_flag" [socket_id]="socket_id" [socket]="socket" [room_id]="selected_room"></app-room>
+            </div>
+        </div>
+    </div>
+</div>
