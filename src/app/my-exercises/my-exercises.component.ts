@@ -103,6 +103,11 @@ export class MyExercisesComponent implements OnInit{
     return (d1.isBefore(d2) ? -1 : 1) * (isAsc ? 1 : -1); 
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   /* Refresh the table content */
   refreshTable() {
     this._service.getMyExercises().subscribe((data: any) => {
@@ -110,7 +115,7 @@ export class MyExercisesComponent implements OnInit{
         // Changing theme ID array to theme name array
         var theme_names: string[] = [];
         ex.theme.forEach((id: any) => {
-          theme_names.push(this.all_themes[id - 4 - 1].name);
+          theme_names.push(this.all_themes[id - 1].name);
         });  
 
         ex.theme = theme_names;

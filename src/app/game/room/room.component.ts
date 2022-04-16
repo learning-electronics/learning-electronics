@@ -40,7 +40,6 @@ export class RoomComponent implements OnInit {
 
   // send message to the server
   sendMessage() {
-    console.log(this.form.get('msg')?.value);
     this.socket.emit("send_message", this.form.get('msg')?.value, this.room_id);
     this.form.reset();
   }

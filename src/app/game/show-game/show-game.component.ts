@@ -28,6 +28,8 @@ export class ShowGameComponent implements OnInit {
   counter : number = 0;
   all_exercises : exercise[] = [];
   started : boolean = false;
+  game_over : boolean = false;
+  toggle : boolean = false;
 
   ngOnInit(): void {
     this.socket.emit("client_get_question", this.room_id);
@@ -126,6 +128,10 @@ export class ShowGameComponent implements OnInit {
       this.counter = counter;
     });
 
+    this.socket.on("game_over", () => {
+      this.game_over = true;
+    });
+
   }
 
   startGame() {
@@ -142,6 +148,7 @@ export class ShowGameComponent implements OnInit {
   }
   getOption(option : string) {
     this.res = option;
+    this.toggle = !this.toggle;
     //this.socket.emit("client_get_result", this.room_id, this.res);
   }
 }
