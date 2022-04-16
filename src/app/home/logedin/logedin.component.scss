@@ -1,5 +1,6 @@
 .example-card {
     max-width: 400px;
+    background: #3F51B5;
 }
 
 span {
@@ -39,4 +40,38 @@ mat-icon {
 
 mat-card-content {
     justify-content: center;
+}
+
+mat-card-title{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    color: #FFFFFF;
+}
+
+.example-card{
+
+    width: 300px;
+    height: 300px;
+
+}
+.content{
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 60px;
+    
+    margin: 0 auto;
+    width: 40%;
+    padding-top: 100px;
+    vertical-align: middle;
+    
+
+
+    color: #FFFFFF;
+    
+}
+
+.contenttitle{
+    text-align: center;
 }

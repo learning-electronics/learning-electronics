@@ -9,6 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LogedinComponent implements OnInit {
 
+  isActive1 = false;
+  isActive2 = false;
+  isActive3 = false;
+  isActive4 = false;
+  
   constructor() { }
 
   ngOnInit(): void {

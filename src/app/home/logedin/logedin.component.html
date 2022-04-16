@@ -13,48 +13,56 @@
             </mat-card-content>
         </mat-card>                 
     </div>
+
+
     <div class="row">
         <div class="row d-flex justify-content-center">
             <div class="col"></div>
+
             <mat-grid-list cols="2" rowHeight="2:1">
-        
-                <!-- GRID ONE LEFT->RIGHT TOP->BOTTOM -->
-                <!-- <mat-grid-tile>
-                    <mat-card class="mat-elevation-z8">
-                        <mat-card-content align="center">
-                            <div class="col">
-                                <div class="row">
-                                    <h2 style="color: white; text-align: center;">Biblioteca</h2>
-                                </div>
-        
-                                <div class="row" style="justify-content: center; align-items:center; ">
-                                    <mat-icon>library_books</mat-icon>
-                                </div>
-                            </div>
+                <mat-grid-tile class="contenttitle" >
+                    <mat-card class="example-card" [class.mat-elevation-z2]="!isActive1"
+                    [class.mat-elevation-z8]="isActive1" (mouseenter)="isActive1 = true" (mouseleave)="isActive1 = false" >
+                        <mat-card-subtitle></mat-card-subtitle>
+                        <mat-card-title>Quiz</mat-card-title>
+                        <mat-card-content class="content" >
+                            quiz
                         </mat-card-content>
-                    </mat-card>
-                </mat-grid-tile> -->
-        
-                <mat-grid-tile>
-                    <div class="view overlay zoom">
-                        <img src="../../assets/img/Frame1.png" class="img-fluid " alt="sample image">
-                    </div>
+                      </mat-card>
                 </mat-grid-tile>
                 
-                <mat-grid-tile>
-                    <div class="view overlay zoom">
-                        <img src="../../assets/img/Frame2.png" class="img-fluid " alt="sample image">
-                    </div>
+                <mat-grid-tile class="contenttitle">
+                    <mat-card class="example-card" [class.mat-elevation-z2]="!isActive2"
+                    [class.mat-elevation-z8]="isActive2" (mouseenter)="isActive2 = true" (mouseleave)="isActive2 = false" >
+                        <mat-card-subtitle></mat-card-subtitle>
+                        <mat-card-title id="text" >Jogos</mat-card-title>
+                        <mat-card-content class="content">gamepad
+                        </mat-card-content>
+                      </mat-card>
                 </mat-grid-tile>
-                <mat-grid-tile>
-                    <div class="view overlay zoom">
-                        <img src="../../assets/img/Frame3.png" class="img-fluid " alt="sample image">
-                    </div>
+
+
+
+                <mat-grid-tile class="contenttitle" >
+                    <mat-card class="example-card" [class.mat-elevation-z2]="!isActive3"
+                    [class.mat-elevation-z8]="isActive3" (mouseenter)="isActive3 = true" (mouseleave)="isActive3 = false" >
+                        <mat-card-subtitle></mat-card-subtitle>
+                        <mat-card-title>Biblioteca</mat-card-title>
+                        <mat-card-content class="content">
+                            book
+                        </mat-card-content>
+                      </mat-card>
                 </mat-grid-tile>
-                <mat-grid-tile>
-                    <div class="view overlay zoom">
-                        <img src="../../assets/img/Frame4.png" class="img-fluid " alt="sample image">
-                    </div>
+
+                <mat-grid-tile class="contenttitle">
+                    <mat-card class="example-card" [class.mat-elevation-z2]="!isActive4"
+                    [class.mat-elevation-z8]="isActive4" (mouseenter)="isActive4 = true" (mouseleave)="isActive4 = false" >
+                        <mat-card-subtitle></mat-card-subtitle>
+                        <mat-card-title>Exercicios</mat-card-title>
+                        <mat-card-content class="content">
+                            library_books
+                        </mat-card-content>
+                      </mat-card>
                 </mat-grid-tile>
               </mat-grid-list>
               
