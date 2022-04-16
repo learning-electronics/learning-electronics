@@ -13,3 +13,9 @@ export class FaqComponent implements OnInit {
   }
 
 }
+
+export class ExpansionOverviewExample {
+  panelOpenState = false;
+}
+
+
