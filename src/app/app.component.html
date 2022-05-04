@@ -22,14 +22,14 @@
                 <span *ngIf="isExpanded">Perfil</span>
             </mat-list-item>
 
-            <mat-list-item routerLink="my_exercises/" *ngIf="teacher">
-                <mat-icon mat-list-icon>folder_special</mat-icon>
-                <span *ngIf="isExpanded">Meus Exercícios</span>
-            </mat-list-item>
-
             <mat-list-item (click)="classRouting()">
                 <mat-icon mat-list-icon>class</mat-icon>
                 <span *ngIf="isExpanded">Turmas</span>
+            </mat-list-item>
+
+            <mat-list-item routerLink="my_exercises/" *ngIf="teacher">
+                <mat-icon mat-list-icon>folder_special</mat-icon>
+                <span *ngIf="isExpanded">Meus Exercícios</span>
             </mat-list-item>
     
             <mat-list-item routerLink="library/">

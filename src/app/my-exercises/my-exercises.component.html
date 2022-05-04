@@ -72,7 +72,10 @@
                 <tr class="mat-row" *matNoDataRow>
                     <td class="mat-cell" colspan="4">Não há perguntas que correspondam ao filtro "{{input.value}}"</td>
                 </tr>
+
             </table>
+            <mat-paginator appPageSizeExercises [length]="pageSize" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Seleciona página dos Exercícios">
+            </mat-paginator>
         </div>
     </div>
 </div>

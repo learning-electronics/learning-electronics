@@ -118,7 +118,7 @@ export class EditExerciseComponent implements OnInit {
               this._router.navigate([currentUrl]);
           });
           
-          this._snackBar.open('Exercício adicionado!', 'Fechar', { "duration": 2500 });
+          this._snackBar.open('Exercício atualizado!', 'Fechar', { "duration": 2500 });
         } else {
           console.log(data);
         }

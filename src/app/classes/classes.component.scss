@@ -1,4 +1,4 @@
-table {
+table, .mat-toolbar, .mat-paginator {
     margin: auto;
     width: 60%;
 }
@@ -9,4 +9,8 @@ th.mat-sort-header-sorted {
 
 form {
     margin: auto;
+}
+
+.mat-toolbar {
+    min-height: 80px !important;
 }

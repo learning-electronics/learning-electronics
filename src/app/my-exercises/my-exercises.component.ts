@@ -1,16 +1,16 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { exercise, SharedService, theme } from '../shared.service';
 import { AddExerciseComponent } from './add-exercise/add-exercise.component';
 import { EditExerciseComponent } from './edit-exercise/edit-exercise.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 import * as _moment from 'moment';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { SelectionModel } from '@angular/cdk/collections';
 import { DeleteConfirmationComponent } from './delete-confirmation/delete-confirmation.component';
 import { MatSort, Sort} from '@angular/material/sort';
-
 
 
 const moment = _moment;
@@ -38,15 +38,18 @@ export const DATE_FORMAT = {
   ]
 })
 export class MyExercisesComponent implements OnInit{
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  
   displayedColumns: string[] = ['select', 'question', 'theme', 'classes', 'date'];
   dataSource = new MatTableDataSource<any>();
   selection = new SelectionModel<any>(true, []);
-
+  
   all_themes: theme[] = [];
   all_units: string[] = [];
   all_exercises: exercise[] = [];
   sortedData: exercise[] = [];
-  @ViewChild(MatSort) sort: MatSort;
+  pageSize: number = 10;
 
   constructor(public add_edit_ex_dialog: MatDialog, private _service: SharedService) {
     this._service.getThemes().subscribe((data: any) => {
@@ -64,8 +67,10 @@ export class MyExercisesComponent implements OnInit{
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
+  /* Sort data for the table */
   sortData(sort: Sort) {
     const data = this.all_exercises.slice();
     if (!sort.active || sort.direction === '') {
@@ -92,10 +97,12 @@ export class MyExercisesComponent implements OnInit{
     this.dataSource = new MatTableDataSource(this.sortedData);
   }
 
+  /* Compare 2 elements of the table string or number */
   compare(a: number | string, b: number | string, isAsc: boolean) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 
+  /* Function to compare 2 dates */
   compareDate(a: string, b: string, isAsc: boolean) {
     var d1 = moment(a, 'DD-MM-YYYY').utc();
     var d2 = moment(b, 'DD-MM-YYYY').utc();
@@ -115,7 +122,7 @@ export class MyExercisesComponent implements OnInit{
         // Changing theme ID array to theme name array
         var theme_names: string[] = [];
         ex.theme.forEach((id: any) => {
-          theme_names.push(this.all_themes[id - 1].name);
+          theme_names.push(this.all_themes[id - 4 - 1].name);
         });  
 
         ex.theme = theme_names;
@@ -127,6 +134,8 @@ export class MyExercisesComponent implements OnInit{
       
       this.dataSource = new MatTableDataSource(this.all_exercises);
       this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.pageSize = localStorage.getItem('pageSizeExercises') ? parseInt(localStorage.getItem('pageSizeExercises')!) : 10;
     });
   }
 
@@ -150,7 +159,7 @@ export class MyExercisesComponent implements OnInit{
     var theme_list: number[] = [];
 
     exercise_data.theme.forEach((theme: string) => {
-      theme_list.push(this.all_themes.findIndex((t: theme) => t.name == theme) + 1);
+      theme_list.push(this.all_themes.findIndex((t: theme) => t.name == theme) + 1 + 4);
     });
 
     const dialogRef = this.add_edit_ex_dialog.open(EditExerciseComponent, {

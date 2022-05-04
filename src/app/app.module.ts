@@ -60,13 +60,16 @@ import { ShowGameComponent } from './game/show-game/show-game.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { DeleteConfirmationComponent } from './my-exercises/delete-confirmation/delete-confirmation.component';
 import { CreateRoomComponent } from './game/create-room/create-room.component';
-import {MatSortModule} from '@angular/material/sort';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatExpansionModule} from '@angular/material/expansion'; 
+import { MatSortModule } from '@angular/material/sort';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatExpansionModule } from '@angular/material/expansion'; 
 import { MatTreeModule } from '@angular/material/tree';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { PopupComponent } from './popup/popup.component';
 import { ViewExerciseComponent } from './popup/view-exercise/view-exercise.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { PageSizeExercisesDirective } from './directive/page-size-exercises.directive';
+import { PageSizeClassesDirective } from './directive/page-size-classes.directive';
 
 @NgModule({
   declarations: [
@@ -103,9 +106,10 @@ import { ViewExerciseComponent } from './popup/view-exercise/view-exercise.compo
     EditExerciseComponent,
     DeleteConfirmationComponent,
     CreateRoomComponent,
-    
     PopupComponent,
     ViewExerciseComponent,
+    PageSizeExercisesDirective,
+    PageSizeClassesDirective
   ],
   imports: [
     BrowserModule,
@@ -140,6 +144,7 @@ import { ViewExerciseComponent } from './popup/view-exercise/view-exercise.compo
     MatExpansionModule,
     MatTreeModule,
     MatButtonToggleModule,
+    MatPaginatorModule,
     NgCircleProgressModule.forRoot({
       radius: 90,
       outerStrokeWidth: 12,
