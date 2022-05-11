@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
-import { SharedService, theme } from 'src/app/shared.service';
+import { SharedService, theme, classroom } from 'src/app/shared.service';
 import { AddExerciseComponent } from '../add-exercise.component';
 
 @Component({
@@ -19,6 +19,7 @@ export class ManualComponent implements OnInit {
   croppedImage: any = '';
   themes: theme[] = [];
   units: string[] = [];
+  classrooms: classroom[] = [];
 
   constructor(
     private _formBuilder: FormBuilder, 
@@ -31,6 +32,7 @@ export class ManualComponent implements OnInit {
     this.ModalTitle = data.ModalTitle;
     this.themes = data.themes;
     this.units = data.units;
+    this.classrooms = data.classrooms;
   }
 
   ngOnInit(): void {
@@ -39,6 +41,7 @@ export class ManualComponent implements OnInit {
       answers: new FormControl("", [Validators.required]),
       theme: new FormControl("", [Validators.required]),
       unit: new FormControl("", [Validators.required]),
+      classrooms: new FormControl("", [Validators.required]),
       resolution: new FormControl(""),
       image: new FormControl(""),   
     }, {validator: answerValidator});

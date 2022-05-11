@@ -49,12 +49,18 @@ export interface person {
   role?: string | number
 }
 
+export interface classroom {
+  id: number,
+  name: string
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
   readonly ACCOUNT_API = "http://127.0.0.1:8000/account/api";
   readonly EXERCISE_API = "http://127.0.0.1:8000/exercise/api";
+  readonly CLASSROOM_API = "http://127.0.0.1:8000/classroom/api";
 
   /* Initialize the log status as true or false*/
   private logStatusSource = new BehaviorSubject<boolean>(localStorage.getItem('loggedIn') === 'true' ? true : false);
@@ -253,5 +259,34 @@ export class SharedService {
     };
 
     return this._http.patch(this.EXERCISE_API + '/update_exercise/' + id, ex, httpOptions);
+  }
+
+  /* Get all classrooms */
+  getClassrooms() {
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    return this._http.get(this.CLASSROOM_API + '/classrooms', httpOptions);
+  }
+
+
+  /* Get all the classrooms from the Teacher */
+  getMyClassrooms() {
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    return this._http.get(this.CLASSROOM_API + '/my_classrooms', httpOptions);
   }
 }

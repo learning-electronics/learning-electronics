@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { exercise, SharedService, theme } from '../shared.service';
+import { exercise, SharedService, theme, classroom } from '../shared.service';
 import { AddExerciseComponent } from './add-exercise/add-exercise.component';
 import { EditExerciseComponent } from './edit-exercise/edit-exercise.component';
 import { MatTableDataSource } from '@angular/material/table';
@@ -48,6 +48,7 @@ export class MyExercisesComponent implements OnInit{
   all_themes: theme[] = [];
   all_units: string[] = [];
   all_exercises: exercise[] = [];
+  all_classrooms: classroom[] = [];
   sortedData: exercise[] = [];
   pageSize: number = 10;
 
@@ -59,6 +60,10 @@ export class MyExercisesComponent implements OnInit{
 
     this._service.getUnits().subscribe((data: any) => {
       this.all_units = data;
+    });
+
+    this._service.getMyClassrooms().subscribe((data: any) => {
+      this.all_classrooms = data as classroom[];
     });
   }
 
@@ -122,7 +127,7 @@ export class MyExercisesComponent implements OnInit{
         // Changing theme ID array to theme name array
         var theme_names: string[] = [];
         ex.theme.forEach((id: any) => {
-          theme_names.push(this.all_themes[id - 4 - 1].name);
+          theme_names.push(this.all_themes[id - 1].name);
         });  
 
         ex.theme = theme_names;
@@ -148,7 +153,8 @@ export class MyExercisesComponent implements OnInit{
       data: {
         'ModalTitle': "Adicionar Exercício",
         'themes': this.all_themes,
-        'units': this.all_units
+        'units': this.all_units,
+        'classrooms': this.all_classrooms
       }
     });
   }
@@ -159,7 +165,7 @@ export class MyExercisesComponent implements OnInit{
     var theme_list: number[] = [];
 
     exercise_data.theme.forEach((theme: string) => {
-      theme_list.push(this.all_themes.findIndex((t: theme) => t.name == theme) + 1 + 4);
+      theme_list.push(this.all_themes.findIndex((t: theme) => t.name == theme) + 1);
     });
 
     const dialogRef = this.add_edit_ex_dialog.open(EditExerciseComponent, {

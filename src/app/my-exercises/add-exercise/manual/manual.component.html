@@ -46,6 +46,17 @@
                     <input matInput formControlName="resolution">
                 </mat-form-field>
             </div>
+
+            <div class="row my-3 mx-auto">
+                <mat-form-field >
+                    <mat-label>Turmas</mat-label>
+                    <mat-select formControlName="classrooms" name="Turmas" multiple>
+                        <mat-option [value]="class.id" *ngFor="let class of classrooms">
+                        {{class.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
         </div>
         <div class="col my-3 mx-auto">
             <div class="row mx-auto">
