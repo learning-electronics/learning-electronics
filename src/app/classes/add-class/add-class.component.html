@@ -3,7 +3,7 @@
 </div>
 
 <mat-dialog-content class="mat-typography">
-    <form [formGroup]="form" (ngSubmit)="submit()">
+    <form [formGroup]="form">
         <div class="col">
             <div class="row my-3 mx-auto">
                 <mat-form-field class="mx-auto">
@@ -42,7 +42,7 @@
             </div>
 
             <div class="row mt-4 mb-1 mx-auto">
-                <button mat-raised-button color="accent" type="submit" mat-button>Criar Turma</button>
+                <button mat-raised-button color="accent" (click)="submit()" mat-button>Criar Turma</button>
             </div>
         </div>
     </form>

@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { AddClassComponent } from './add-class/add-class.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SharedService, classroom } from '../shared.service';
 
 @Component({
   selector: 'app-classes',
@@ -23,7 +24,7 @@ export class ClassesComponent implements OnInit {
   pageSize: number = 10;
   sortedData: any[] = [];
 
-  constructor(private _router: Router, public add_class_dialog: MatDialog) {
+  constructor(private _service: SharedService, private _router: Router, public add_class_dialog: MatDialog) {
     this.refreshTable();
   }
 
@@ -87,24 +88,20 @@ export class ClassesComponent implements OnInit {
   refreshTable() {
     var results: any[] = [];
     
-    results.push({
-      id: 1,
-      name: 'SE-101',
-      teacher: 'Andre',
-      number_students: 10,
-    },
-    {
-      id: 2,
-      name: 'SE-202',
-      teacher: 'Joao',
-      number_students: 20,
-    }
-    );
+    this._service.getClassrooms().subscribe((data: any) => {
+      data as classroom[];
+      
+      console.log(data);
 
-    this.dataSource = new MatTableDataSource(results);
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.pageSize = localStorage.getItem('pageSizeClasses') ? parseInt(localStorage.getItem('pageSizeClasses')!) : 10;
+      data.forEach( (element: any) => {
+        results.push({ id: element.id, name: element.name, teacher: element.teacher__first_name, number_students: element.students });
+      });
+
+      this.dataSource = new MatTableDataSource(results);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.pageSize = localStorage.getItem('pageSizeClasses') ? parseInt(localStorage.getItem('pageSizeClasses')!) : 10;
+    });
   }
 
   redirectClass(classroom: any) {

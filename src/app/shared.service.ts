@@ -51,7 +51,9 @@ export interface person {
 
 export interface classroom {
   id: number,
-  name: string
+  name: string,
+  teacher?: string,
+  students?: any[]
 }
 
 @Injectable({
@@ -288,5 +290,19 @@ export class SharedService {
     };
 
     return this._http.get(this.CLASSROOM_API + '/my_classrooms', httpOptions);
+  }
+
+  /* Create a new Classroom */
+  addClassroom(classroom: classroom) {
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    return this._http.post(this.CLASSROOM_API + '/add_classroom', classroom, httpOptions);
   }
 }

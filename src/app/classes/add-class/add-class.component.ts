@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SharedService } from 'src/app/shared.service';
 
 @Component({
   selector: 'app-add-class',
@@ -12,7 +15,7 @@ export class AddClassComponent implements OnInit {
   minPw: number = 6;
   form!: FormGroup;
 
-  constructor(private _formBuilder: FormBuilder) { }
+  constructor(private _formBuilder: FormBuilder, private _service: SharedService, private _snackBar: MatSnackBar, private dialogRef: MatDialogRef<AddClassComponent>) { }
 
   ngOnInit(): void {
     this.form = this._formBuilder.group({
@@ -45,7 +48,27 @@ export class AddClassComponent implements OnInit {
   }
 
   /* Submit form action */
-  submit() {}
+  submit() {
+    /* Only submit if the form is valid */
+    if (this.form.valid) {
+      var classroom: any = { 
+        'name': this.form.controls['name'].value, 
+        'password': this.form.controls['password'].value
+      };
+      
+      /* Call add classroom method */
+      this._service.addClassroom(classroom).subscribe((data: any) => {
+        if (data.v == true) {
+          /* Close the Dialog */
+          this.dialogRef.close();
+          this._snackBar.open('Turma adicionada', 'Fechar', { "duration": 2500 });
+        } else {
+          this.form.controls['name'].reset();
+          this._snackBar.open('O nome desta turma já existe', 'Fechar', { "duration": 2500 });
+        }
+      });
+    }
+  }
 }
 
 export const passwordMatchValidator: ValidatorFn = (formGroup: AbstractControl ): ValidationErrors | null => {

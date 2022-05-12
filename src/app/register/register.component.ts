@@ -88,7 +88,6 @@ export class RegisterComponent implements OnInit {
 
       /* Call registration method */
       this._service.register(person).subscribe((data: any) => {
-        console.log(data);
         data as account_response;
         
         if (data.v == true) {
