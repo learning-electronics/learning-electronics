@@ -1,0 +1,49 @@
+<div class="row mx-auto">
+    <h2 mat-dialog-title>Criar Turma</h2>
+</div>
+
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="col">
+            <div class="row my-3 mx-auto">
+                <mat-form-field class="mx-auto">
+                    <mat-label>Nome da Turma</mat-label>
+                    <input matInput appearance="fill" formControlName="name" required>
+                    <mat-error *ngIf="form.controls['name'].invalid">Você deve inserir um nome</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="row my-3 mx-auto">
+                <mat-form-field >
+                    <mat-label>Password</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" (input)="onPasswordInput()" required>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="password?.hasError('required')">Você deve inserir uma password</mat-error>
+                    <mat-error *ngIf="password?.hasError('minlength')">A password deve ter no minímo {{minPw}} caracteres</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="row my-3 mx-auto">
+                <mat-form-field >
+                    <mat-label>Confirmar Password</mat-label>
+                    <input matInput [type]="hide_confirm ? 'password' : 'text'" formControlName="password2" (input)="onPasswordInput()" required>
+                    <button mat-icon-button matSuffix (click)="hide_confirm = !hide_confirm" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide_confirm ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="password2?.hasError('required')">Confirme a sua password</mat-error>
+                    <mat-error *ngIf="password2?.invalid && !password2?.hasError('required')">As passwords não são iguais</mat-error>
+                </mat-form-field>
+            </div>
+            
+            <div class="row mt-4 mb-1 mx-auto">
+                <button mat-raised-button color="primary" (click)="generatePassword()" mat-button>Gerar Password</button>
+            </div>
+
+            <div class="row mt-4 mb-1 mx-auto">
+                <button mat-raised-button color="accent" type="submit" mat-button>Criar Turma</button>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>

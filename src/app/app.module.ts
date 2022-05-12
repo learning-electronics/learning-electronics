@@ -70,6 +70,7 @@ import { ViewExerciseComponent } from './popup/view-exercise/view-exercise.compo
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { PageSizeExercisesDirective } from './directive/page-size-exercises.directive';
 import { PageSizeClassesDirective } from './directive/page-size-classes.directive';
+import { AddClassComponent } from './classes/add-class/add-class.component';
 
 @NgModule({
   declarations: [
@@ -109,7 +110,8 @@ import { PageSizeClassesDirective } from './directive/page-size-classes.directiv
     PopupComponent,
     ViewExerciseComponent,
     PageSizeExercisesDirective,
-    PageSizeClassesDirective
+    PageSizeClassesDirective,
+    AddClassComponent
   ],
   imports: [
     BrowserModule,

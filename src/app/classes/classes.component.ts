@@ -3,6 +3,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
+import { AddClassComponent } from './add-class/add-class.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-classes',
@@ -21,7 +23,7 @@ export class ClassesComponent implements OnInit {
   pageSize: number = 10;
   sortedData: any[] = [];
 
-  constructor(private _router: Router) {
+  constructor(private _router: Router, public add_class_dialog: MatDialog) {
     this.refreshTable();
   }
 
@@ -70,6 +72,15 @@ export class ClassesComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  /* Open Dialog for adding a class */
+  addClass() {
+    const dialogRef = this.add_class_dialog.open(AddClassComponent, {
+      width: '30%',
+      height: '50%', 
+      minWidth: '300px',
+    });
   }
 
   /* Update the table's information */
