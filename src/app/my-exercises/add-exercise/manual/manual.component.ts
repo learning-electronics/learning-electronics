@@ -41,12 +41,22 @@ export class ManualComponent implements OnInit {
       answers: new FormControl("", [Validators.required]),
       theme: new FormControl("", [Validators.required]),
       unit: new FormControl("", [Validators.required]),
+      check: new FormControl("", [Validators.required]),
       classrooms: new FormControl("", [Validators.required]),
       resolution: new FormControl(""),
       image: new FormControl(""),   
     }, {validator: answerValidator});
   }
-  
+
+  /* Block Classrooms form field when "public" checkbox is chosen */
+  blockClassrooms(val: boolean) {
+    if (val) {
+      this.form.controls['classrooms'].disable();
+    } else {
+      this.form.controls['classrooms'].enable();
+    }
+  }
+
   /* Shorthands for form controls (used from within template) */
   get question() { return this.form.get('question'); }
   get answer() { return this.form.get('answers'); }

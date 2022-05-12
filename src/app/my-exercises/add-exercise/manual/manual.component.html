@@ -47,6 +47,10 @@
                 </mat-form-field>
             </div>
 
+            <div class="row my-2 mx-auto">
+                <mat-checkbox color="primary" formControlName="check" (change)="blockClassrooms($event.checked)">Tornar o exercício público</mat-checkbox>
+            </div>
+
             <div class="row my-3 mx-auto">
                 <mat-form-field >
                     <mat-label>Turmas</mat-label>
