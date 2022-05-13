@@ -72,7 +72,17 @@ export class SharedService {
   private themeStatusSource = new BehaviorSubject<boolean>(localStorage.getItem('theme') === 'true' ? true : false);
   currentThemeStatus = this.themeStatusSource.asObservable();
 
+  /* Initialize the classroom information */
+  private classroomSource = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('class')!));
+  classroomOpened = this.classroomSource.asObservable()
+
   constructor(private _http: HttpClient) { }
+
+  /* Change the opened class information */
+  openClassroom(info: any) {
+    this.classroomSource.next(info);
+    localStorage.setItem('class', JSON.stringify(info));
+  }
 
   /* Change log status used across the app*/
   changeLogStatus(logStatus: boolean) {
@@ -304,5 +314,19 @@ export class SharedService {
     };
 
     return this._http.post(this.CLASSROOM_API + '/add_classroom', classroom, httpOptions);
+  }
+
+  /* Get information from a Classroom */
+  getInfoClassroom(id: number) {
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    return this._http.get(this.CLASSROOM_API + '/my_classrooms/' + id, httpOptions);
   }
 }

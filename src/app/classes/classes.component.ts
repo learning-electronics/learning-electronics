@@ -23,14 +23,13 @@ export class ClassesComponent implements OnInit {
   value: number = 0;
   pageSize: number = 10;
   sortedData: any[] = [];
+  all_classrooms: any[] = [];
 
   constructor(private _service: SharedService, private _router: Router, public add_class_dialog: MatDialog) {
     this.refreshTable();
   }
 
   ngOnInit(): void {
-    this.value = Math.floor(Math.random() * 10) + 1;
-    this.refreshTable();
   }
 
   ngAfterViewInit() {
@@ -40,29 +39,27 @@ export class ClassesComponent implements OnInit {
 
   /* Sort data for the table */
   sortData(sort: Sort) {
-  //   const data = this.all_exercises.slice();
-  //   if (!sort.active || sort.direction === '') {
-  //     this.sortedData = data;
-  //     return;
-  //   }
+    const data = this.all_classrooms.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
 
-  //   this.sortedData = data.sort((a, b) => {  
-  //     const isAsc = sort.direction === 'asc';
-  //     switch (sort.active) {
-  //       case 'question':
-  //         return this.compare(a.question, b.question, isAsc);
-  //       case 'theme':
-  //         return this.compare(a.ans1, b.ans1, isAsc);
-  //       case 'classes':
-  //         return this.compare(a.ans1, b.ans1, isAsc);
-  //       case 'date':
-  //         return this.compareDate(a.date, b.date, isAsc);
-  //       default:
-  //         return 0;
-  //     }
-  //   });
+    this.sortedData = data.sort((a, b) => {  
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'name':
+          return this.compare(a.name, b.name, isAsc);
+        case 'teacher':
+          return this.compare(a.teacher, b.teacher, isAsc);
+        case 'number_students':
+          return this.compare(a.number_students, b.number_students, isAsc);
+        default:
+          return 0;
+      }
+    });
 
-  //   this.dataSource = new MatTableDataSource(this.sortedData);
+    this.dataSource = new MatTableDataSource(this.sortedData);
   }
 
   /* Compare 2 elements of the table string or number */
@@ -86,18 +83,14 @@ export class ClassesComponent implements OnInit {
 
   /* Update the table's information */
   refreshTable() {
-    var results: any[] = [];
-    
     this._service.getClassrooms().subscribe((data: any) => {
       data as classroom[];
-      
-      console.log(data);
 
       data.forEach( (element: any) => {
-        results.push({ id: element.id, name: element.name, teacher: element.teacher__first_name, number_students: element.students });
+        this.all_classrooms.push({ id: element.id, name: element.name, teacher: element.teacher__first_name, number_students: element.students });
       });
 
-      this.dataSource = new MatTableDataSource(results);
+      this.dataSource = new MatTableDataSource(this.all_classrooms);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.pageSize = localStorage.getItem('pageSizeClasses') ? parseInt(localStorage.getItem('pageSizeClasses')!) : 10;
@@ -105,6 +98,11 @@ export class ClassesComponent implements OnInit {
   }
 
   redirectClass(classroom: any) {
-    this._router.navigate(['class/'], { state: { id: classroom.id } });
+    this.openClassroom(classroom);
+    this._router.navigate(['class/']);
+  }
+
+  openClassroom(info: any) {
+    this._service.openClassroom(info);
   }
 }
