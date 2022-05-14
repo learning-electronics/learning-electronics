@@ -47,7 +47,7 @@ export class MyExercisesComponent implements OnInit{
   
   all_themes: theme[] = [];
   all_units: string[] = [];
-  all_exercises: exercise[] = [];
+  all_exercises: any[] = [];
   all_classrooms: classroom[] = [];
   sortedData: exercise[] = [];
   pageSize: number = 10;
@@ -123,13 +123,29 @@ export class MyExercisesComponent implements OnInit{
   /* Refresh the table content */
   refreshTable() {
     this._service.getMyExercises().subscribe((data: any) => {
-      data.forEach((ex: exercise) => {
+      console.log(data);
+
+      data.forEach((ex: any) => {
         // Changing theme ID array to theme name array
         var theme_names: string[] = [];
         ex.theme.forEach((id: any) => {
           theme_names.push(this.all_themes[id - 1 - 4].name);
         });  
 
+        if (ex.public == true) {
+          ex.classes = "Público";
+        } else {
+          ex.classes = "";
+          
+          /* Append the class name to the classes string */
+          ex.visible.forEach((c: {'id': number, 'name': string}) => {
+            ex.classes += c.name + ", ";
+          });
+          
+          /* Remove the last comma */
+          ex.classes = ex.classes.substring(0, ex.classes.length - 2);
+        }
+          
         ex.theme = theme_names;
         // Get the correct date format
         ex.date = moment(ex.date).format('DD-MM-YYYY');

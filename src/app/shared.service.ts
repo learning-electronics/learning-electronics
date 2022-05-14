@@ -19,7 +19,9 @@ export interface exercise {
   resol: string,
   img: string | null,
   teacher?: number,
-  date?: any
+  date?: any,
+  visible?: any[]
+  public?: boolean
 }
 
 export interface login {

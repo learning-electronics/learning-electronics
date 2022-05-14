@@ -21,7 +21,7 @@ export class ShowClassComponent implements OnInit {
 
   displayedColumnsMembers: string[] = ['type', 'fname', 'lname'];
   dataSourceMembers = new MatTableDataSource<any>();
-  displayedColumnsExercises: string[] = ['question', 'theme', 'classes', 'date'];
+  displayedColumnsExercises: string[] = ['question', 'theme', 'date'];
   dataSourceExercises = new MatTableDataSource<any>();
 
   valueMembers: number = 0;
