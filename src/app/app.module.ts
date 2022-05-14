@@ -71,6 +71,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { PageSizeExercisesDirective } from './directive/page-size-exercises.directive';
 import { PageSizeClassesDirective } from './directive/page-size-classes.directive';
 import { AddClassComponent } from './classes/add-class/add-class.component';
+import { ClassPasswordComponent } from './classes/class-password/class-password.component';
 
 @NgModule({
   declarations: [
@@ -111,7 +112,8 @@ import { AddClassComponent } from './classes/add-class/add-class.component';
     ViewExerciseComponent,
     PageSizeExercisesDirective,
     PageSizeClassesDirective,
-    AddClassComponent
+    AddClassComponent,
+    ClassPasswordComponent
   ],
   imports: [
     BrowserModule,

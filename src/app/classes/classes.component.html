@@ -23,7 +23,7 @@
             <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
                 <ng-container matColumnDef="access">
                     <th mat-header-cell *matHeaderCellDef>Acesso</th>
-                    <td mat-cell *matCellDef="let element"> <mat-icon>lock</mat-icon> </td>
+                    <td mat-cell *matCellDef="let element"> <mat-icon *ngIf="!element.access">lock</mat-icon> <mat-icon *ngIf="element.access">lock_open</mat-icon> </td>
                 </ng-container>
 
                 <ng-container matColumnDef="name">

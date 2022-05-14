@@ -5,7 +5,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { AddClassComponent } from './add-class/add-class.component';
 import { MatDialog } from '@angular/material/dialog';
-import { SharedService, classroom } from '../shared.service';
+import { SharedService, classroom, person } from '../shared.service';
+import { ClassPasswordComponent } from './class-password/class-password.component';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-classes',
@@ -24,12 +26,14 @@ export class ClassesComponent implements OnInit {
   pageSize: number = 10;
   sortedData: any[] = [];
   all_classrooms: any[] = [];
+  user_info: person;
+  type: string;
 
-  constructor(private _service: SharedService, private _router: Router, public add_class_dialog: MatDialog) {
+  constructor(private _service: SharedService, private _router: Router, public add_class_dialog: MatDialog, public login_class_dialog: MatDialog) {
     this.refreshTable();
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
   }
 
   ngAfterViewInit() {
@@ -87,7 +91,7 @@ export class ClassesComponent implements OnInit {
       data as classroom[];
 
       data.forEach( (element: any) => {
-        this.all_classrooms.push({ id: element.id, name: element.name, teacher: element.teacher__first_name, number_students: element.students });
+        this.all_classrooms.push({ access: element.access, id: element.id, name: element.name, teacher: element.teacher__first_name, number_students: element.students });
       });
 
       this.dataSource = new MatTableDataSource(this.all_classrooms);
@@ -98,11 +102,26 @@ export class ClassesComponent implements OnInit {
   }
 
   redirectClass(classroom: any) {
-    this.openClassroom(classroom);
-    this._router.navigate(['class/']);
+    if (classroom.access === false) {
+      this.insertCredentialsClassroom(classroom);
+    } else {
+      this.openClassroom(classroom);
+      this._router.navigate(['class/']);
+    }
   }
 
+  /* Change the opened classroom */
   openClassroom(info: any) {
     this._service.openClassroom(info);
+  }
+
+  /* Login to a classroom */
+  insertCredentialsClassroom(info: any) {
+    const dialogRef = this.login_class_dialog.open(ClassPasswordComponent, {
+      width: '25%',
+      height: '29%', 
+      minWidth: '250px',
+      data: info
+    });
   }
 }
