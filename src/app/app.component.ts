@@ -37,8 +37,10 @@ export class AppComponent {
         if (data.v == true) {
           if (data.info.role == "Teacher") {
             this.teacher = true;
+            this._service.changeUserStatus('Teacher');
           } else {
             this.teacher = false;
+            this._service.changeUserStatus('Student');
           }
         }
       });

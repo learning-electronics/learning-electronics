@@ -17,7 +17,7 @@
                 <div class="col"></div>
                 
                 <div class="col-1 mx-5">
-                    <button mat-raised-button color="primary" (click)="addClass()">Criar Turma</button>
+                    <button mat-raised-button color="primary" *ngIf="type == 'Teacher'" (click)="addClass()">Criar Turma</button>
                 </div>
             </mat-toolbar>
             <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">

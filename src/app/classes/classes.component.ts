@@ -7,7 +7,6 @@ import { AddClassComponent } from './add-class/add-class.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SharedService, classroom, person } from '../shared.service';
 import { ClassPasswordComponent } from './class-password/class-password.component';
-import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-classes',
@@ -29,8 +28,9 @@ export class ClassesComponent implements OnInit {
   user_info: person;
   type: string;
 
-  constructor(private _service: SharedService, private _router: Router, public add_class_dialog: MatDialog, public login_class_dialog: MatDialog) {
+  constructor(public _service: SharedService, private _router: Router, public add_class_dialog: MatDialog, public login_class_dialog: MatDialog) {
     this.refreshTable();
+    this._service.userStatus.subscribe( (data: any) => { this.type = data });
   }
 
   ngOnInit(): void { 
