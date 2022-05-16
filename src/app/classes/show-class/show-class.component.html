@@ -61,8 +61,32 @@
                         </div>
                         
                         <div class="col"></div>
+
+                        <div class="col-1 mx-5">
+                            <button mat-raised-button color="warn" *ngIf="selection.selected.length > 0" >
+                                Desassociar Exercício{{ selection.selected.length > 1 ? 's' : '' }}
+                            </button>
+                        </div>
                     </mat-toolbar>
+                    
                      <table mat-table [dataSource]="dataSourceExercises" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
+                        <!-- Checkbox Column -->
+
+                        <ng-container matColumnDef="select">
+                            <th mat-header-cell *matHeaderCellDef >
+                                <mat-checkbox (change)="$event ? masterToggle() : null" 
+                                                [checked]="selection.hasValue() && isAllSelected()"
+                                                [indeterminate]="selection.hasValue() && !isAllSelected()">
+                                </mat-checkbox>
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                <mat-checkbox (click)="$event.stopPropagation()"
+                                                (change)="$event ? selection.toggle(row) : null"
+                                                [checked]="selection.isSelected(row)">
+                                </mat-checkbox>
+                            </td>
+                        </ng-container>
+                        
                         <ng-container matColumnDef="question">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Pergunta">Pergunta</th>
                             <td mat-cell *matCellDef="let element"> {{element.question}} </td>
@@ -96,7 +120,20 @@
             </mat-tab>
     
             <mat-tab label="Definições">
-                Definições
+                <div *ngIf="data.type == 'Teacher'">
+                    <button mat-raised-button color="warn" (click)="deleteClassroom()">
+                        <mat-icon>delete</mat-icon>
+                        Eliminar Turma
+                    </button>
+                </div>
+
+                <div *ngIf="data.type == 'Student'">
+                    Código da Turma
+                    <button mat-raised-button color="warn" (click)="leaveClassroom()">
+                        <mat-icon>logout</mat-icon>
+                        Sair da Turma
+                    </button>
+                </div>
             </mat-tab>
         </mat-tab-group>
     </div>

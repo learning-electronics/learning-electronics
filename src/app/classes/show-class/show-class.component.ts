@@ -7,6 +7,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import * as moment from 'moment';
 import { PopupComponent } from 'src/app/popup/popup.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-show-class',
@@ -21,8 +24,9 @@ export class ShowClassComponent implements OnInit {
 
   displayedColumnsMembers: string[] = ['type', 'fname', 'lname'];
   dataSourceMembers = new MatTableDataSource<any>();
-  displayedColumnsExercises: string[] = ['question', 'theme', 'date'];
+  displayedColumnsExercises: string[] = ['select', 'question', 'theme', 'date'];
   dataSourceExercises = new MatTableDataSource<any>();
+  selection = new SelectionModel<any>(true, []);
 
   valueMembers: number = 0;
   pageSizeMembers: number = 10;
@@ -39,14 +43,18 @@ export class ShowClassComponent implements OnInit {
   data: any;
   subscription: Subscription = new Subscription();
 
-  constructor(private _service: SharedService, public popup_dialog: MatDialog) {
+  constructor(private _service: SharedService, public popup_dialog: MatDialog, private _snackBar: MatSnackBar, private _router: Router) {
     this.subscription = this._service.classroomOpened.subscribe((data: any) => {
       this.data = data;
 
-      this._service.getThemes().subscribe((data: any) => {
-        this.all_themes = data as theme[];
-        this.refreshTable();
-      });
+      if (data == null) {
+        this._router.navigate(['/classes']);
+      } else {
+        this._service.getThemes().subscribe((data: any) => {
+          this.all_themes = data as theme[];
+          this.refreshTable();
+        });
+      }
     });
   }
   
@@ -140,6 +148,7 @@ export class ShowClassComponent implements OnInit {
     });
   }
 
+  /* Function to call poup exercise */
   popup(ex: exercise) {
     /* Open Popup Dialog */
     const dialogRef = this.popup_dialog.open(PopupComponent, {
@@ -155,5 +164,44 @@ export class ShowClassComponent implements OnInit {
     member_object.lname = member.split(' ')[3];
 
     return member_object;
+  }
+
+  /* Student leaves the classroom */
+  leaveClassroom() {
+    this._service.leaveClassroom(this.data.id).subscribe((data: any) => {
+      if (data.v == true) {
+        this._snackBar.open('Saiu da turma com sucesso', 'Fechar', { duration: 2500 });
+        //this._router.navigate(['/classes']);
+        this._service.openClassroom(null);
+      } else {
+        this._snackBar.open('Erro ao sair da turma', 'Fechar', { duration: 2500 });
+      }
+    });
+  }
+
+  /* Delete the classroom */
+  deleteClassroom() {
+    this._service.deleteClassroom(this.data.id).subscribe((data: any) => {
+      if (data.v == true) {
+        this._snackBar.open('Turma eliminada com sucesso', 'Fechar', { duration: 2500 });
+        this._service.openClassroom(null);
+      } else {
+        this._snackBar.open('Erro ao eliminar a turma', 'Fechar', { duration: 2500 });
+      }
+    });
+  }
+
+  /* Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSourceExercises.data.length;
+    return numSelected === numRows;
+  }
+
+  /* Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSourceExercises.data.forEach(row => this.selection.select(row));
   }
 }

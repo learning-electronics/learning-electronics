@@ -7,3 +7,8 @@ p {
     font-weight: 500;
     text-align: center;
 }
+
+table, .mat-toolbar, .mat-paginator {
+    margin: auto;
+    width: 80%;
+}

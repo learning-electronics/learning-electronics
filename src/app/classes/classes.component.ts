@@ -112,6 +112,7 @@ export class ClassesComponent implements OnInit {
 
   /* Change the opened classroom */
   openClassroom(info: any) {
+    info.type = this.type;
     this._service.openClassroom(info);
   }
 
@@ -121,7 +122,7 @@ export class ClassesComponent implements OnInit {
       width: '25%',
       height: '29%', 
       minWidth: '250px',
-      data: info
+      data: info 
     });
   }
 }

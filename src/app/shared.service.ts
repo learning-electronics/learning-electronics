@@ -356,4 +356,32 @@ export class SharedService {
 
     return this._http.post(this.CLASSROOM_API + '/enter_classroom/' + id, {'password': password}, httpOptions);
   }
+
+  /* Leave a classroom */
+  leaveClassroom(id: number) {
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    return this._http.post(this.CLASSROOM_API + '/exit_classroom/' + id, {}, httpOptions);
+  }
+
+  /* Delete a classroom */
+  deleteClassroom(id: number) {
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    return this._http.delete(this.CLASSROOM_API + '/delete_classroom/' + id, httpOptions);
+  }
 }
