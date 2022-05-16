@@ -114,6 +114,7 @@ import { ClassPasswordComponent } from './classes/class-password/class-password.
     PageSizeExercisesDirective,
     PageSizeClassesDirective,
     AddClassComponent,
+    ClassPasswordComponent,
     AutomaticComponent
   ],
   imports: [

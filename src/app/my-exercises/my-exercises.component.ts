@@ -123,8 +123,6 @@ export class MyExercisesComponent implements OnInit{
   /* Refresh the table content */
   refreshTable() {
     this._service.getMyExercises().subscribe((data: any) => {
-      console.log(data);
-
       data.forEach((ex: any) => {
         // Changing theme ID array to theme name array
         var theme_names: string[] = [];
@@ -135,15 +133,19 @@ export class MyExercisesComponent implements OnInit{
         if (ex.public == true) {
           ex.classes = "Público";
         } else {
-          ex.classes = "";
-          
-          /* Append the class name to the classes string */
-          ex.visible.forEach((c: {'id': number, 'name': string}) => {
-            ex.classes += c.name + ", ";
-          });
-          
-          /* Remove the last comma */
-          ex.classes = ex.classes.substring(0, ex.classes.length - 2);
+          if ('visible' in ex) {
+            ex.classes = "";
+            
+            /* Append the class name to the classes string */
+            ex.visible.forEach((c: {'id': number, 'name': string}) => {
+              ex.classes += c.name + ", ";
+            });
+            
+            /* Remove the last comma */
+            ex.classes = ex.classes.substring(0, ex.classes.length - 2);
+          } else {
+            ex.classes = "Nenhuma";
+          }
         }
           
         ex.theme = theme_names;
