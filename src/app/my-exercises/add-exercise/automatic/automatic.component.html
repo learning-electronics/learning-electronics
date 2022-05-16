@@ -1,0 +1,78 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="row mx-auto">
+        <div class="col">
+            <div class="row my-3 mx-auto">
+                <mat-form-field class="mx-auto">
+                    <mat-label>Pergunta</mat-label>
+                    <input matInput formControlName="question" required>
+                    <!-- <mat-error *ngIf="question?.hasError('required')">Crie uma questão</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div class="row my-3 mx-auto">
+                <mat-form-field class="mx-auto">
+                    <mat-label>Public</mat-label>
+                    <input matInput formControlName="public" required>
+                    <!-- <mat-error *ngIf="question?.hasError('required')">Crie uma questão</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div class="row my-3 mx-auto">
+                <mat-form-field class="mx-auto">
+                    <mat-label>Tema</mat-label>
+                    <input matInput formControlName="theme" required>
+                    <!-- <mat-error *ngIf="question?.hasError('required')">Crie uma questão</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div class="row my-3 mx-auto">
+                <mat-form-field class="mx-auto">
+                    <mat-label>Target</mat-label>
+                    <input matInput formControlName="target" required>
+                    <!-- <mat-error *ngIf="question?.hasError('required')">Crie uma questão</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div class="row my-3 mx-auto">
+                <mat-form-field class="mx-auto">
+                    <mat-label>Frequencia</mat-label>
+                    <input matInput formControlName="freq" required>
+                    <!-- <mat-error *ngIf="question?.hasError('required')">Crie uma questão</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div class="row my-3 mx-auto">
+                <mat-form-field class="mx-auto">
+                    <mat-label>Unidade</mat-label>
+                    <input matInput formControlName="unit" required>
+                    <!-- <mat-error *ngIf="question?.hasError('required')">Crie uma questão</mat-error> -->
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col my-3 mx-auto">
+            <div class="row mx-auto">
+                <image-cropper
+                [ngStyle]="{'opacity': imageChangedEvent == '' ? '0' : '1'}"
+                [imageURL]=""
+                [imageChangedEvent]="imageChangedEvent"
+                [maintainAspectRatio]="true"
+                format="png"
+                (imageCropped)="imageCropped($event)"
+                ></image-cropper>
+            </div>
+    
+            <div class="row mt-3">
+                <mat-form-field>
+                    <ngx-mat-file-input placeholder="Escolher Imagem" (change)="imageChangeEvent($event)"></ngx-mat-file-input>
+                    <mat-icon matSuffix>folder</mat-icon>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col my-3 mx-auto">
+            <div class="row mt-3">
+                <mat-form-field>
+                    <ngx-mat-file-input type="file" placeholder="Escolher Ficheiro" (change)="fileChangeEvent($event)"></ngx-mat-file-input>
+                    <mat-icon matSuffix>folder</mat-icon>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row mt-4 mb-1 mx-auto">
+            <button mat-raised-button color="accent" type="submit" mat-button>Adicionar</button>
+        </div>
+    </div>
+</form>

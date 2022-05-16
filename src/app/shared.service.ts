@@ -22,6 +22,15 @@ export interface exercise {
   date?: any
 }
 
+export interface exerciseSolver {
+  question: string,
+  public: string,
+  theme: string,
+  target: string,
+  freq: string,
+  unit: string
+}
+
 export interface login {
   email: string,
   password: string
@@ -222,6 +231,24 @@ export class SharedService {
     }
 
     return this._http.post(this.EXERCISE_API + '/add_exercise', ex, httpOptions);
+  }
+
+  /* Create exercise with circuit solver */
+  addExerciseSolver(file: FormData) {
+    var token = localStorage.getItem('token');
+
+    // const httpOptions = {
+    //   headers: new HttpHeaders({
+    //     // 'Content-Type': 'application/json',
+    //     Authorization: 'Bearer' + token
+    //   })
+    // }
+
+    const httpOptions = {
+      headers: new HttpHeaders({ Authorization: 'Bearer ' + token })
+    };
+
+    return this._http.post(this.EXERCISE_API + '/add_exercise_solver', file, httpOptions);
   }
 
   /* Update exercise's photo */
