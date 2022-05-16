@@ -19,7 +19,9 @@ export interface exercise {
   resol: string,
   img: string | null,
   teacher?: number,
-  date?: any
+  date?: any,
+  visible?: any[]
+  public?: boolean
 }
 
 export interface exerciseSolver {
@@ -62,7 +64,8 @@ export interface classroom {
   id: number,
   name: string,
   teacher?: string,
-  students?: any[]
+  students?: any[],
+  access: boolean
 }
 
 @Injectable({
@@ -81,7 +84,27 @@ export class SharedService {
   private themeStatusSource = new BehaviorSubject<boolean>(localStorage.getItem('theme') === 'true' ? true : false);
   currentThemeStatus = this.themeStatusSource.asObservable();
 
+  /* Initialize the classroom information */
+  private classroomSource = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('class')!));
+  classroomOpened = this.classroomSource.asObservable()
+
+  /* Initialize the type of user information */
+  private userSource = new BehaviorSubject<string>(localStorage.getItem('user') === 'Teacher' ? 'Teacher' : 'Student');
+  userStatus = this.userSource.asObservable()
+
   constructor(private _http: HttpClient) { }
+
+  /* Change the opened class information */
+  openClassroom(info: any) {
+    this.classroomSource.next(info);
+    localStorage.setItem('class', JSON.stringify(info));
+  }
+
+  /* Change log status used across the app*/
+  changeUserStatus(userStatus: string) {
+    this.userSource.next(userStatus);
+    localStorage.setItem('user', userStatus);
+  }
 
   /* Change log status used across the app*/
   changeLogStatus(logStatus: boolean) {
@@ -331,5 +354,61 @@ export class SharedService {
     };
 
     return this._http.post(this.CLASSROOM_API + '/add_classroom', classroom, httpOptions);
+  }
+
+  /* Get information from a Classroom */
+  getInfoClassroom(id: number) {
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    return this._http.get(this.CLASSROOM_API + '/my_classrooms/' + id, httpOptions);
+  }
+
+  /* Login to a classroom */
+  loginClassroom(id: number, password: string) {
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    return this._http.post(this.CLASSROOM_API + '/enter_classroom/' + id, {'password': password}, httpOptions);
+  }
+
+  /* Leave a classroom */
+  leaveClassroom(id: number) {
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    return this._http.post(this.CLASSROOM_API + '/exit_classroom/' + id, {}, httpOptions);
+  }
+
+  /* Delete a classroom */
+  deleteClassroom(id: number) {
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    return this._http.delete(this.CLASSROOM_API + '/delete_classroom/' + id, httpOptions);
   }
 }

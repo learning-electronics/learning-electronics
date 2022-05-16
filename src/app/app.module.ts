@@ -72,6 +72,7 @@ import { PageSizeExercisesDirective } from './directive/page-size-exercises.dire
 import { PageSizeClassesDirective } from './directive/page-size-classes.directive';
 import { AddClassComponent } from './classes/add-class/add-class.component';
 import { AutomaticComponent } from './my-exercises/add-exercise/automatic/automatic.component';
+import { ClassPasswordComponent } from './classes/class-password/class-password.component';
 
 @NgModule({
   declarations: [

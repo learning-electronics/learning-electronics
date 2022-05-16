@@ -13,7 +13,7 @@ export class ChangeEmailComponent implements OnInit {
   hide: boolean = true;
   form!: FormGroup;
   
-  constructor(private _formBuilder: FormBuilder, private _snackBar: MatSnackBar, private _service: SharedService, private dialogRef: MatDialogRef<ChangeEmailComponent>,) { }
+  constructor(private _formBuilder: FormBuilder, private _snackBar: MatSnackBar, private _service: SharedService) { }
 
   ngOnInit(): void {
     this.form = this._formBuilder.group({

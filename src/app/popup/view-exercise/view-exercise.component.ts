@@ -16,8 +16,6 @@ export class ViewExerciseComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.resolution);
-    console.log(this.data);
   }
 
   ngOnChanges(): void {

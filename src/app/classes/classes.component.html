@@ -1,6 +1,10 @@
 <div class="row d-flex justify-content-center w-100 h-100">
     <div class="col my-5 mx-auto">
-        <div class="row mx-5">
+        <div class="row my-2">
+            <p>Lista de Turmas</p>
+        </div>
+
+        <div class="row mx-5 mt-3">
             <mat-toolbar>
                 <div class="col-2 mt-2">
                     <mat-form-field style="font-size: 0.95rem;">
@@ -13,13 +17,13 @@
                 <div class="col"></div>
                 
                 <div class="col-1 mx-5">
-                    <button mat-raised-button color="primary" (click)="addClass()">Criar Turma</button>
+                    <button mat-raised-button color="primary" *ngIf="type == 'Teacher'" (click)="addClass()">Criar Turma</button>
                 </div>
             </mat-toolbar>
             <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
                 <ng-container matColumnDef="access">
                     <th mat-header-cell *matHeaderCellDef>Acesso</th>
-                    <td mat-cell *matCellDef="let element"> <mat-icon>lock</mat-icon> </td>
+                    <td mat-cell *matCellDef="let element"> <mat-icon *ngIf="!element.access">lock</mat-icon> <mat-icon *ngIf="element.access">lock_open</mat-icon> </td>
                 </ng-container>
 
                 <ng-container matColumnDef="name">
@@ -33,7 +37,7 @@
                 </ng-container>
                 
                 <ng-container matColumnDef="number_students">
-                    <th mat-header-cell mat-sort-header *matHeaderCellDef>Nº de Membros</th>
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>Nº de Alunos</th>
                     <td mat-cell *matCellDef="let element"> {{element.number_students}} </td>
                 </ng-container>
                 
