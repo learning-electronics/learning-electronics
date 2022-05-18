@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
-import { SharedService } from 'src/app/shared.service';
+import { SharedService, theme } from 'src/app/shared.service';
 import { AddExerciseComponent } from '../add-exercise.component';
 
 @Component({
@@ -18,86 +18,97 @@ export class AutomaticComponent implements OnInit {
   fileChangedEvent : any = "";
   imageChangedEvent: any = '';
   croppedImage: any = '';
+  themes: theme[] = [];
+  units: string[] = [];
+  ModalTitle: string;
   
   
   constructor(
     private _formBuilder: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private _service: SharedService,
     private _snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<AddExerciseComponent>,
     private _router: Router
-  ) { }
+  ) {
+    this.themes = data.themes;
+    this.units = data.units;
+    this.ModalTitle = data.ModalTitle;
+  }
 
   ngOnInit(): void {
     this.form = this._formBuilder.group({
-      cirpath : new FormControl(),
-      theme : new FormControl(),
-      question : new FormControl(),
-      public : new FormControl(),
-      target : new FormControl(),
-      freq : new FormControl(),
-      unit : new FormControl(),
-      img : new FormControl()
+      cirpath : new FormControl("", [Validators.required]),
+      theme : new FormControl("", [Validators.required]),
+      question : new FormControl("", [Validators.required]),
+      public : new FormControl(false, [Validators.required]),
+      target : new FormControl("", [Validators.required]),
+      freq : new FormControl("", [Validators.required]),
+      unit : new FormControl("", [Validators.required]),
+      img : new FormControl("", [Validators.required])
     })
   }
 
   ngAfterViewInit() {
   }
   
-  // submit form action
+  /* Shorthands for form controls (used from within template) */
+  get question() { return this.form.get('question'); }
+  get target() { return this.form.get('target'); }
+  get freq() { return this.form.get('freq'); }
+
+  /*  Submit form action
+      Sends all data to the rest in a FormData object
+  */
   submit() {
 
     const formData = new FormData();
     formData.append('cirpath', this.form.get('cirpath')?.value);
-    
-    // var exercise = {
-    //   question: this.form.get('question')?.value,
-    //   public: this.form.get('public')?.value,
-    //   theme: this.form.get('theme')?.value,
-    //   target: this.form.get('target')?.value,
-    //   freq: this.form.get('freq')?.value,
-    //   unit: this.form.get('unit')?.value
-    // }
-
     formData.append('question', this.form.get('question')?.value);
     formData.append('theme', this.form.get('theme')?.value);
-    formData.append('public', this.form.get('public')?.value);
     formData.append('target', this.form.get('target')?.value);
     formData.append('freq', this.form.get('freq')?.value);
     formData.append('unit', this.form.get('unit')?.value);
-    
+    formData.append('public', this.form.get('public')?.value);
+
     this._service.addExerciseSolver(formData).subscribe((data: any) => {
       console.log(data);
-
+      
       if(data.v == true) {
-        var img = this.uploadPhoto();
+      var img = this.uploadPhoto();
+      
+      console.log(img?.get);
+      if(img != null) {
         
-        console.log(img?.get);
-        if(img != null) {
-          console.log("img nao é null");
+        this._service.uploadExercisePhoto(img, Number(data.m)).subscribe((data: any) => {
           
-          this._service.uploadExercisePhoto(img, Number(data.m)).subscribe((data: any) => {
-              
-            if (data.v == true) {
-              /* Close the dialog */
-              this.dialogRef.close();
-
-              /* Reload the my_exercises component */
-              let currentUrl = this._router.url;
-              this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-                  this._router.navigate([currentUrl]);
-              });
-              
-              this._snackBar.open('Foto adicionada!', 'Fechar', { "duration": 2500 });
+          if (data.v == true) {
+            /* Close the dialog */
+            this.dialogRef.close();
+            
+            /* Reload the my_exercises component */
+            let currentUrl = this._router.url;
+            this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+              this._router.navigate([currentUrl]);
+            });
+            
+            this._snackBar.open('Foto adicionada!', 'Fechar', { "duration": 2500 });
             }
           });
         }
-
       }
-      
     });
-
   }
+
+
+  // /* Block Classrooms form field when "public" checkbox is chosen */
+  // blockClassrooms(val: boolean) {
+  //   if (val) {
+  //     this.form.controls['classrooms'].disable();
+  //   } else {
+  //     this.form.controls['classrooms'].enable();
+  //   }
+  // }
 
   /* Upload the exercise's photo */
   uploadPhoto() {
@@ -118,8 +129,7 @@ export class AutomaticComponent implements OnInit {
     
     const formData: FormData = new FormData();
     formData.append('img', file, file.name);
-    console.log("upload");
-    console.log(formData.get('img'));
+
     return formData;
   }
 
@@ -135,7 +145,6 @@ export class AutomaticComponent implements OnInit {
       var name: string = file_name;
       
       const file = new File([this.convertDataUrlToBlob(file_name)], name, {type: 'file/' + ext});
-      console.log(file);
 
       const formData: FormData = new FormData();
       formData.append('cirpath', file, file.name);
@@ -172,12 +181,7 @@ export class AutomaticComponent implements OnInit {
   }
 
   imageChangeEvent(event: any): void {
-    // if(event.target.files.length > 0) {
-    //   const img = event.target.files[0];
-    //   this.form.get('img')?.setValue(img);
-    // }
     this.imageChangedEvent = event;
-
   }
 
 }
