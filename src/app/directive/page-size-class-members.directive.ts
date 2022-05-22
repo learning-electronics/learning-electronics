@@ -2,13 +2,13 @@ import { Directive } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Directive({
-  selector: '[appPageSizeClasses]'
+  selector: '[appPageSizeClassMembers]'
 })
-export class PageSizeClassesDirective {
+export class PageSizeClassMembersDirective {
   constructor(private element: MatPaginator) {
     element.page.subscribe((e: any) => this._setLocalStorage(e.pageSize));
 
-    this._setPageSize(Number(localStorage.getItem('pageSizeClasses')) || 10);
+    this._setPageSize(Number(localStorage.getItem('pageSizeClassMembers')) || 10);
   }
 
   private _setPageSize(v: number) {
@@ -16,6 +16,6 @@ export class PageSizeClassesDirective {
   }
 
   private _setLocalStorage(v: number) {
-    localStorage.setItem('pageSizeClasses', v.toString());
+    localStorage.setItem('pageSizeClassMembers', v.toString());
   }
 }

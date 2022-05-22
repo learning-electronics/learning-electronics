@@ -88,10 +88,6 @@ export class MyExercisesComponent implements OnInit{
       switch (sort.active) {
         case 'question':
           return this.compare(a.question, b.question, isAsc);
-        case 'theme':
-          return this.compare(a.ans1, b.ans1, isAsc);
-        case 'classes':
-          return this.compare(a.ans1, b.ans1, isAsc);
         case 'date':
           return this.compareDate(a.date, b.date, isAsc);
         default:

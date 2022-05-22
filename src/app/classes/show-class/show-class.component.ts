@@ -30,10 +30,8 @@ export class ShowClassComponent implements OnInit {
   dataSourceExercises = new MatTableDataSource<any>();
   selectionExercises = new SelectionModel<any>(true, []);
 
-  valueMembers: number = 0;
   pageSizeMembers: number = 10;
   sortedDataMembers: any[] = [];
-  valueExercises: number = 0;
   pageSizeExercises: number = 10;
   sortedDataExercises: any[] = [];
 
@@ -74,36 +72,68 @@ export class ShowClassComponent implements OnInit {
   ngAfterViewInit() {
     this.dataSourceMembers.sort = this.sortMembers;
     this.dataSourceMembers.paginator = this.paginatorMembers;
+
+    this.dataSourceExercises.sort = this.sortExercises;
+    this.dataSourceExercises.paginator = this.paginatorExercises;
   }
 
-  /* Sort data for the table */
-  sortData(sort: Sort) {
-    /* const data = [""];
+  /* Sort Exercises Data for the table */
+  sortDataExercises(sort: Sort) {
+    const data = this.all_exercises.slice();
     if (!sort.active || sort.direction === '') {
-      this.sortedData = data;
+      this.sortedDataExercises = data;
       return;
     }
 
-    this.sortedData = data.sort((a, b) => {  
+    this.sortedDataExercises = data.sort((a, b) => {  
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
-        case 'name':
+        case 'question':
           return this.compare(a.question, b.question, isAsc);
-        case 'teacher':
-          return this.compare(a.ans1, b.ans1, isAsc);
-        case 'number_students':
-          return this.compare(a.ans1, b.ans1, isAsc);
+        case 'date':
+          return this.compareDate(a.date, b.date, isAsc);
         default:
           return 0;
       }
     });
 
-    this.dataSource = new MatTableDataSource(this.sortedData); */
+    this.dataSourceExercises = new MatTableDataSource(this.sortedDataExercises);
+  }
+
+  /* Sort Members Data for the table */
+  sortDataMembers(sort: Sort) {
+    const data = this.all_members.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedDataMembers = data;
+      return;
+    }
+
+    this.sortedDataMembers = data.sort((a, b) => {  
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'first_name':
+          return this.compare(a.first_name, b.first_name, isAsc);
+        case 'last_name':
+          return this.compareDate(a.last_name, b.last_name, isAsc);
+        default:
+          return 0;
+      }
+    });
+
+    this.dataSourceMembers = new MatTableDataSource(this.sortedDataMembers);
   }
 
   /* Compare 2 elements of the table string or number */
   compare(a: number | string, b: number | string, isAsc: boolean) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+
+  /* Function to compare 2 dates */
+  compareDate(a: string, b: string, isAsc: boolean) {
+    var d1 = moment(a, 'DD-MM-YYYY').utc();
+    var d2 = moment(b, 'DD-MM-YYYY').utc();
+
+    return (d1.isBefore(d2) ? -1 : 1) * (isAsc ? 1 : -1); 
   }
 
   applyFilterMembers(event: Event) {
@@ -148,12 +178,12 @@ export class ShowClassComponent implements OnInit {
       this.dataSourceExercises = new MatTableDataSource(this.all_exercises);
       this.dataSourceExercises.sort = this.sortExercises;
       this.dataSourceExercises.paginator = this.paginatorExercises;
-      this.pageSizeExercises = localStorage.getItem('pageSizeExercises') ? parseInt(localStorage.getItem('pageSizeExercises')!) : 10;
+      this.pageSizeExercises = localStorage.getItem('pageSizeClassExs') ? parseInt(localStorage.getItem('pageSizeClassExs')!) : 10;
 
       this.dataSourceMembers = new MatTableDataSource(this.all_members);
       this.dataSourceMembers.sort = this.sortMembers;
       this.dataSourceMembers.paginator = this.paginatorMembers;
-      this.pageSizeMembers = localStorage.getItem('pageSizeClasses') ? parseInt(localStorage.getItem('pageSizeClasses')!) : 10;
+      this.pageSizeMembers = localStorage.getItem('pageSizeClassMembers') ? parseInt(localStorage.getItem('pageSizeClassMembers')!) : 10;
     });
   }
 
