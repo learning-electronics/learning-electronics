@@ -5,7 +5,7 @@
                 <h2>Chat da Sala {{room_id}}</h2>
             </div>
 
-            <div class="row my-2">
+            <div id="Msgs" class="row my-2" #chat_box>
                 <div *ngFor="let item of chat ">
                     <b>{{item.src}}</b> : {{item.data}}
                 </div>
@@ -15,7 +15,7 @@
                 <form [formGroup]="form">
                     <mat-form-field appearance="fill">
                         <mat-label>Send message</mat-label>
-                        <input  matInput type="text" formControlName="msg" (keyup.enter)="sendMessage()">
+                        <input  matInput type="text" formControlName="msg" >
                         <button *ngIf="form.get('msg')?.value" matSuffix mat-icon-button aria-label="Clear" (click)="sendMessage()">
                             <mat-icon>send</mat-icon>
                         </button>
