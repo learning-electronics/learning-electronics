@@ -19,21 +19,45 @@
                         </div>
                         
                         <div class="col"></div>
+
+                        <div class="col-2">
+                            <button mat-raised-button *ngIf="selectionMembers.selected.length > 0"
+                                color="warn" (click)="desassociateMembers()">
+                                Desassociar Aluno{{ selectionMembers.selected.length > 1 ? 's' : '' }}
+                            </button>
+                        </div>
                     </mat-toolbar>
-                    <table mat-table [dataSource]="dataSourceMembers" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSourceMembers" matSort (matSortChange)="sortDataMembers($event)" class="mat-elevation-z8">
+                        <!-- Checkbox Column -->
+
+                        <ng-container matColumnDef="select">
+                            <th mat-header-cell *matHeaderCellDef >
+                                <mat-checkbox (change)="$event ? masterToggleMembers() : null" 
+                                                [checked]="selectionMembers.hasValue() && isAllSelectedMembers()"
+                                                [indeterminate]="selectionMembers.hasValue() && !isAllSelectedMembers()">
+                                </mat-checkbox>
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                <mat-checkbox *ngIf="row.type == 'Estudante'" (click)="$event.stopPropagation()"
+                                                (change)="$event ? selectionMembers.toggle(row) : null"
+                                                [checked]="selectionMembers.isSelected(row)">
+                                </mat-checkbox>
+                            </td>
+                        </ng-container>
+
                         <ng-container matColumnDef="type">
-                            <th mat-header-cell mat-sort-header *matHeaderCellDef>Tipo</th>
+                            <th mat-header-cell *matHeaderCellDef>Tipo</th>
                             <td mat-cell *matCellDef="let element"> {{element.type}} </td>
                         </ng-container>
 
-                        <ng-container matColumnDef="fname">
+                        <ng-container matColumnDef="first_name">
                             <th mat-header-cell mat-sort-header *matHeaderCellDef>Primeiro Nome</th>
-                            <td mat-cell *matCellDef="let element"> {{element.fname}} </td>
+                            <td mat-cell *matCellDef="let element"> {{element.first_name}} </td>
                         </ng-container>
                         
-                        <ng-container matColumnDef="lname">
+                        <ng-container matColumnDef="last_name">
                             <th mat-header-cell mat-sort-header *matHeaderCellDef>Último Nome</th>
-                            <td mat-cell *matCellDef="let element"> {{element.lname}} </td>
+                            <td mat-cell *matCellDef="let element"> {{element.last_name}} </td>
                         </ng-container>
                         
                         <tr mat-header-row *matHeaderRowDef="displayedColumnsMembers"></tr>
@@ -44,7 +68,7 @@
                             <td class="mat-cell" colspan="4">Não há membros que correspondam ao filtro "{{inputM.value}}"</td>
                         </tr>
                     </table>
-                    <mat-paginator appPageSizeClasses [length]="pageSizeMembers" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Seleciona página dos Membros">
+                    <mat-paginator appPageSizeClassMembers [length]="pageSizeMembers" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Seleciona página dos Membros">
                     </mat-paginator>
                 </div>
             </mat-tab>
@@ -62,27 +86,28 @@
                         
                         <div class="col"></div>
 
-                        <div class="col-1 mx-5">
-                            <button mat-raised-button color="warn" *ngIf="selection.selected.length > 0" >
-                                Desassociar Exercício{{ selection.selected.length > 1 ? 's' : '' }}
+                        <div class="col-3">
+                            <button mat-raised-button *ngIf="selectionExercises.selected.length > 0"
+                                color="warn" (click)="desassociateExercises()">   
+                                Desassociar Exercício{{ selectionExercises.selected.length > 1 ? 's' : '' }}
                             </button>
                         </div>
                     </mat-toolbar>
                     
-                     <table mat-table [dataSource]="dataSourceExercises" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
+                     <table mat-table [dataSource]="dataSourceExercises" matSort (matSortChange)="sortDataExercises($event)" class="mat-elevation-z8">
                         <!-- Checkbox Column -->
 
                         <ng-container matColumnDef="select">
                             <th mat-header-cell *matHeaderCellDef >
-                                <mat-checkbox (change)="$event ? masterToggle() : null" 
-                                                [checked]="selection.hasValue() && isAllSelected()"
-                                                [indeterminate]="selection.hasValue() && !isAllSelected()">
+                                <mat-checkbox (change)="$event ? masterToggleExercises() : null" 
+                                                [checked]="selectionExercises.hasValue() && isAllSelectedExercises()"
+                                                [indeterminate]="selectionExercises.hasValue() && !isAllSelectedExercises()">
                                 </mat-checkbox>
                             </th>
                             <td mat-cell *matCellDef="let row">
                                 <mat-checkbox (click)="$event.stopPropagation()"
-                                                (change)="$event ? selection.toggle(row) : null"
-                                                [checked]="selection.isSelected(row)">
+                                                (change)="$event ? selectionExercises.toggle(row) : null"
+                                                [checked]="selectionExercises.isSelected(row)">
                                 </mat-checkbox>
                             </td>
                         </ng-container>
@@ -110,13 +135,17 @@
                             <td class="mat-cell" colspan="4">Não há perguntas que correspondam ao filtro "{{inputE.value}}"</td>
                         </tr>
                     </table>
-                    <mat-paginator appPageSizeExercises [length]="pageSizeExercises" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Seleciona página dos Exercícios">
+                    <mat-paginator appPageSizeClassExs [length]="pageSizeExercises" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Seleciona página dos Exercícios">
                     </mat-paginator>
                 </div>
             </mat-tab>
     
             <mat-tab label="Testes">
                 Testes
+            </mat-tab>
+
+            <mat-tab label="Estatísticas">
+                Estatísticas
             </mat-tab>
     
             <mat-tab label="Definições">

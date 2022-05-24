@@ -88,10 +88,6 @@ export class MyExercisesComponent implements OnInit{
       switch (sort.active) {
         case 'question':
           return this.compare(a.question, b.question, isAsc);
-        case 'theme':
-          return this.compare(a.ans1, b.ans1, isAsc);
-        case 'classes':
-          return this.compare(a.ans1, b.ans1, isAsc);
         case 'date':
           return this.compareDate(a.date, b.date, isAsc);
         default:
@@ -127,7 +123,7 @@ export class MyExercisesComponent implements OnInit{
         // Changing theme ID array to theme name array
         var theme_names: string[] = [];
         ex.theme.forEach((id: any) => {
-          theme_names.push(this.all_themes[id - 1].name);
+          theme_names.push(this.all_themes[id - 1 - 4].name);
         });  
 
         if (ex.public == true) {
@@ -183,7 +179,7 @@ export class MyExercisesComponent implements OnInit{
     var theme_list: number[] = [];
 
     exercise_data.theme.forEach((theme: string) => {
-      theme_list.push(this.all_themes.findIndex((t: theme) => t.name == theme) + 1);
+      theme_list.push(this.all_themes.findIndex((t: theme) => t.name == theme) + 1 + 4);
     });
 
     const dialogRef = this.add_edit_ex_dialog.open(EditExerciseComponent, {

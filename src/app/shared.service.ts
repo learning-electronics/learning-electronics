@@ -411,4 +411,18 @@ export class SharedService {
 
     return this._http.delete(this.CLASSROOM_API + '/delete_classroom/' + id, httpOptions);
   }
+
+  /* Update a classroom */
+  updateClassroom(info: any, id: number) {
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    return this._http.patch(this.CLASSROOM_API + '/update_classroom/' + id, info, httpOptions);
+  }
 }

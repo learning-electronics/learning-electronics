@@ -73,6 +73,9 @@ import { PageSizeClassesDirective } from './directive/page-size-classes.directiv
 import { AddClassComponent } from './classes/add-class/add-class.component';
 import { AutomaticComponent } from './my-exercises/add-exercise/automatic/automatic.component';
 import { ClassPasswordComponent } from './classes/class-password/class-password.component';
+import { DesassociateElementComponent } from './classes/desassociate-element/desassociate-element.component';
+import { PageSizeClassExsDirective } from './directive/page-size-class-exs.directive';
+import { PageSizeClassMembersDirective } from './directive/page-size-class-members.directive';
 
 @NgModule({
   declarations: [
@@ -115,7 +118,10 @@ import { ClassPasswordComponent } from './classes/class-password/class-password.
     PageSizeClassesDirective,
     AddClassComponent,
     ClassPasswordComponent,
-    AutomaticComponent
+    AutomaticComponent,
+    DesassociateElementComponent,
+    PageSizeClassExsDirective,
+    PageSizeClassMembersDirective
   ],
   imports: [
     BrowserModule,
