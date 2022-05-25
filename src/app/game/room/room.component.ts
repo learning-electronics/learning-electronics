@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 // import { Location } from '@angular/common';
 
@@ -16,7 +16,7 @@ export class RoomComponent implements OnInit {
   form: FormGroup = new FormGroup({
     msg: new FormControl(''),
   });
-
+  @ViewChild('chat_box') chat_box:ElementRef;
   constructor() { }
 
   // state : any;
@@ -37,7 +37,10 @@ export class RoomComponent implements OnInit {
       this.chat = data;
     });
   }
-
+  ngAfterViewChecked() {
+    //scrolls to the bottom of the chat
+    this.chat_box.nativeElement.scrollTop = this.chat_box.nativeElement.scrollHeight;
+}
   // send message to the server
   sendMessage() {
     this.socket.emit("send_message", this.form.get('msg')?.value, this.room_id);
