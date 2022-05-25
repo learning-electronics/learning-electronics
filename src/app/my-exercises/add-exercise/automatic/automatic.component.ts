@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
-import { SharedService, theme } from 'src/app/shared.service';
+import { classroom, SharedService, theme } from 'src/app/shared.service';
 import { AddExerciseComponent } from '../add-exercise.component';
 
 @Component({
@@ -13,15 +13,14 @@ import { AddExerciseComponent } from '../add-exercise.component';
   styleUrls: ['./automatic.component.scss']
 })
 export class AutomaticComponent implements OnInit {
-
   form! : FormGroup;
   fileChangedEvent : any = "";
   imageChangedEvent: any = '';
   croppedImage: any = '';
   themes: theme[] = [];
   units: string[] = [];
+  classrooms: classroom[] = [];
   ModalTitle: string;
-  
   
   constructor(
     private _formBuilder: FormBuilder,
@@ -33,6 +32,7 @@ export class AutomaticComponent implements OnInit {
   ) {
     this.themes = data.themes;
     this.units = data.units;
+    this.classrooms = data.classrooms;
     this.ModalTitle = data.ModalTitle;
   }
 
@@ -41,17 +41,14 @@ export class AutomaticComponent implements OnInit {
       cirpath : new FormControl("", [Validators.required]),
       theme : new FormControl("", [Validators.required]),
       question : new FormControl("", [Validators.required]),
-      public : new FormControl(false, [Validators.required]),
       target : new FormControl("", [Validators.required]),
+      check : new FormControl(false),
+      classrooms: new FormControl([]),
       freq : new FormControl("", [Validators.required]),
-      unit : new FormControl("", [Validators.required]),
-      img : new FormControl("", [Validators.required])
+      unit : new FormControl("", [Validators.required])
     })
   }
 
-  ngAfterViewInit() {
-  }
-  
   /* Shorthands for form controls (used from within template) */
   get question() { return this.form.get('question'); }
   get target() { return this.form.get('target'); }
@@ -61,7 +58,6 @@ export class AutomaticComponent implements OnInit {
       Sends all data to the rest in a FormData object
   */
   submit() {
-
     const formData = new FormData();
     formData.append('cirpath', this.form.get('cirpath')?.value);
     formData.append('question', this.form.get('question')?.value);
@@ -69,30 +65,27 @@ export class AutomaticComponent implements OnInit {
     formData.append('target', this.form.get('target')?.value);
     formData.append('freq', this.form.get('freq')?.value);
     formData.append('unit', this.form.get('unit')?.value);
-    formData.append('public', this.form.get('public')?.value);
+    formData.append('public', this.form.get('check')?.value);
+    formData.append('visible', this.form.get('check')?.value == false ? this.form.get('classrooms')?.value : []);
+    console.log(this.form.get('check')?.value == false ? this.form.get('classrooms')?.value : []);
 
-    this._service.addExerciseSolver(formData).subscribe((data: any) => {
-      console.log(data);
-      
+    this._service.addExerciseSolver(formData).subscribe((data: any) => { 
       if(data.v == true) {
-      var img = this.uploadPhoto();
+        var img = this.uploadPhoto();
       
-      console.log(img?.get);
-      if(img != null) {
-        
-        this._service.uploadExercisePhoto(img, Number(data.m)).subscribe((data: any) => {
-          
-          if (data.v == true) {
-            /* Close the dialog */
-            this.dialogRef.close();
-            
-            /* Reload the my_exercises component */
-            let currentUrl = this._router.url;
-            this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-              this._router.navigate([currentUrl]);
-            });
-            
-            this._snackBar.open('Foto adicionada!', 'Fechar', { "duration": 2500 });
+        if(img != null) {  
+          this._service.uploadExercisePhoto(img, Number(data.m)).subscribe((data: any) => {
+            if (data.v == true) {
+              // /* Close the dialog */
+              // this.dialogRef.close();
+              
+              // /* Reload the my_exercises component */
+              // let currentUrl = this._router.url;
+              // this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+              //   this._router.navigate([currentUrl]);
+              // });
+              
+              this._snackBar.open('Foto adicionada!', 'Fechar', { "duration": 2500 });
             }
           });
         }
@@ -100,15 +93,15 @@ export class AutomaticComponent implements OnInit {
     });
   }
 
-
-  // /* Block Classrooms form field when "public" checkbox is chosen */
-  // blockClassrooms(val: boolean) {
-  //   if (val) {
-  //     this.form.controls['classrooms'].disable();
-  //   } else {
-  //     this.form.controls['classrooms'].enable();
-  //   }
-  // }
+  /* Block Classrooms form field when "public" checkbox is chosen */
+  blockClassrooms(val: boolean) {
+    if (val) {
+      this.form.controls['classrooms'].reset();
+      this.form.controls['classrooms'].disable();
+    } else {
+      this.form.controls['classrooms'].enable();
+    }
+  }
 
   /* Upload the exercise's photo */
   uploadPhoto() {
@@ -121,20 +114,20 @@ export class AutomaticComponent implements OnInit {
         photo = this.imageChangedEvent.target.files[0].name;
       }
 
-    var arr: string[] = photo.split('.');
-    var ext: string = arr[arr.length - 1];
-    var name: string = photo;
+      var arr: string[] = photo.split('.');
+      var ext: string = arr[arr.length - 1];
+      var name: string = photo;
 
-    const file = new File([this.convertDataUrlToBlob(this.croppedImage)], name, {type: 'image/' + ext});
-    
-    const formData: FormData = new FormData();
-    formData.append('img', file, file.name);
+      const file = new File([this.convertDataUrlToBlob(this.croppedImage)], name, {type: 'image/' + ext});
+      
+      const formData: FormData = new FormData();
+      formData.append('img', file, file.name);
 
-    return formData;
+      return formData;
+    }
+
+    return null;
   }
-
-  return null;
-}
 
   uploadFile() {
     if(this.fileChangedEvent != "") {
@@ -183,5 +176,4 @@ export class AutomaticComponent implements OnInit {
   imageChangeEvent(event: any): void {
     this.imageChangedEvent = event;
   }
-
 }

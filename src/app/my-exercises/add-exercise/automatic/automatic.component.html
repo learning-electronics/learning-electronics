@@ -43,7 +43,18 @@
                 </mat-form-field>
             </div>
             <div class="row my-2 mx-auto">
-                <mat-checkbox color="primary" formControlName="public" name="public">Tornar o exercício público</mat-checkbox>
+                <mat-checkbox color="primary" formControlName="check" name="check" (change)="blockClassrooms($event.checked)">Tornar o exercício público</mat-checkbox>
+            </div>
+
+            <div class="row my-3 mx-auto">
+                <mat-form-field >
+                    <mat-label>Turmas</mat-label>
+                    <mat-select formControlName="classrooms" name="Turmas" multiple>
+                        <mat-option [value]="class.id" *ngFor="let class of classrooms">
+                        {{class.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
         </div>
         <div class="col my-3 mx-auto">

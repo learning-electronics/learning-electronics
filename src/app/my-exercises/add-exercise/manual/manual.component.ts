@@ -43,8 +43,7 @@ export class ManualComponent implements OnInit {
       unit: new FormControl("", [Validators.required]),
       check: new FormControl(false),
       classrooms: new FormControl([]),
-      resolution: new FormControl(""),
-      image: new FormControl(""),   
+      resolution: new FormControl("")
     }, {validator: answerValidator});
   }
 
@@ -54,9 +53,6 @@ export class ManualComponent implements OnInit {
       this.form.controls['classrooms'].reset();
       this.form.controls['classrooms'].disable();
     } else {
-      var lst: any = [];
-      this.data.exercise.visible.forEach((c: any) => { lst.push(c.id)  });
-      this.form.controls['classrooms'].setValue(lst);
       this.form.controls['classrooms'].enable();
     }
   }
@@ -121,7 +117,6 @@ export class ManualComponent implements OnInit {
 
           if (img != null) {
             this._service.uploadExercisePhoto(img, Number(data.m)).subscribe((data: any) => {
-              
               if (data.v == true) {
                 /* Close the dialog */
                 this.dialogRef.close();
