@@ -24,10 +24,10 @@ export class GameComponent implements OnInit {
   connections: string[] = [];
   rooms: string[] = [];
   selected_room: string = "";
+  last_room: string = "";
   room_flag: boolean = false;
   socket_id: string = "";
   newRoomName: string = "";
-  owner : string = "None";
 
   constructor(private router : Router,private _service: SharedService, public dialog: MatDialog) {
     this._service.getAccount().subscribe((data: any) => {
@@ -35,9 +35,7 @@ export class GameComponent implements OnInit {
         this.user_info = data.info as person;
       }
     });
-  }
-  
-  
+  }  
 
   ngOnInit(): void {
     this.socket = io("http://localhost:3000");
@@ -89,11 +87,24 @@ export class GameComponent implements OnInit {
   changeRoom(room_id:any) {    
     if(room_id == "None") {
       this.room_flag = false;
+      this.last_room=this.selected_room;
       this.selected_room = "";
     } else {
       this.room_flag = true;
+      this.last_room = this.selected_room;
       this.selected_room = room_id;
     }
-    this.socket.emit("change_room", this.selected_room);
+    this.socket.emit("change_room", this.selected_room,this.last_room);
+  }
+
+  playerReady(room_id:any){
+    if (room_id == "None") {
+      this.room_flag = false;
+      this.selected_room = "";
+    }else{
+      this.room_flag = true;
+      this.selected_room = room_id; 
+    }
+    this.socket.emit("ready", this.selected_room);
   }
 }
