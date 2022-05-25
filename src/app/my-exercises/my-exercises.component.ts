@@ -198,7 +198,10 @@ export class MyExercisesComponent implements OnInit{
           'resol': ex.resol,
           'theme': theme_list,
           'img': ex.img,
-        }
+          'public': ex.public,
+          'visible': ex.visible
+        },
+        'classrooms': this.all_classrooms
       }
     });
   }

@@ -41,8 +41,8 @@ export class ManualComponent implements OnInit {
       answers: new FormControl("", [Validators.required]),
       theme: new FormControl("", [Validators.required]),
       unit: new FormControl("", [Validators.required]),
-      check: new FormControl("", [Validators.required]),
-      classrooms: new FormControl("", [Validators.required]),
+      check: new FormControl(false),
+      classrooms: new FormControl([]),
       resolution: new FormControl(""),
       image: new FormControl(""),   
     }, {validator: answerValidator});
@@ -51,8 +51,12 @@ export class ManualComponent implements OnInit {
   /* Block Classrooms form field when "public" checkbox is chosen */
   blockClassrooms(val: boolean) {
     if (val) {
+      this.form.controls['classrooms'].reset();
       this.form.controls['classrooms'].disable();
     } else {
+      var lst: any = [];
+      this.data.exercise.visible.forEach((c: any) => { lst.push(c.id)  });
+      this.form.controls['classrooms'].setValue(lst);
       this.form.controls['classrooms'].enable();
     }
   }
@@ -96,7 +100,7 @@ export class ManualComponent implements OnInit {
   submit() {
     if (this.form.valid) {
       var answers: string[] = this.form.get('answers')?.value.split(";");
-    
+      
       var exercise = {
         question: this.form.get('question')?.value,
         ans1: answers[0],
@@ -106,6 +110,8 @@ export class ManualComponent implements OnInit {
         unit: this.form.get('unit')?.value,
         theme: this.form.get('theme')?.value,
         resol: this.form.get('resolution')?.value,
+        public: this.form.get('check')?.value,
+        visible: this.form.get('check')?.value == false ? this.form.get('classrooms')?.value : [],
         img: null
       }
 

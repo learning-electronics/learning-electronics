@@ -4,7 +4,7 @@
             <div class="row my-3 mx-auto">
                 <mat-form-field class="mx-auto">
                     <mat-label>Pergunta</mat-label>
-                    <input matInput formControlName="question" required>
+                    <input matInput formControlName="question" name="Questão" required>
                     <mat-error *ngIf="question?.hasError('required')">Crie uma questão</mat-error>
                 </mat-form-field>
             </div>
@@ -12,7 +12,7 @@
             <div class="row my-3 mx-auto">
                 <mat-form-field class="mx-auto">
                     <mat-label>Respostas (R1; R2; R3; RCorreta)</mat-label>
-                    <input matInput formControlName="answers" (input)="onAnswerInput()"required>
+                    <input matInput formControlName="answers" name="Respostas" (input)="onAnswerInput()"required>
                     <mat-error *ngIf="answer?.hasError('required')">Preencha as respostas da questão</mat-error>
                     <mat-error *ngIf="answer?.invalid && !answer?.hasError('required')">Formato errado</mat-error>
                 </mat-form-field>
@@ -21,7 +21,7 @@
             <div class="row my-3 mx-auto">
                 <mat-form-field >
                     <mat-label>Tema</mat-label>
-                    <mat-select formControlName="theme" name="Tema" multiple>
+                    <mat-select formControlName="theme" name="Temas" multiple>
                         <mat-option [value]="theme.id" *ngFor="let theme of themes">
                         {{theme.name}}
                         </mat-option>
@@ -43,7 +43,7 @@
             <div class="row my-3 mx-auto">
                 <mat-form-field >
                     <mat-label>Resolução</mat-label>
-                    <input matInput formControlName="resolution">
+                    <input matInput formControlName="resolution" name="Resolução">
                 </mat-form-field>
             </div>
 

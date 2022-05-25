@@ -27,6 +27,8 @@ export class EditExerciseComponent implements OnInit {
     private _router: Router,
     private dialogRef: MatDialogRef<EditExerciseComponent>
     ) {
+    console.log(data);
+
     if (this.data.exercise.img == null) {
       this.imgPath = "";
     } else {
@@ -35,20 +37,40 @@ export class EditExerciseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    var lst: any = [];
+    
+    if ('visible' in this.data.exercise && this.data.exercise.visible != undefined) {
+      this.data.exercise.visible.forEach((c: any) => { lst.push(c.id) });
+    } 
+
     this.form = this._formBuilder.group({
       question: new FormControl( {value: this.data.exercise.question, disabled: this.disabled }, [Validators.required]),
       answers: new FormControl(
         { 
           value: this.data.exercise.ans1 + ";" + this.data.exercise.ans2 + ";" + this.data.exercise.ans3 + ";" + this.data.exercise.correct,
           disabled: this.disabled 
-        },
-        [Validators.required]
+        }
       ),
+      classrooms: new FormControl({value: lst, disabled: this.disabled }),
+      check: new FormControl({value: this.data.exercise.public, disabled: this.disabled }, [Validators.required]),
       theme: new FormControl({ value: this.data.exercise.theme, disabled: this.disabled }, [Validators.required]),
       unit: new FormControl({ value: this.data.exercise.unit, disabled: this.disabled }, [Validators.required]),
       resolution: new FormControl({ value: this.data.exercise.resol, disabled: this.disabled }),
-      image: new FormControl(""),   
+      image: new FormControl(""),
     }, {validator: answerValidator}); 
+  }
+
+  /* Block Classrooms form field when "public" checkbox is chosen */
+  blockClassrooms(val: boolean) {
+    if (val) {
+      this.form.controls['classrooms'].reset();
+      this.form.controls['classrooms'].disable();
+    } else {
+      var lst: any = [];
+      this.data.exercise.visible.forEach((c: any) => { lst.push(c.id)  });
+      this.form.controls['classrooms'].setValue(lst);
+      this.form.controls['classrooms'].enable();
+    }
   }
 
   /* Shorthands for form controls (used from within template) */
@@ -94,7 +116,7 @@ export class EditExerciseComponent implements OnInit {
   submit() {
     if (this.form.valid) {
       var answers: string[] = this.form.get('answers')?.value.split(";");
-    
+      
       var exercise = {
         question: this.form.get('question')?.value,
         ans1: answers[0],
@@ -104,8 +126,12 @@ export class EditExerciseComponent implements OnInit {
         unit: this.form.get('unit')?.value,
         theme: this.form.get('theme')?.value,
         resol: this.form.get('resolution')?.value,
+        public: this.form.get('check')?.value,
+        visible: this.form.get('check')?.value == false ? this.form.get('classrooms')?.value : [],
         img: null
       }
+
+      console.log(exercise);
 
       this._service.updateExercise(exercise, this.data.exercise.id).subscribe((data: any) => {
         if (data.v == true) {
@@ -185,6 +211,11 @@ export class EditExerciseComponent implements OnInit {
     this.form.controls['theme'].setValue(this.data.exercise.theme),
     this.form.controls['unit'].setValue(this.data.exercise.unit);
     this.form.controls['resolution'].setValue(this.data.exercise.resol);
+
+    var lst: any = [];
+    this.data.exercise.visible.forEach((c: any) => { lst.push(c.id)  });
+    this.form.controls['classrooms'].setValue(lst);
+    this.form.controls['check'].setValue(this.data.exercise.public);
   }
 
   /* Control the form edit state */
@@ -196,6 +227,8 @@ export class EditExerciseComponent implements OnInit {
       this.form.controls['answers'].disable();
       this.form.controls['theme'].disable();
       this.form.controls['unit'].disable();
+      this.form.controls['classrooms'].disable();
+      this.form.controls['check'].disable();
       this.form.controls['resolution'].disable();
 
       /* Set the default information about the exercise */
@@ -206,6 +239,8 @@ export class EditExerciseComponent implements OnInit {
       this.form.controls['answers'].enable();
       this.form.controls['theme'].enable();
       this.form.controls['unit'].enable();
+      if (this.form.get('check')?.value == false) this.form.controls['classrooms'].enable();
+      this.form.controls['check'].enable();
       this.form.controls['resolution'].enable();
     }
   }
