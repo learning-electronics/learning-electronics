@@ -96,15 +96,4 @@ export class GameComponent implements OnInit {
     }
     this.socket.emit("change_room", this.selected_room,this.last_room);
   }
-
-  playerReady(room_id:any){
-    if (room_id == "None") {
-      this.room_flag = false;
-      this.selected_room = "";
-    }else{
-      this.room_flag = true;
-      this.selected_room = room_id; 
-    }
-    this.socket.emit("ready", this.selected_room);
-  }
 }

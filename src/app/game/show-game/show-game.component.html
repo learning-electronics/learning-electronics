@@ -32,10 +32,19 @@
             </div>
         </div>
         <div class="row">
-            <div class="col"></div>
+            <div class="col">
+                <mat-spinner 
+                class="example-margin"
+                color="accent"
+                mode="determinate"
+                value={{ready_value}}>
+                </mat-spinner>
+                {{n_ready}}/{{n_players}}
+            </div>
 
             <div class="col-2">
-                <mat-icon *ngIf="!started" id="play" color="primary" (click)="startGame()">play_circle_outline</mat-icon>
+                <mat-icon *ngIf="!started" id="play" color="primary" (click)="playerReady()">play_circle_outline</mat-icon>
+                
             </div>
         </div>
     </div>
