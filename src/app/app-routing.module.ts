@@ -15,6 +15,7 @@ import { FailedRegisterComponent } from './failed-register/failed-register.compo
 import { ShowClassComponent } from './classes/show-class/show-class.component';
 import { RoomComponent } from './game/room/room.component';
 import { MyExercisesComponent } from './my-exercises/my-exercises.component';
+import { MyExamsComponent } from './my-exams/my-exams.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'classes', component: ClassesComponent },
   { path: 'class', component: ShowClassComponent },
   { path: 'my_exercises', component: MyExercisesComponent },
+  { path: 'my_exams', component: MyExamsComponent },
   { path: 'quizz', component: QuizzComponent },
   { path: 'game', component: GameComponent },
   { path: 'game', component: RoomComponent },

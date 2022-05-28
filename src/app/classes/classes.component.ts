@@ -34,6 +34,11 @@ export class ClassesComponent implements OnInit {
   }
 
   ngOnInit(): void { 
+    this.dataSource.filterPredicate = (data: classroom, filter: string): boolean => {
+      return (
+        data.name.toLocaleLowerCase().includes(filter)
+      )
+    }
   }
 
   ngAfterViewInit() {
@@ -74,6 +79,9 @@ export class ClassesComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   /* Open Dialog for adding a class */
@@ -94,7 +102,7 @@ export class ClassesComponent implements OnInit {
         this.all_classrooms.push({ access: element.access, id: element.id, name: element.name, teacher: element.teacher__first_name, number_students: element.students });
       });
 
-      this.dataSource = new MatTableDataSource(this.all_classrooms);
+      this.dataSource.data = this.all_classrooms;
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.pageSize = localStorage.getItem('pageSizeClasses') ? parseInt(localStorage.getItem('pageSizeClasses')!) : 10;

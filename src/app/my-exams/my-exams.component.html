@@ -1,7 +1,7 @@
 <div class="row d-flex justify-content-center w-100 h-100">
     <div class="col my-5 mx-auto">
         <div class="row my-2">
-            <p>Os meus Exercícios</p>
+            <p>Os meus Testes</p>
         </div>
 
         <div class="row mx-5 mt-3">
@@ -17,26 +17,26 @@
                 <div class="col"></div>
                 
                 <div class="col-1 mx-5">
-                    <button mat-raised-button color="warn" *ngIf="selection.selected.length > 0" (click)="deleteExercises()">
-                        Eliminar Exercício{{ selection.selected.length > 1 ? 's' : '' }}
+                    <button mat-raised-button color="warn" *ngIf="selection.selected.length > 0" (click)="deleteExams()">
+                        Eliminar Teste{{ selection.selected.length > 1 ? 's' : '' }}
                     </button>
                 </div>
 
                 <div class="col-2">
-                    <button mat-raised-button color="primary" (click)="addEx()">Adicionar Exercício</button>
+                    <button mat-raised-button color="primary" (click)="addExam()">Adicionar Teste</button>
                 </div>
             </mat-toolbar>
-            <table  mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
+             <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
                 <!-- Checkbox Column -->
 
                 <ng-container matColumnDef="select">
-                    <th [style.width]="'5%'" mat-header-cell *matHeaderCellDef >
+                    <th mat-header-cell *matHeaderCellDef >
                         <mat-checkbox (change)="$event ? masterToggle() : null" 
                                         [checked]="selection.hasValue() && isAllSelected()"
                                         [indeterminate]="selection.hasValue() && !isAllSelected()">
                         </mat-checkbox>
                     </th>
-                    <td [style.width]="'5%'" mat-cell *matCellDef="let row">
+                    <td mat-cell *matCellDef="let row">
                         <mat-checkbox (click)="$event.stopPropagation()"
                                         (change)="$event ? selection.toggle(row) : null"
                                         [checked]="selection.isSelected(row)">
@@ -44,25 +44,24 @@
                     </td>
                 </ng-container>
 
-                <ng-container matColumnDef="question">
-                    <th [style.width]="'40%'" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Pergunta">Pergunta</th>
-                    <td [style.width]="'40%'" (click)="editEx(element)" mat-cell *matCellDef="let element"> {{element.question}} </td>
-                </ng-container>
-              
-                <ng-container matColumnDef="theme">
-                    <th mat-header-cell *matHeaderCellDef>Temas</th>
-                    <td (click)="editEx(element)" mat-cell *matCellDef="let element"> {{element.theme}} </td>
+                <ng-container matColumnDef="title">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Pergunta">Pergunta</th>
+                    <td (click)="editExam(element)" mat-cell *matCellDef="let element"> {{element.title}} </td>
                 </ng-container>
               
                 <ng-container matColumnDef="classes">
                     <th mat-header-cell *matHeaderCellDef>Visibilidade</th>
-                    <td (click)="editEx(element)" mat-cell *matCellDef="let element"> {{element.classes}} </td>
+                    <td (click)="editExam(element)" mat-cell *matCellDef="let element"> {{element.classes}} </td>
                 </ng-container>
-            
+
+                <ng-container matColumnDef="password">
+                    <th mat-header-cell *matHeaderCellDef>Password</th>
+                    <td (click)="editExam(element)" mat-cell *matCellDef="let element"> {{element.password}} </td>
+                </ng-container>
               
                 <ng-container matColumnDef="date">
-                    <th [style.width]="'10%'" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Data">Data</th>
-                    <td [style.width]="'10%'" (click)="editEx(element)" mat-cell *matCellDef="let element"> {{element.date}} </td>
+                    <th  mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Data">Data</th>
+                    <td (click)="editExam(element)" mat-cell *matCellDef="let element"> {{element.date}} </td>
                 </ng-container>
               
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

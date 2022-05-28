@@ -67,7 +67,12 @@ export class MyExercisesComponent implements OnInit{
     });
   }
 
-  ngOnInit(): void {  
+  ngOnInit(): void {
+    this.dataSource.filterPredicate = (data: exercise, filter: string): boolean => {
+      return (
+        data.question.toLocaleLowerCase().includes(filter)
+      )
+    }
   }
 
   ngAfterViewInit() {
@@ -112,8 +117,11 @@ export class MyExercisesComponent implements OnInit{
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    const filter = (event.target as HTMLInputElement).value.trim().toLocaleLowerCase();
+    this.dataSource.filter = filter;
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   /* Refresh the table content */
@@ -151,7 +159,7 @@ export class MyExercisesComponent implements OnInit{
         this.all_exercises.push(ex);
       });
       
-      this.dataSource = new MatTableDataSource(this.all_exercises);
+      this.dataSource.data = this.all_exercises;
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.pageSize = localStorage.getItem('pageSizeExercises') ? parseInt(localStorage.getItem('pageSizeExercises')!) : 10;
