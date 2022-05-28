@@ -78,6 +78,7 @@ import { PageSizeClassExsDirective } from './directive/page-size-class-exs.direc
 import { PageSizeClassMembersDirective } from './directive/page-size-class-members.directive';
 import { MyExamsComponent } from './my-exams/my-exams.component';
 import { AddExamComponent } from './my-exams/add-exam/add-exam.component';
+import { DeleteConfirmationExamComponent } from './my-exams/delete-confirmation-exam/delete-confirmation-exam.component';
 
 @NgModule({
   declarations: [
@@ -125,7 +126,8 @@ import { AddExamComponent } from './my-exams/add-exam/add-exam.component';
     PageSizeClassExsDirective,
     PageSizeClassMembersDirective,
     MyExamsComponent,
-    AddExamComponent
+    AddExamComponent,
+    DeleteConfirmationExamComponent
   ],
   imports: [
     BrowserModule,

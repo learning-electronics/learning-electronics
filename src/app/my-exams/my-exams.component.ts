@@ -4,45 +4,59 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { classroom, SharedService } from '../shared.service';
+import { classroom, SharedService, theme } from '../shared.service';
+import * as _moment from 'moment';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { AddExamComponent } from './add-exam/add-exam.component';
+import { DeleteConfirmationExamComponent } from './delete-confirmation-exam/delete-confirmation-exam.component';
+
+const moment = _moment;
+
+export const DATE_FORMAT = {
+  parse: {
+      dateInput: ['DD-MM-YYYY', 'DD/MM/YYYY'] 
+  },
+  display: {
+      dateInput: 'DD-MM-YYYY',
+      monthYearLabel: 'YYYY',
+      dateA11yLabel: 'LL',
+      monthYearA11yLabel: 'YYYY'
+  }
+};
 
 @Component({
   selector: 'app-my-exams',
   templateUrl: './my-exams.component.html',
-  styleUrls: ['./my-exams.component.scss']
+  styleUrls: ['./my-exams.component.scss'],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: DATE_FORMAT },
+  ]
 })
 export class MyExamsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   
-  displayedColumns: string[] = ['select', 'title', 'classes', 'password', 'date'];
+  displayedColumns: string[] = ['select', 'title', 'numQuestions', 'classes', 'password', 'timer', 'date'];
   dataSource = new MatTableDataSource<any>();
   selection = new SelectionModel<any>(true, []);
 
-  d:any = [
-    {
-      title: 1,
-      classes: 1,
-      password: 1,
-      date: 1,
-    },
-    {
-      title: 2,
-      classes: 2,
-      password: 2,
-      date: 2,
-    }
-  ]
-
   pageSize: number = 10;
   all_classrooms: classroom[];
+  all_themes: theme[];
+  all_exams: any[] = [];
   
   constructor(public add_edit_ex_dialog: MatDialog, private _service: SharedService) {
+    this._service.getThemes().subscribe((data: any) => {
+      this.all_themes = data as theme[];
+      this.refreshTable();
+    });
+
     this._service.getMyClassrooms().subscribe((data: any) => {
       this.all_classrooms = data as classroom[];
     });
-    this.dataSource = new MatTableDataSource(this.d);
   }
 
   ngOnInit(): void {
@@ -66,10 +80,49 @@ export class MyExamsComponent implements OnInit {
     }
   }
 
+  refreshTable() {
+    this._service.getMyExams().subscribe((data: any) => {
+      console.log(data);
+      data.forEach((exam: any) => {
+        if (exam.public == true) {
+          exam.classes = "Público";
+        } else {
+          if (exam.classrooms.length > 0) {
+            exam.classes = "";
+            
+            /* Append the class name to the classes string */
+            exam.classrooms.forEach((c: {'id': number, 'name': string}) => {
+              exam.classes += c.name + ", ";
+            });
+            
+            /* Remove the last comma */
+            exam.classes = exam.classes.substring(0, exam.classes.length - 2);
+          } else {
+            exam.classes = "Nenhuma";
+          }
+        }
+
+        exam.password = exam.has_pwd == true ? 'Sim' : 'Não'
+        
+        // Get the correct date format
+        exam.date_created = moment(exam.date_create).format('DD-MM-YYYY');
+
+        this.all_exams.push(exam);
+      });
+      
+      this.dataSource.data = this.all_exams;
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.pageSize = 5;//localStorage.getItem('pageSizeExercises') ? parseInt(localStorage.getItem('pageSizeExercises')!) : 10;
+    });
+  }
+
   sortData(sort: Sort) {}
 
   deleteExams() {
-
+    const dialogRef = this.add_edit_ex_dialog.open(DeleteConfirmationExamComponent, {
+      data: this.selection.selected
+    });
   }
 
   addExam() {

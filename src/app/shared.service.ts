@@ -419,5 +419,44 @@ export class SharedService {
     return this._http.patch(this.CLASSROOM_API + '/update_classroom/' + id, info, httpOptions);
   }
 
-  
+  /* Create a new Exam */
+  addExam(exam: any) {
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    return this._http.post(this.EXAM_API + '/add_exam', exam, httpOptions);
+  }
+
+  getMyExams() {
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    return this._http.get(this.EXAM_API + '/my_exams', httpOptions);
+  }
+
+  /* Delete a exam */
+  deleteExam(id: number) {
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    return this._http.delete(this.EXAM_API + '/delete_exam/' + id, httpOptions);
+  }
 }

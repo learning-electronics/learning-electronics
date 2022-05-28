@@ -1,15 +1,20 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { PopupComponent } from 'src/app/popup/popup.component';
 import { classroom, exercise, SharedService, theme } from 'src/app/shared.service';
 
 @Component({
   selector: 'app-add-exam',
   templateUrl: './add-exam.component.html',
-  styleUrls: ['./add-exam.component.scss']
+  styleUrls: ['./add-exam.component.scss']/* ,
+  encapsulation: ViewEncapsulation.None */
 })
 export class AddExamComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -32,7 +37,13 @@ export class AddExamComponent implements OnInit {
 
   form!: FormGroup;
 
-  constructor(private _formBuilder: FormBuilder,  private _service: SharedService) {
+  constructor(private _formBuilder: FormBuilder, 
+    private _service: SharedService,
+    private _router: Router,
+    private _snackBar: MatSnackBar,
+    public popup_dialog: MatDialog,
+    private dialogRef: MatDialogRef<AddExamComponent>)
+  {
     this._service.getThemes().subscribe((data: any) => {
       this.all_themes = data as theme[];
       this.refreshTable();
@@ -50,7 +61,9 @@ export class AddExamComponent implements OnInit {
       password: new FormControl(null),
       deduct: new FormControl("", [Validators.required]),
       check: new FormControl(false),
-      classrooms: new FormControl([])
+      classrooms: new FormControl([]),
+      timer: new FormControl(""),
+      repeat: new FormControl(true),
     }, {validator: numQuestionsValidator});
 
     this.dataSource.filterPredicate = (data: exercise, filter: string): boolean => {
@@ -119,21 +132,40 @@ export class AddExamComponent implements OnInit {
       var exercises_info: any[] = [];
       this.selection.selected.forEach((ex: exercise) => {
         exercises_info.push({
-          id: ex.id,
-          mark: 1/this.selection.selected.length
+          exercise: ex.id,
+          mark: (1/this.selection.selected.length).toFixed(2)
         });
       });
 
       var exam = {
         name: this.form.get('name')?.value,
         password: this.form.get('password')?.value,
-        deduct: this.form.get('deduct')?.value,
+        deduct: this.form.get('deduct')?.value.toFixed(2),
         classrooms: this.form.get('check')?.value == false ? this.form.get('classrooms')?.value : [],
         public: this.form.get('check')?.value,
         exercises: exercises_info
       }
 
-      console.log(exam)
+      console.log(exam);
+
+      this._service.addExam(exam).subscribe((data: any) => {
+        if ("v" in data) {
+          if (data.v == true) {
+            /* Close the dialog */
+            this.dialogRef.close();
+
+            /* Reload the my_exercises component */
+            let currentUrl = this._router.url;
+            this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+                this._router.navigate([currentUrl]);
+            });
+            
+            this._snackBar.open('Teste adicionado!', 'Fechar', { "duration": 2500 });
+          } else {
+            this._snackBar.open('Erro ao adicionar Teste!', 'Fechar', { "duration": 2500 });
+          }
+        }
+      });
     }
   }
 
@@ -187,10 +219,9 @@ export class AddExamComponent implements OnInit {
           } else {
             ex.classes = "Nenhuma";
           }
-        }
-          
+        } 
         ex.theme = theme_names;
-
+      
         this.all_exercises.push(ex);
       });
       
@@ -198,6 +229,14 @@ export class AddExamComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.pageSize = 5;//localStorage.getItem('pageSizeExercises') ? parseInt(localStorage.getItem('pageSizeExercises')!) : 10;
+    });
+  }
+
+  /* Function to call poup exercise */
+  popup(ex: exercise) {
+    /* Open Popup Dialog */
+    const dialogRef = this.popup_dialog.open(PopupComponent, {
+      data: ex
     });
   }
 

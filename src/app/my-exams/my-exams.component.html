@@ -45,8 +45,13 @@
                 </ng-container>
 
                 <ng-container matColumnDef="title">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Pergunta">Pergunta</th>
-                    <td (click)="editExam(element)" mat-cell *matCellDef="let element"> {{element.title}} </td>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Nome">Nome</th>
+                    <td (click)="editExam(element)" mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="numQuestions">
+                    <th mat-header-cell *matHeaderCellDef>Número de Questões</th>
+                    <td (click)="editExam(element)" mat-cell *matCellDef="let element"> {{element.number_of_exercises}} </td>
                 </ng-container>
               
                 <ng-container matColumnDef="classes">
@@ -58,10 +63,15 @@
                     <th mat-header-cell *matHeaderCellDef>Password</th>
                     <td (click)="editExam(element)" mat-cell *matCellDef="let element"> {{element.password}} </td>
                 </ng-container>
+
+                <ng-container matColumnDef="timer">
+                    <th mat-header-cell *matHeaderCellDef>Duração</th>
+                    <td (click)="editExam(element)" mat-cell *matCellDef="let element"> {{element.timer == null ? 'Sem tempo' : element.timer}} </td>
+                </ng-container>
               
                 <ng-container matColumnDef="date">
                     <th  mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Data">Data</th>
-                    <td (click)="editExam(element)" mat-cell *matCellDef="let element"> {{element.date}} </td>
+                    <td (click)="editExam(element)" mat-cell *matCellDef="let element"> {{element.date_created}} </td>
                 </ng-container>
               
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
