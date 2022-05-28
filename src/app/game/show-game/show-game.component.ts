@@ -33,6 +33,8 @@ export class ShowGameComponent implements OnInit {
   n_players : number = 0;
   n_ready : number = 0;
   ready_value : number = 0;
+  show_question : boolean = false;
+  pready : boolean = false;
 
   ngOnInit(): void {
     this.socket.emit("client_get_question", this.room_id);
@@ -130,11 +132,15 @@ export class ShowGameComponent implements OnInit {
     });
     
     this.socket.on("game_started", (state : boolean, counter : number) => {
+      this.show_question=true;
       this.started = state;
       this.counter = counter;
     });
 
     this.socket.on("game_over", () => {
+      this.show_answer = false;
+      //fazer um play again**
+      this.show_question = false;
       this.game_over = true;
     });
 
@@ -170,5 +176,11 @@ export class ShowGameComponent implements OnInit {
   playerReady() {
     //this.ready_value = (this.n_ready / this.n_players) * 100;
     this.socket.emit("playerReady", this.room_id,this.ready_value);
+    this.pready = true;
+  }
+
+  playerNotReady() {
+    this.socket.emit("playerNotReady", this.room_id);
+    this.pready = false;
   }
 }

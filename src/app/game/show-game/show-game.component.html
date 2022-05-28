@@ -1,10 +1,10 @@
 <mat-card>
     <div class="col my-auto mx-auto">
         <div class="row">
-            <h2>{{room_id}}</h2>
+            <h2>Sala {{room_id}}</h2>
         </div>
 
-        <div class="row" *ngIf="!show_answer">
+        <div class="row" *ngIf="!show_answer && show_question">
             <div class="col">
                 <div class="row">
                     <h1>Time left: {{counter}}</h1>
@@ -32,19 +32,28 @@
             </div>
         </div>
         <div class="row">
+
             <div class="col">
-                <mat-spinner 
-                class="example-margin"
-                color="accent"
-                mode="determinate"
-                value={{ready_value}}>
-                </mat-spinner>
-                {{n_ready}}/{{n_players}}
+                <div class="row" style="font-size: 1.2rem;margin-top: 05%;">
+                    <mat-card *ngIf="!started" style="width:10rem; height:10rem;margin-left: 2%;">
+
+                        <mat-spinner 
+                        class="example-margin"
+                        color="accent"
+                        mode="determinate"
+                        value={{ready_value}}>
+                        </mat-spinner>
+                        
+                        {{n_ready}}/{{n_players}} Players Ready
+                    </mat-card>
+                </div>
+
             </div>
 
-            <div class="col-2">
-                <mat-icon *ngIf="!started" id="play" color="primary" (click)="playerReady()">play_circle_outline</mat-icon>
-                
+            <div class="col-2" style="margin-top: 15%;">
+                <mat-icon *ngIf="!started && !pready" id="play" color="primary" (click)="playerReady()">play_circle_outline</mat-icon>
+                <!-- not readybutton -->
+                <mat-icon  *ngIf="!started && pready" id="play" color="primary" (click)="playerNotReady()">stop_circle</mat-icon>
             </div>
         </div>
     </div>
@@ -52,4 +61,5 @@
     <mat-card *ngIf="correct_answer && show_answer">Correct!</mat-card>
     <mat-card *ngIf="!correct_answer && show_answer">Wrong!</mat-card>
     <mat-card *ngIf="game_over">The game is over!</mat-card>
+    <!-- replay button -->
 </mat-card>
