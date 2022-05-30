@@ -10,6 +10,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { AddExamComponent } from './add-exam/add-exam.component';
 import { DeleteConfirmationExamComponent } from './delete-confirmation-exam/delete-confirmation-exam.component';
+import { EditExamComponent } from './edit-exam/edit-exam.component';
 
 const moment = _moment;
 
@@ -160,13 +161,21 @@ export class MyExamsComponent implements OnInit {
       height: '75%', 
       minWidth: '700px',
       data: {
-        'ModalTitle': "Adicionar Teste",
         'classrooms': this.all_classrooms
       }
     });
   }
 
-  editExam(exam_data: any) {}
+  editExam(exam_data: any) {
+    const dialogRef = this.add_edit_ex_dialog.open(EditExamComponent, {
+      width: '60%',
+      height: '75%', 
+      minWidth: '700px',
+      data: {
+        'classrooms': this.all_classrooms
+      }
+    });
+  }
 
   /* Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
