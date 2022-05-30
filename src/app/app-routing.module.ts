@@ -18,6 +18,7 @@ import { MyExercisesComponent } from './my-exercises/my-exercises.component';
 import { MyExamsComponent } from './my-exams/my-exams.component';
 
 const routes: Routes = [
+  { path: 'show-quizz', component: QuizzComponent },
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'library', component: LibraryComponent },
