@@ -22,22 +22,32 @@ export class ShowClassComponent implements OnInit {
   @ViewChild(MatSort) sortMembers: MatSort;
   @ViewChild(MatPaginator) paginatorExercises: MatPaginator;
   @ViewChild(MatSort) sortExercises: MatSort;
+  @ViewChild(MatPaginator) paginatorExams: MatPaginator;
+  @ViewChild(MatSort) sortExams: MatSort;
 
   displayedColumnsMembers: string[] = ['select', 'type', 'first_name', 'last_name'];
   dataSourceMembers = new MatTableDataSource<any>();
   selectionMembers = new SelectionModel<any>(true, []);
+  
   displayedColumnsExercises: string[] = ['select', 'question', 'theme', 'date'];
   dataSourceExercises = new MatTableDataSource<any>();
   selectionExercises = new SelectionModel<any>(true, []);
+  
+  displayedColumnsExams: string[] = ['select', 'title', 'numQuestions', 'password', 'timer'];
+  dataSourceExams = new MatTableDataSource<any>();
+  selectionExams = new SelectionModel<any>(true, []);
 
   pageSizeMembers: number = 10;
   sortedDataMembers: any[] = [];
   pageSizeExercises: number = 10;
   sortedDataExercises: any[] = [];
+  pageSizeExams: number = 10;
+  sortedDataExams: any[] = [];
 
   all_members: any[] = [];
   all_exercises: exercise[] = [];
   all_themes: theme[] = [];
+  all_exams: any[] = [];
 
   name: string = "";
   data: any;
@@ -54,6 +64,12 @@ export class ShowClassComponent implements OnInit {
           this.all_themes = data as theme[];
           this.refreshTable();
         });
+
+        this._service.getClassroomExams(data.id).subscribe((data: any) => {
+          this.all_exams = data;
+          console.log(this.all_exams);
+          //this.refreshTable();
+        });
       }
     });
   }
@@ -62,6 +78,7 @@ export class ShowClassComponent implements OnInit {
     if (this.data.type == 'Student') {
       this.displayedColumnsMembers = ['type', 'first_name', 'last_name'];
       this.displayedColumnsExercises = ['question', 'theme', 'date'];
+      this.displayedColumnsExams = ['title', 'numQuestions', 'password', 'timer'];
     }
   }
 
@@ -75,6 +92,9 @@ export class ShowClassComponent implements OnInit {
 
     this.dataSourceExercises.sort = this.sortExercises;
     this.dataSourceExercises.paginator = this.paginatorExercises;
+
+    this.dataSourceExams.sort = this.sortExams;
+    this.dataSourceExams.paginator = this.paginatorExams;
   }
 
   /* Sort Exercises Data for the table */
@@ -123,6 +143,29 @@ export class ShowClassComponent implements OnInit {
     this.dataSourceMembers = new MatTableDataSource(this.sortedDataMembers);
   }
 
+  /* Sort Exa,s Data for the table */
+  sortDataExams(sort: Sort) {
+    const data = this.all_exams.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedDataExams = data;
+      return;
+    }
+
+    this.sortedDataExams = data.sort((a, b) => {  
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'first_name':
+          return this.compare(a.first_name, b.first_name, isAsc);
+        case 'last_name':
+          return this.compareDate(a.last_name, b.last_name, isAsc);
+        default:
+          return 0;
+      }
+    });
+
+    this.dataSourceExams = new MatTableDataSource(this.sortedDataExams);
+  }
+
   /* Compare 2 elements of the table string or number */
   compare(a: number | string, b: number | string, isAsc: boolean) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
@@ -145,6 +188,11 @@ export class ShowClassComponent implements OnInit {
   applyFilterExercises(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSourceExercises.filter = filterValue.trim().toLowerCase(); 
+  }
+
+  applyFilterExams(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSourceExams.filter = filterValue.trim().toLowerCase(); 
   }
 
   /* Update the table's information */
@@ -175,15 +223,20 @@ export class ShowClassComponent implements OnInit {
         this.all_exercises.push(ex);
       });
       
-      this.dataSourceExercises = new MatTableDataSource(this.all_exercises);
+      this.dataSourceExercises.data = this.all_exercises;
       this.dataSourceExercises.sort = this.sortExercises;
       this.dataSourceExercises.paginator = this.paginatorExercises;
       this.pageSizeExercises = localStorage.getItem('pageSizeClassExs') ? parseInt(localStorage.getItem('pageSizeClassExs')!) : 10;
 
-      this.dataSourceMembers = new MatTableDataSource(this.all_members);
+      this.dataSourceMembers.data = this.all_members;
       this.dataSourceMembers.sort = this.sortMembers;
       this.dataSourceMembers.paginator = this.paginatorMembers;
       this.pageSizeMembers = localStorage.getItem('pageSizeClassMembers') ? parseInt(localStorage.getItem('pageSizeClassMembers')!) : 10;
+
+      this.dataSourceExams.data = this.all_exams;
+      this.dataSourceExams.sort = this.sortExams;
+      this.dataSourceExams.paginator = this.paginatorExams;
+      this.pageSizeExams = localStorage.getItem('pageSizeClassExams') ? parseInt(localStorage.getItem('pageSizeClassExams')!) : 10;
     });
   }
 
@@ -268,6 +321,8 @@ export class ShowClassComponent implements OnInit {
     const dialogRef = this.popup_dialog.open(DesassociateElementComponent, { data: data });
   }
 
+  desassociateExams() {}
+
   /* Whether the number of selected elements matches the total number of rows. */
   isAllSelectedExercises() {
     const numSelected = this.selectionExercises.selected.length;
@@ -296,5 +351,19 @@ export class ShowClassComponent implements OnInit {
         this.dataSourceMembers.data.forEach(row => {
           if(row.type == 'Estudante') this.selectionMembers.select(row)
         });
+  }
+
+  /* Whether the number of selected elements matches the total number of rows. */
+  isAllSelectedExams() {
+    const numSelected = this.selectionExams.selected.length;
+    const numRows = this.dataSourceExams.data.length;
+    return numSelected === numRows;
+  }
+
+  /* Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggleExams() {
+    this.isAllSelectedExams() ?
+        this.selectionExams.clear() :
+        this.dataSourceExams.data.forEach(row => this.selectionExams.select(row));
   }
 }

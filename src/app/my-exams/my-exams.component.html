@@ -53,15 +53,20 @@
                     <th mat-header-cell *matHeaderCellDef>Número de Questões</th>
                     <td (click)="editExam(element)" mat-cell *matCellDef="let element"> {{element.number_of_exercises}} </td>
                 </ng-container>
+
+                <ng-container matColumnDef="visible">
+                    <th mat-header-cell *matHeaderCellDef>Visibilidade</th>
+                    <td (click)="editExam(element)" mat-cell *matCellDef="let element"> {{element.public == true ? 'Sim' : 'Não'}} </td>
+                </ng-container>
               
                 <ng-container matColumnDef="classes">
-                    <th mat-header-cell *matHeaderCellDef>Visibilidade</th>
+                    <th mat-header-cell *matHeaderCellDef>Turmas</th>
                     <td (click)="editExam(element)" mat-cell *matCellDef="let element"> {{element.classes}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="password">
                     <th mat-header-cell *matHeaderCellDef>Password</th>
-                    <td (click)="editExam(element)" mat-cell *matCellDef="let element"> {{element.password}} </td>
+                    <td (click)="editExam(element)" mat-cell *matCellDef="let element"> {{element.has_pwd == true ? 'Sim' : 'Não'}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="timer">
@@ -83,7 +88,7 @@
                 </tr>
 
             </table>
-            <mat-paginator appPageSizeExercises [length]="pageSize" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Seleciona página dos Exercícios">
+            <mat-paginator appPageSizeExams [length]="pageSize" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Seleciona página dos Testes">
             </mat-paginator>
         </div>
     </div>

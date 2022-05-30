@@ -99,16 +99,6 @@ export class AddExamComponent implements OnInit {
       this.numQuestions?.setErrors(null);
   }
 
-  /* Block Classrooms form field when "public" checkbox is chosen */
-  blockClassrooms(val: boolean) {
-    if (val) {
-      this.form.controls['classrooms'].reset();
-      this.form.controls['classrooms'].disable();
-    } else {
-      this.form.controls['classrooms'].enable();
-    }
-  }
-
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -141,12 +131,10 @@ export class AddExamComponent implements OnInit {
         name: this.form.get('name')?.value,
         password: this.form.get('password')?.value,
         deduct: this.form.get('deduct')?.value.toFixed(2),
-        classrooms: this.form.get('check')?.value == false ? this.form.get('classrooms')?.value : [],
+        classrooms: this.form.get('classrooms')?.value ? this.form.get('classrooms')?.value : [],
         public: this.form.get('check')?.value,
         exercises: exercises_info
       }
-
-      console.log(exam);
 
       this._service.addExam(exam).subscribe((data: any) => {
         if ("v" in data) {

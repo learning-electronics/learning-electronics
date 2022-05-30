@@ -39,14 +39,15 @@ export class MyExamsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   
-  displayedColumns: string[] = ['select', 'title', 'numQuestions', 'classes', 'password', 'timer', 'date'];
+  displayedColumns: string[] = ['select', 'title', 'numQuestions', 'visible', 'classes', 'password', 'timer', 'date'];
   dataSource = new MatTableDataSource<any>();
   selection = new SelectionModel<any>(true, []);
 
-  pageSize: number = 10;
   all_classrooms: classroom[];
   all_themes: theme[];
   all_exams: any[] = [];
+  sortedData: any[] = [];
+  pageSize: number = 10;
   
   constructor(public add_edit_ex_dialog: MatDialog, private _service: SharedService) {
     this._service.getThemes().subscribe((data: any) => {
@@ -62,7 +63,7 @@ export class MyExamsComponent implements OnInit {
   ngOnInit(): void {
     this.dataSource.filterPredicate = (data: any, filter: string): boolean => {
       return (
-        data.title.toLocaleLowerCase().includes(filter)
+        data.name.toLocaleLowerCase().includes(filter)
       )
     }
   }
@@ -84,25 +85,19 @@ export class MyExamsComponent implements OnInit {
     this._service.getMyExams().subscribe((data: any) => {
       console.log(data);
       data.forEach((exam: any) => {
-        if (exam.public == true) {
-          exam.classes = "Público";
+        if (exam.classrooms.length > 0) {
+          exam.classes = "";
+          
+          /* Append the class name to the classes string */
+          exam.classrooms.forEach((c: {'id': number, 'name': string}) => {
+            exam.classes += c.name + ", ";
+          });
+          
+          /* Remove the last comma */
+          exam.classes = exam.classes.substring(0, exam.classes.length - 2);
         } else {
-          if (exam.classrooms.length > 0) {
-            exam.classes = "";
-            
-            /* Append the class name to the classes string */
-            exam.classrooms.forEach((c: {'id': number, 'name': string}) => {
-              exam.classes += c.name + ", ";
-            });
-            
-            /* Remove the last comma */
-            exam.classes = exam.classes.substring(0, exam.classes.length - 2);
-          } else {
-            exam.classes = "Nenhuma";
-          }
+          exam.classes = "Nenhuma";
         }
-
-        exam.password = exam.has_pwd == true ? 'Sim' : 'Não'
         
         // Get the correct date format
         exam.date_created = moment(exam.date_create).format('DD-MM-YYYY');
@@ -113,11 +108,45 @@ export class MyExamsComponent implements OnInit {
       this.dataSource.data = this.all_exams;
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
-      this.pageSize = 5;//localStorage.getItem('pageSizeExercises') ? parseInt(localStorage.getItem('pageSizeExercises')!) : 10;
+      localStorage.getItem('pageSizeExams') ? parseInt(localStorage.getItem('pageSizeExams')!) : 10;
     });
   }
 
-  sortData(sort: Sort) {}
+  /* Sort data for the table */
+  sortData(sort: Sort) {
+    const data = this.all_exams.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
+
+    this.sortedData = data.sort((a, b) => {  
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'question':
+          return this.compare(a.question, b.question, isAsc);
+        case 'date':
+          return this.compareDate(a.date, b.date, isAsc);
+        default:
+          return 0;
+      }
+    });
+
+    this.dataSource = new MatTableDataSource(this.sortedData);
+  }
+
+  /* Compare 2 elements of the table string or number */
+  compare(a: number | string, b: number | string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+
+  /* Function to compare 2 dates */
+  compareDate(a: string, b: string, isAsc: boolean) {
+    var d1 = moment(a, 'DD-MM-YYYY').utc();
+    var d2 = moment(b, 'DD-MM-YYYY').utc();
+
+    return (d1.isBefore(d2) ? -1 : 1) * (isAsc ? 1 : -1); 
+  }
 
   deleteExams() {
     const dialogRef = this.add_edit_ex_dialog.open(DeleteConfirmationExamComponent, {

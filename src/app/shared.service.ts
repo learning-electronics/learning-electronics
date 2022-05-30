@@ -459,4 +459,17 @@ export class SharedService {
 
     return this._http.delete(this.EXAM_API + '/delete_exam/' + id, httpOptions);
   }
+
+  getClassroomExams(id: number) {
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    return this._http.get(this.EXAM_API + '/get_classroom_exams/' + id, httpOptions);
+  }
 }

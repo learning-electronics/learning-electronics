@@ -80,6 +80,9 @@ import { MyExamsComponent } from './my-exams/my-exams.component';
 import { AddExamComponent } from './my-exams/add-exam/add-exam.component';
 import { DeleteConfirmationExamComponent } from './my-exams/delete-confirmation-exam/delete-confirmation-exam.component';
 import { ShowQuizzComponent } from './quizz/show-quizz/show-quizz.component';
+import { PageSizeExamsDirective } from './directive/page-size-exams.directive';
+import { PageSizeClassExamsDirective } from './directive/page-size-class-exams.directive';
+import { EditExamComponent } from './my-exams/edit-exam/edit-exam.component';
 
 @NgModule({
   declarations: [
@@ -129,7 +132,10 @@ import { ShowQuizzComponent } from './quizz/show-quizz/show-quizz.component';
     MyExamsComponent,
     AddExamComponent,
     DeleteConfirmationExamComponent,
-    ShowQuizzComponent
+    ShowQuizzComponent,
+    PageSizeExamsDirective,
+    PageSizeClassExamsDirective,
+    EditExamComponent,
   ],
   imports: [
     BrowserModule,
