@@ -31,6 +31,11 @@
                 <mat-icon mat-list-icon>folder_special</mat-icon>
                 <span *ngIf="isExpanded">Meus Exercícios</span>
             </mat-list-item>
+
+            <mat-list-item routerLink="my_exams/" *ngIf="teacher">
+                <mat-icon mat-list-icon>snippet_folder</mat-icon>
+                <span *ngIf="isExpanded">Meus Testes</span>
+            </mat-list-item>
     
             <mat-list-item routerLink="library/">
                 <mat-icon mat-list-icon>library_books</mat-icon>

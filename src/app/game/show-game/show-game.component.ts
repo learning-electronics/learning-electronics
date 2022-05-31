@@ -13,7 +13,7 @@ export class ShowGameComponent implements OnInit {
   @Input() room_id! : string;
   @Input() socket : any;
   @Input() socket_id! : string;
-  @Input() owner! : string;
+  
 
   DJANGO_SERVER = 'http://127.0.0.1:8000';
   
@@ -30,6 +30,11 @@ export class ShowGameComponent implements OnInit {
   started : boolean = false;
   game_over : boolean = false;
   toggle : boolean = false;
+  n_players : number = 0;
+  n_ready : number = 0;
+  ready_value : number = 0;
+  show_question : boolean = false;
+  pready : boolean = false;
 
   ngOnInit(): void {
     this.socket.emit("client_get_question", this.room_id);
@@ -38,6 +43,9 @@ export class ShowGameComponent implements OnInit {
         this.all_exercises.push(ex);
       });
     });
+
+    this.socket.emit("client_get_totalPlayers", this.room_id);
+    this.socket.emit("client_get_players_ready", this.room_id);
     console.log(this.all_exercises);
   }
 
@@ -124,19 +132,33 @@ export class ShowGameComponent implements OnInit {
     });
     
     this.socket.on("game_started", (state : boolean, counter : number) => {
+      this.show_question=true;
       this.started = state;
       this.counter = counter;
     });
 
     this.socket.on("game_over", () => {
+      this.show_answer = false;
+      //fazer um play again**
+      this.show_question = false;
       this.game_over = true;
     });
 
+    this.socket.on("players_ready", (n_ready:number) => {
+      this.n_ready=n_ready;
+      console.log(this.n_ready);
+      this.ready_value = (this.n_ready / this.n_players) * 100;
+    });
+    
+    this.socket.on("totalPlayers", (n_players:number) => {
+      this.n_players = n_players ;
+      this.ready_value = (this.n_ready / this.n_players) * 100;
+    });
   }
 
-  startGame() {
-    this.socket.emit("start_game", this.room_id);
-  }
+  // startGame() {
+  //   this.socket.emit("start_game", this.room_id);
+  // }
 
   shuffleArray(array : string[]) {
     for(var i = array.length-1; i > 0; i--) {
@@ -150,5 +172,15 @@ export class ShowGameComponent implements OnInit {
     this.res = option;
     this.toggle = !this.toggle;
     //this.socket.emit("client_get_result", this.room_id, this.res);
+  }
+  playerReady() {
+    //this.ready_value = (this.n_ready / this.n_players) * 100;
+    this.socket.emit("playerReady", this.room_id,this.ready_value);
+    this.pready = true;
+  }
+
+  playerNotReady() {
+    this.socket.emit("playerNotReady", this.room_id);
+    this.pready = false;
   }
 }

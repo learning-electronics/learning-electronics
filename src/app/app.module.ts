@@ -76,6 +76,13 @@ import { ClassPasswordComponent } from './classes/class-password/class-password.
 import { DesassociateElementComponent } from './classes/desassociate-element/desassociate-element.component';
 import { PageSizeClassExsDirective } from './directive/page-size-class-exs.directive';
 import { PageSizeClassMembersDirective } from './directive/page-size-class-members.directive';
+import { MyExamsComponent } from './my-exams/my-exams.component';
+import { AddExamComponent } from './my-exams/add-exam/add-exam.component';
+import { DeleteConfirmationExamComponent } from './my-exams/delete-confirmation-exam/delete-confirmation-exam.component';
+import { ShowQuizzComponent } from './quizz/show-quizz/show-quizz.component';
+import { PageSizeExamsDirective } from './directive/page-size-exams.directive';
+import { PageSizeClassExamsDirective } from './directive/page-size-class-exams.directive';
+import { EditExamComponent } from './my-exams/edit-exam/edit-exam.component';
 
 @NgModule({
   declarations: [
@@ -121,7 +128,14 @@ import { PageSizeClassMembersDirective } from './directive/page-size-class-membe
     AutomaticComponent,
     DesassociateElementComponent,
     PageSizeClassExsDirective,
-    PageSizeClassMembersDirective
+    PageSizeClassMembersDirective,
+    MyExamsComponent,
+    AddExamComponent,
+    DeleteConfirmationExamComponent,
+    ShowQuizzComponent,
+    PageSizeExamsDirective,
+    PageSizeClassExamsDirective,
+    EditExamComponent,
   ],
   imports: [
     BrowserModule,

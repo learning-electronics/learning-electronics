@@ -75,6 +75,7 @@ export class SharedService {
   readonly ACCOUNT_API = "http://127.0.0.1:8000/account/api";
   readonly EXERCISE_API = "http://127.0.0.1:8000/exercise/api";
   readonly CLASSROOM_API = "http://127.0.0.1:8000/classroom/api";
+  readonly EXAM_API = "http://127.0.0.1:8000/exam/api";
 
   /* Initialize the log status as true or false*/
   private logStatusSource = new BehaviorSubject<boolean>(localStorage.getItem('loggedIn') === 'true' ? true : false);
@@ -260,13 +261,6 @@ export class SharedService {
   addExerciseSolver(file: FormData) {
     var token = localStorage.getItem('token');
 
-    // const httpOptions = {
-    //   headers: new HttpHeaders({
-    //     // 'Content-Type': 'application/json',
-    //     Authorization: 'Bearer' + token
-    //   })
-    // }
-
     const httpOptions = {
       headers: new HttpHeaders({ Authorization: 'Bearer ' + token })
     };
@@ -326,7 +320,6 @@ export class SharedService {
 
     return this._http.get(this.CLASSROOM_API + '/classrooms', httpOptions);
   }
-
 
   /* Get all the classrooms from the Teacher */
   getMyClassrooms() {
@@ -424,5 +417,59 @@ export class SharedService {
     };
 
     return this._http.patch(this.CLASSROOM_API + '/update_classroom/' + id, info, httpOptions);
+  }
+
+  /* Create a new Exam */
+  addExam(exam: any) {
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    return this._http.post(this.EXAM_API + '/add_exam', exam, httpOptions);
+  }
+
+  getMyExams() {
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    return this._http.get(this.EXAM_API + '/my_exams', httpOptions);
+  }
+
+  /* Delete a exam */
+  deleteExam(id: number) {
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    return this._http.delete(this.EXAM_API + '/delete_exam/' + id, httpOptions);
+  }
+
+  getClassroomExams(id: number) {
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    return this._http.get(this.EXAM_API + '/get_classroom_exams/' + id, httpOptions);
   }
 }

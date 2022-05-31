@@ -67,7 +67,12 @@ export class MyExercisesComponent implements OnInit{
     });
   }
 
-  ngOnInit(): void {  
+  ngOnInit(): void {
+    this.dataSource.filterPredicate = (data: exercise, filter: string): boolean => {
+      return (
+        data.question.toLocaleLowerCase().includes(filter)
+      )
+    }
   }
 
   ngAfterViewInit() {
@@ -112,8 +117,11 @@ export class MyExercisesComponent implements OnInit{
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    const filter = (event.target as HTMLInputElement).value.trim().toLocaleLowerCase();
+    this.dataSource.filter = filter;
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   /* Refresh the table content */
@@ -123,7 +131,7 @@ export class MyExercisesComponent implements OnInit{
         // Changing theme ID array to theme name array
         var theme_names: string[] = [];
         ex.theme.forEach((id: any) => {
-          theme_names.push(this.all_themes[id - 1 - 4].name);
+          theme_names.push(this.all_themes.find((t: theme) => t.id ==id)!.name);
         });  
 
         if (ex.public == true) {
@@ -151,7 +159,7 @@ export class MyExercisesComponent implements OnInit{
         this.all_exercises.push(ex);
       });
       
-      this.dataSource = new MatTableDataSource(this.all_exercises);
+      this.dataSource.data = this.all_exercises;
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.pageSize = localStorage.getItem('pageSizeExercises') ? parseInt(localStorage.getItem('pageSizeExercises')!) : 10;
@@ -179,7 +187,7 @@ export class MyExercisesComponent implements OnInit{
     var theme_list: number[] = [];
 
     exercise_data.theme.forEach((theme: string) => {
-      theme_list.push(this.all_themes.findIndex((t: theme) => t.name == theme) + 1 + 4);
+      theme_list.push(this.all_themes.find((t: theme) => t.name == theme)!.id);
     });
 
     const dialogRef = this.add_edit_ex_dialog.open(EditExerciseComponent, {
