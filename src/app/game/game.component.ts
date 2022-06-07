@@ -56,9 +56,7 @@ export class GameComponent implements OnInit {
 
     // receives the current list of rooms from the server
     this.socket.on("loadRooms", (rooms : string[]) => {
-      this.rooms = rooms;
-      console.log(this.rooms);
-      
+      this.rooms = rooms;    
     });
     
   }

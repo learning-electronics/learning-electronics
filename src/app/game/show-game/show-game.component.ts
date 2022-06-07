@@ -35,6 +35,10 @@ export class ShowGameComponent implements OnInit {
   ready_value : number = 0;
   show_question : boolean = false;
   pready : boolean = false;
+  num_correct_answers : number = 0;
+
+  game_results = {};
+  game_users : string[] = [];
 
   ngOnInit(): void {
     this.socket.emit("client_get_question", this.room_id);
@@ -46,7 +50,7 @@ export class ShowGameComponent implements OnInit {
 
     this.socket.emit("client_get_totalPlayers", this.room_id);
     this.socket.emit("client_get_players_ready", this.room_id);
-    console.log(this.all_exercises);
+
   }
 
   ngAfterViewInit() {
@@ -122,6 +126,7 @@ export class ShowGameComponent implements OnInit {
       this.show_answer = flag;
       if(this.res == this.answer) {
         this.correct_answer = true;
+        this.num_correct_answers++;
       } else {
         this.correct_answer = false;
       }
@@ -139,9 +144,10 @@ export class ShowGameComponent implements OnInit {
 
     this.socket.on("game_over", () => {
       this.show_answer = false;
-      //fazer um play again**
       this.show_question = false;
       this.game_over = true;
+      
+      this.socket.emit("client_total_points", this.socket.id, this.room_id, this.num_correct_answers);
     });
 
     this.socket.on("players_ready", (n_ready:number) => {
@@ -154,11 +160,14 @@ export class ShowGameComponent implements OnInit {
       this.n_players = n_players ;
       this.ready_value = (this.n_ready / this.n_players) * 100;
     });
-  }
 
-  // startGame() {
-  //   this.socket.emit("start_game", this.room_id);
-  // }
+    this.socket.on("game_results", (points: any) => {
+      this.game_results = points;
+      this.game_users = Object.keys(points);
+      console.log(this.game_results);
+    });
+
+  }
 
   shuffleArray(array : string[]) {
     for(var i = array.length-1; i > 0; i--) {
@@ -168,13 +177,13 @@ export class ShowGameComponent implements OnInit {
       array[j] = temp;
     }
   }
+
   getOption(option : string) {
     this.res = option;
     this.toggle = !this.toggle;
-    //this.socket.emit("client_get_result", this.room_id, this.res);
   }
+
   playerReady() {
-    //this.ready_value = (this.n_ready / this.n_players) * 100;
     this.socket.emit("playerReady", this.room_id,this.ready_value);
     this.pready = true;
   }
