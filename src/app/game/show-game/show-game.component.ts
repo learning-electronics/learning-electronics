@@ -1,6 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SharedService, exercise } from 'src/app/shared.service';
 
+interface Result {
+  name: string;
+  points: number;
+}
+
+const RESULTS_DATA : Result[] = [];
+
 @Component({
   selector: 'app-show-game',
   templateUrl: './show-game.component.html',
@@ -39,6 +46,10 @@ export class ShowGameComponent implements OnInit {
 
   game_results = {};
   game_users : string[] = [];
+
+  displayedColumns: string[] = ['name', 'points'];
+  dataSource = RESULTS_DATA;
+  show_results_flag : boolean = false;
 
   ngOnInit(): void {
     this.socket.emit("client_get_question", this.room_id);
@@ -164,7 +175,16 @@ export class ShowGameComponent implements OnInit {
     this.socket.on("game_results", (points: any) => {
       this.game_results = points;
       this.game_users = Object.keys(points);
-      console.log(this.game_results);
+
+      console.log(points);
+
+      for(let key in points) {
+        RESULTS_DATA.push({name: key, points: points[key]});
+      }
+
+      console.log(RESULTS_DATA);
+      this.show_results_flag = true;
+
     });
 
   }
