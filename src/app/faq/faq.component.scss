@@ -1,69 +1,55 @@
-.example-card {
-    max-width: 80%px;
-    background: #3F51B5;
-}
 
-span {
-    display: table;
-    margin: 0 auto;
-}
 
 #welcome{
-    height: auto;
-    font-size: large;
-    padding: 25px 75px
+    font-size: x-large;
+    
 }
+
+.welomecontainer{
+align-content: left;
+}
+
 
 #subheader{
     font-size: 150%;
 }
 #welcome_text{
-    font-size: 200%;
+    font-size: 150%;
 }
 
 mat-icon{
     font-size: 300%;
 }
 
-.img:hover{
-    box-shadow: -1px 10px 29px 0px rgba(0,0,0,0.8);
-}
 
-mat-icon {
-    color: white;
-}
-
-.banner {
-    width: 35%;
-    aspect-ratio: 1;
-    min-width: 200px;
-    background-color: #3F51B5;
-    border-radius: 15px !important;
-}
-
-mat-card-content {
-    justify-content: center;
-}
-
-mat-expansion-panel{
-    text-align: center;
-
-}
 
 mat-panel-title{
     
-    text-align: center;
-    justify-content: center;
+    text-align: left;
+    justify-content: left;
     font: bold;
     font-size: 130%;
 }
 
 mat-card{
     margin-left: 10%;
-    max-width: 80%;
+    margin-right: 0%;
+    width: 70%;
+    height: 40%;
+    text-align: left;
 }
 
 mat-expansion-panel{
     margin-left: 10%;
-    max-width: 80%;
+    width: 80%;
+    text-align: left;
 }
+
+mat-accordion{
+    width: 100%;
+}
+
+.row{
+    margin-bottom: 10%;
+}
+

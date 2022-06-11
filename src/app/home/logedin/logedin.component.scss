@@ -164,6 +164,11 @@ mat-card-title{
   transform: translateY(-.5rem);
 }
 
+a {
+  color: rgb(0, 0, 0);
+  text-decoration: none; /* no underline */
+}
+
 
 
 /*=============== BREAKPOINTS ===============*/
@@ -184,6 +189,7 @@ mat-card-title{
   .footer__subscribe{
     width: 400px;
   }
+  
 }
 
 
@@ -235,4 +241,9 @@ mat-card-title{
   align-items: center;
   margin-left: 10%;
   max-height: 160%;
+  margin-bottom: 10%;
+}
+
+.section__title-center{
+  font-size:xx-large;
 }
