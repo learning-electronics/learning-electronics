@@ -1,6 +1,6 @@
 <div class="row d-flex justify-content-center w-100 h-100">
     <mat-card [class.mat-elevation-z5]="true">
-        <form [formGroup]="createTestForm" (ngSubmit)="createTest()">
+        <form [formGroup]="createTestForm" (ngSubmit)="submit()">
             <mat-card-title id="header">Criar Teste</mat-card-title>
             <mat-card-subtitle id="header">Crie um teste para praticar</mat-card-subtitle>
             <div class="col">
@@ -53,35 +53,4 @@
             </div>
         </form>
     </mat-card>
-    <!-- <div class="col">
-        <div [class.mat-elevation-z5]="true">
-            <div class="card-header">
-                <h3>Create a test</h3>
-            </div>
-            <div class="card-body">
-                <form [formGroup]="createTestForm" (ngSubmit)="createTest()">
-                    
-                    <div class="my-3 form-group">
-                        <label for="nQuestion">Nº Exercicios</label>
-                        <input type="text" class="form-control" id="nQuestion" formControlName="nQuestions"
-                            placeholder="Enter test name">
-                    </div>
-                    
-                    <div class="my-3 form-group">
-                        <label for="themes">Temas das Perguntas</label>
-                        <input type="text" class="form-control" id="themes" formControlName="themes"
-                            placeholder="Escolha os temas das perguntas">
-                    </div>
-
-                    <div class="my-3 form-group">
-                        <label for="duration">Duraçao do teste</label>
-                        <input type="number" class="form-control" id="duration" formControlName="duration"
-                            placeholder="Defina duraçao do teste">
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Create test</button>
-                </form>
-            </div>
-        </div>
-    </div> -->
 </div>

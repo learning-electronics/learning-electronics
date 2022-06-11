@@ -1,1 +1,36 @@
-<p>show-quizz works!</p>
+<!-- //mat card to show question -->
+<mat-card id="quizz">
+
+    <div class="row">
+        <h2>Teste</h2>
+    </div>
+
+   
+    <div class="col d-flex justify-content-center" *ngFor="let question of exs">
+        
+        <div class="row my-4">
+            <h1 style="text-align: center;">{{question.question}}</h1>
+            <img id="image" *ngIf="question.img != null" [src]="'http://127.0.0.1:8000'+question.img" alt="Exercise Image">
+            <mat-radio-group class="my-4">
+                <mat-radio-button [value]="question.ans1" (change)="chooseOption(question.question,question.ans1)">  
+                    {{question.ans1}}  
+                </mat-radio-button >
+                <mat-radio-button [value]="question.ans2" (change)="chooseOption(question.question,question.ans2)">  
+                    {{question.ans2}}  
+                </mat-radio-button>
+                <mat-radio-button [value]="question.ans3" (change)="chooseOption(question.question,question.ans3)">  
+                    {{question.ans3}}
+                </mat-radio-button>
+                <mat-radio-button [value]="question.correct" (change)="chooseOption(question.question,question.correct)">  
+                    {{question.correct}}
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+
+    </div>
+   
+    <button mat-raised-button style="width: 40%;" color="primary" (click)="checkAnswers()">Finish</button>
+   
+
+</mat-card>
+<!-- //mat card to show answer -->

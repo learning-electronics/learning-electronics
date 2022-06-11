@@ -16,9 +16,10 @@ import { ShowClassComponent } from './classes/show-class/show-class.component';
 import { RoomComponent } from './game/room/room.component';
 import { MyExercisesComponent } from './my-exercises/my-exercises.component';
 import { MyExamsComponent } from './my-exams/my-exams.component';
+import { ShowQuizzComponent } from './quizz/show-quizz/show-quizz.component';
 
 const routes: Routes = [
-  { path: 'show-quizz', component: QuizzComponent },
+  { path: 'show-quizz', component: ShowQuizzComponent },
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'library', component: LibraryComponent },

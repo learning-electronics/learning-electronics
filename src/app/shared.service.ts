@@ -93,12 +93,22 @@ export class SharedService {
   private userSource = new BehaviorSubject<string>(localStorage.getItem('user') === 'Teacher' ? 'Teacher' : 'Student');
   userStatus = this.userSource.asObservable()
 
+  /* Initialize the exam information */
+  private examSource = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('exam')!));
+  examStatus = this.examSource.asObservable()
+
   constructor(private _http: HttpClient) { }
 
   /* Change the opened class information */
   openClassroom(info: any) {
     this.classroomSource.next(info);
     localStorage.setItem('class', JSON.stringify(info));
+  }
+
+  /* Change the opened class information */
+  openExam(info: any) {
+    this.examSource.next(info);
+    localStorage.setItem('exam', JSON.stringify(info));
   }
 
   /* Change log status used across the app*/
