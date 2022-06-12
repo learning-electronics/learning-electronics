@@ -89,6 +89,7 @@ export class AddExamComponent implements OnInit {
 
   /* Update validation when the questgions input changes */
   onQuestionsInput() {
+    this.selection.clear();
     if (this.form.hasError('numQuestionsWrong'))
       this.numQuestions?.setErrors([{'numQuestionsWrong': true}]);
     else
