@@ -1,7 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, Sort } from '@angular/material/sort';
@@ -30,28 +30,24 @@ export class AddExamComponent implements OnInit {
   all_classrooms: classroom[] = [];
   pageSize: number = 5;
   state: number = 1;
-  points: any[] = [{name: 'Nada', value: 0}, {name: '25%', value: 0.25}, {name: '33%', value: 1/3}, {name: '50%', value: 0.5}];
+  points: any[] = [{name: 'Nada', value: 0}, {name: '25%', value: 0.25}, {name: '33%', value: 0.33}, {name: '50%', value: 0.5}];
   disable_state = true;
   disable_submit = true;
   hide: boolean = true;
 
   form!: FormGroup;
 
-  constructor(private _formBuilder: FormBuilder, 
+  constructor(private _formBuilder: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: any,  
     private _service: SharedService,
     private _router: Router,
     private _snackBar: MatSnackBar,
     public popup_dialog: MatDialog,
     private dialogRef: MatDialogRef<AddExamComponent>)
   {
-    this._service.getThemes().subscribe((data: any) => {
-      this.all_themes = data as theme[];
-      this.refreshTable();
-    });
-
-    this._service.getMyClassrooms().subscribe((data: any) => {
-      this.all_classrooms = data as classroom[];
-    });
+    this.all_themes = data.themes as theme[];
+    this.all_classrooms = data.classrooms as classroom[];
+    this.refreshTable();
   }
 
   ngOnInit(): void {
@@ -133,7 +129,8 @@ export class AddExamComponent implements OnInit {
         deduct: this.form.get('deduct')?.value.toFixed(2),
         classrooms: this.form.get('classrooms')?.value ? this.form.get('classrooms')?.value : [],
         public: this.form.get('check')?.value,
-        exercises: exercises_info
+        exercises: exercises_info,
+        repeat: this.form.get('repeat')?.value
       }
 
       this._service.addExam(exam).subscribe((data: any) => {

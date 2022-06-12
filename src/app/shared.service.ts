@@ -443,6 +443,7 @@ export class SharedService {
     return this._http.post(this.EXAM_API + '/add_exam', exam, httpOptions);
   }
 
+  /* Get the professro exams */
   getMyExams() {
     var token: any = localStorage.getItem('token');
 
@@ -454,6 +455,19 @@ export class SharedService {
     };
 
     return this._http.get(this.EXAM_API + '/my_exams', httpOptions);
+  }
+
+  updateExam(exam: any, id: number) {
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    return this._http.patch(this.EXAM_API + '/update_exam/' + id, exam, httpOptions);
   }
 
   /* Delete a exam */

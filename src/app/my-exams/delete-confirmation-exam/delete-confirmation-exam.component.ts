@@ -27,7 +27,7 @@ export class DeleteConfirmationExamComponent implements OnInit {
     this.data.forEach((exam: any) => {
       this._service.deleteExam(exam.id).subscribe((res: any) => {
         if (!res.v) {
-          this._snackBar.open("Erro a eliminar exames", "Fechar", { duration: 2500 });
+          this._snackBar.open("Erro a eliminar testes", "Fechar", { duration: 2500 });
         }
       });
       /* Close the dialog */
@@ -39,7 +39,7 @@ export class DeleteConfirmationExamComponent implements OnInit {
           this._router.navigate([currentUrl]);
       });
 
-      this._snackBar.open("Exames Eliminados", "Fechar", { duration: 25000 });
+      this._snackBar.open("Testes Eliminados", "Fechar", { duration: 25000 });
     })
   }
 

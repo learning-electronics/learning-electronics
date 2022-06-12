@@ -161,6 +161,7 @@ export class MyExamsComponent implements OnInit {
       height: '75%', 
       minWidth: '700px',
       data: {
+        'themes': this.all_themes,
         'classrooms': this.all_classrooms
       }
     });
@@ -172,6 +173,8 @@ export class MyExamsComponent implements OnInit {
       height: '75%', 
       minWidth: '700px',
       data: {
+        'exam': exam_data,
+        'themes': this.all_themes,
         'classrooms': this.all_classrooms
       }
     });

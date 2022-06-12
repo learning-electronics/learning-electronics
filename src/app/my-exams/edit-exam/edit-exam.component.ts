@@ -1,7 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, Sort } from '@angular/material/sort';
@@ -23,46 +23,50 @@ export class EditExamComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
   selection = new SelectionModel<any>(true, []);
   
+  filled_data: any;
   sortedData: exercise[] = [];
   all_themes: theme[] = [];
   all_exercises: any[] = [];
   all_classrooms: classroom[] = [];
   pageSize: number = 5;
   state: number = 1;
-  points: any[] = [{name: 'Nada', value: 0}, {name: '25%', value: 0.25}, {name: '33%', value: 1/3}, {name: '50%', value: 0.5}];
-  disable_state = true;
-  disable_submit = true;
+  points: any[] = [{name: 'Nada', value: 0}, {name: '25%', value: 0.25}, {name: '33%', value: 0.33}, {name: '50%', value: 0.5}];
+  disable_state = false;
+  disable_submit = false;
   hide: boolean = true;
 
   form!: FormGroup;
 
-  constructor(private _formBuilder: FormBuilder, 
+  constructor(private _formBuilder: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private _service: SharedService,
     private _router: Router,
     private _snackBar: MatSnackBar,
     public popup_dialog: MatDialog,
     private dialogRef: MatDialogRef<EditExamComponent>)
   {
-    this._service.getThemes().subscribe((data: any) => {
-      this.all_themes = data as theme[];
-      this.refreshTable();
-    });
-
-    this._service.getMyClassrooms().subscribe((data: any) => {
-      this.all_classrooms = data as classroom[];
-    });
+    console.log(data.exam);
+    this.filled_data = data.exam;
+    this.all_themes = data.themes as theme[];
+    this.all_classrooms = data.classrooms as classroom[];
+    this.refreshTable();
   }
 
   ngOnInit(): void {
+    var class_ids: number[] = [];
+    this.filled_data.classrooms.forEach((c: classroom) => {
+      class_ids.push(c.id);
+    });
+    
     this.form = this._formBuilder.group({
-      name: new FormControl("", [Validators.required]),
-      questions: new FormControl("", [Validators.required]),
+      name: new FormControl(this.filled_data.name, [Validators.required]),
+      questions: new FormControl(this.filled_data.number_of_exercises, [Validators.required]),
       password: new FormControl(null),
-      deduct: new FormControl("", [Validators.required]),
-      check: new FormControl(false),
-      classrooms: new FormControl([]),
-      timer: new FormControl(""),
-      repeat: new FormControl(true),
+      deduct: new FormControl(this.points.find((p: any) => p.value == this.filled_data.deduct).value, [Validators.required]),
+      check: new FormControl(this.filled_data.public),
+      classrooms: new FormControl(class_ids),
+      timer: new FormControl(this.filled_data.timer),
+      repeat: new FormControl(this.filled_data.repeat),
     }, {validator: numQuestionsValidator});
 
     this.dataSource.filterPredicate = (data: exercise, filter: string): boolean => {
@@ -92,6 +96,9 @@ export class EditExamComponent implements OnInit {
 
   /* Update validation when the questgions input changes */
   onQuestionsInput() {
+    console.log('aqui');
+    this.selection.clear();
+
     if (this.form.hasError('numQuestionsWrong'))
       this.numQuestions?.setErrors([{'numQuestionsWrong': true}]);
     else
@@ -132,10 +139,12 @@ export class EditExamComponent implements OnInit {
         deduct: this.form.get('deduct')?.value.toFixed(2),
         classrooms: this.form.get('classrooms')?.value ? this.form.get('classrooms')?.value : [],
         public: this.form.get('check')?.value,
-        exercises: exercises_info
+        exercises: exercises_info,
+        repeat: this.form.get('repeat')?.value,
       }
 
-      this._service.addExam(exam).subscribe((data: any) => {
+      this._service.updateExam(exam, this.filled_data.id).subscribe((data: any) => {
+        console.log(data);
         if ("v" in data) {
           if (data.v == true) {
             /* Close the dialog */
@@ -147,9 +156,9 @@ export class EditExamComponent implements OnInit {
                 this._router.navigate([currentUrl]);
             });
             
-            this._snackBar.open('Teste adicionado!', 'Fechar', { "duration": 2500 });
+            this._snackBar.open('Exame adicionado!', 'Fechar', { "duration": 2500 });
           } else {
-            this._snackBar.open('Erro ao adicionar Teste!', 'Fechar', { "duration": 2500 });
+            this._snackBar.open('Erro ao adicionar Exame!', 'Fechar', { "duration": 2500 });
           }
         }
       });
@@ -216,6 +225,13 @@ export class EditExamComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.pageSize = 5;//localStorage.getItem('pageSizeExercises') ? parseInt(localStorage.getItem('pageSizeExercises')!) : 10;
+      
+
+      this.filled_data.exercises.forEach((id: number) => {
+        this.dataSource.data.forEach((row: any) => {
+          if (row.id == id) this.selection.select(row);
+        });
+      });
     });
   }
 
