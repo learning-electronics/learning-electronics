@@ -36,13 +36,15 @@ export class ShowGameComponent implements OnInit {
   all_exercises : exercise[] = [];
   started : boolean = false;
   game_over : boolean = false;
-  toggle : boolean = false;
+  // toggle : boolean = false;
   n_players : number = 0;
   n_ready : number = 0;
   ready_value : number = 0;
   show_question : boolean = false;
   pready : boolean = false;
   num_correct_answers : number = 0;
+
+  selected_id! : string;
 
   game_results = {};
   game_users : string[] = [];
@@ -132,8 +134,6 @@ export class ShowGameComponent implements OnInit {
     });
 
     this.socket.on("show_result", (flag : boolean) => {
-      console.log(this.answer);
-      console.log(this.res);
       this.show_answer = flag;
       if(this.res == this.answer) {
         this.correct_answer = true;
@@ -176,15 +176,12 @@ export class ShowGameComponent implements OnInit {
       this.game_results = points;
       this.game_users = Object.keys(points);
 
-      console.log(points);
-
       for(let key in points) {
         RESULTS_DATA.push({name: key, points: points[key]});
       }
 
-      console.log(RESULTS_DATA);
+      RESULTS_DATA.sort((a,b) => (a.points < b.points) ? 1 : -1);
       this.show_results_flag = true;
-
     });
 
   }
@@ -199,8 +196,11 @@ export class ShowGameComponent implements OnInit {
   }
 
   getOption(option : string) {
-    this.res = option;
-    this.toggle = !this.toggle;
+    if(this.res != option) {
+      this.res = option;
+    } else {
+      this.res = "";
+    }
   }
 
   playerReady() {

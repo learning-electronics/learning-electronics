@@ -21,8 +21,8 @@
                 <div class="row">
                     <div aria-label="Select an option" >
                         <div *ngFor="let option of options" >
-                            <button id="options" mat-raised-button color="primary" [value]="option" (click)="getOption(option)">
-                            {{option}}
+                            <button [ngStyle]="{'background-color': option == res ? '#ff4081' : '#009688' }" id="options" mat-raised-button color="primary" [value]="option" (click)="getOption(option)">
+                                {{option}}
                             </button>
                             <br>
                             <br>
