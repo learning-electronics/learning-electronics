@@ -1,0 +1,20 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="row mx-auto">
+        <div class="col my-3 mx-auto">
+            <div class="row my-2 mx-auto">
+                <mat-checkbox color="primary" formControlName="check" name="check" (change)="blockClassrooms($event.checked)">Tornar o exercício público</mat-checkbox>
+            </div>
+            
+            <div class="row mt-3">
+                <mat-form-field>
+                    <ngx-mat-file-input type="file" placeholder="Escolher Ficheiro" (change)="fileChangeEvent($event)"></ngx-mat-file-input>
+                    <mat-icon matSuffix>folder</mat-icon>
+                </mat-form-field>
+            </div>
+        </div>
+            
+        <div class="row mt-4 mb-1 mx-auto">
+            <button mat-raised-button color="accent" type="submit" mat-button>Submeter ficheiro</button>
+        </div>
+    </div>
+</form>

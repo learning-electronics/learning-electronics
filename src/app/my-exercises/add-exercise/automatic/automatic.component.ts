@@ -129,24 +129,6 @@ export class AutomaticComponent implements OnInit {
     return null;
   }
 
-  uploadFile() {
-    if(this.fileChangedEvent != "") {
-      var file_name = this.fileChangedEvent.target.files[0].name;
-
-      var arr: string[] = file_name.split('.');
-      var ext: string = arr[arr.length - 1];
-      var name: string = file_name;
-      
-      const file = new File([this.convertDataUrlToBlob(file_name)], name, {type: 'file/' + ext});
-
-      const formData: FormData = new FormData();
-      formData.append('cirpath', file, file.name);
-
-      return formData;
-    }
-    return null;
-  }
-
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64;
   }
