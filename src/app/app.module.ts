@@ -83,6 +83,7 @@ import { ShowQuizzComponent } from './quizz/show-quizz/show-quizz.component';
 import { PageSizeExamsDirective } from './directive/page-size-exams.directive';
 import { PageSizeClassExamsDirective } from './directive/page-size-class-exams.directive';
 import { EditExamComponent } from './my-exams/edit-exam/edit-exam.component';
+import { WordComponent } from './my-exercises/add-exercise/word/word.component';
 
 @NgModule({
   declarations: [
@@ -136,6 +137,7 @@ import { EditExamComponent } from './my-exams/edit-exam/edit-exam.component';
     PageSizeExamsDirective,
     PageSizeClassExamsDirective,
     EditExamComponent,
+    WordComponent,
   ],
   imports: [
     BrowserModule,
