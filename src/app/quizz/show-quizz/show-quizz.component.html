@@ -1,36 +1,40 @@
 <!-- //mat card to show question -->
 <mat-card id="quizz">
 
-    <div class="row">
-        <h2>Teste</h2>
-    </div>
-
-   
-    <div class="col d-flex justify-content-center" *ngFor="let question of exs">
+    
+    <div class="col d-flex justify-content-center" *ngIf="!end">
+        
         
         <div class="row my-4">
-            <h1 style="text-align: center;">{{question.question}}</h1>
-            <img id="image" *ngIf="question.img != null" [src]="'http://127.0.0.1:8000'+question.img" alt="Exercise Image">
-            <mat-radio-group class="my-4">
-                <mat-radio-button [value]="question.ans1" (change)="chooseOption(question.question,question.ans1)">  
-                    {{question.ans1}}  
-                </mat-radio-button >
-                <mat-radio-button [value]="question.ans2" (change)="chooseOption(question.question,question.ans2)">  
-                    {{question.ans2}}  
-                </mat-radio-button>
-                <mat-radio-button [value]="question.ans3" (change)="chooseOption(question.question,question.ans3)">  
-                    {{question.ans3}}
-                </mat-radio-button>
-                <mat-radio-button [value]="question.correct" (change)="chooseOption(question.question,question.correct)">  
-                    {{question.correct}}
+            <button mat-raised-button style="height: 100%;" [disabled]="currentQuestionId==0 " (click)="getPreviousQuestion()">
+                <mat-icon>arrow_back_ios</mat-icon>
+            </button>
+        </div>
+
+        <div class="row mx-auto my-5">
+            <h1>Pergunta {{currentQuestionId+1}}/{{this.examData.nquestions}}</h1>
+            <h1 style="text-align: center;">{{currentQuestion.question}}</h1>
+            <!-- show time left -->
+            <h2>Tempo restante: {{minutes}}:{{seconds}}</h2>
+            <img id="image" *ngIf="currentQuestion.img != null" [src]="'http://127.0.0.1:8000'+currentQuestion.img" alt="Exercise Image">
+            <mat-radio-group class="my-4"[(ngModel)]="selectedValue">
+                <mat-radio-button style="font-size:1.5rem ;" *ngFor="let option of exsOptions.get(currentQuestion.question)" (change)="chooseOption(currentQuestion.question,option)" [value]="option">
+                    {{option}}
                 </mat-radio-button>
             </mat-radio-group>
         </div>
-
+        <!-- button to next question -->
+        <div class="row my-4">
+            <button mat-raised-button  [disabled]="currentQuestionId==examData.nquestions-1" (click)="getNextQuestion()">
+                <mat-icon>arrow_forward_ios</mat-icon>
+            </button>
+        </div>
     </div>
-   
-    <button mat-raised-button style="width: 40%;" color="primary" (click)="checkAnswers()">Finish</button>
-   
+    <button mat-raised-button *ngIf="last" style="width: 40%;" color="primary" (click)="checkAnswers()">Finish</button>
+    <!-- display results of the tests -->
+    <div class="col d-flex justify-content-center" *ngIf="end">
+        Classificação obtida foi: {{grade}}
+    </div>
 
 </mat-card>
 <!-- //mat card to show answer -->

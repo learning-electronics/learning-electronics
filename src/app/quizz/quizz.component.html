@@ -9,7 +9,9 @@
                     <mat-form-field class="mx-auto">
                         <mat-label>Nº de Perguntas</mat-label>
                         <input matInput appearance="fill" formControlName="nQuestions" required>
-                        <!-- <mat-error *ngIf="form.controls['fname'].invalid">Você deve inserir um nome</mat-error> -->
+                        <mat-error *ngIf="createTestForm.controls['nQuestions'].invalid && !createTestForm.controls['nQuestions'].hasError('required')">Apenas números</mat-error>
+                        <mat-error *ngIf="createTestForm.controls['nQuestions'].hasError('required')">Você deve escolher o número de pergutnas</mat-error>
+
                     </mat-form-field>
                 </div>
                 
@@ -21,7 +23,7 @@
                                 {{theme.name}}
                             </mat-option>
                         </mat-select>
-                        <!-- <mat-error *ngIf="form.controls['lname'].invalid">Você deve inserir um nome</mat-error> -->
+                        <mat-error *ngIf="createTestForm.controls['themes'].hasError('required')">Você deve escolher pelo menos um tema</mat-error>
                     </mat-form-field>
                 </div>
 
@@ -29,8 +31,8 @@
                     <mat-form-field id="mat-form-field">
                         <mat-label>Duraçao</mat-label>
                         <input matInput formControlName="duration" required>
-                        <!-- <mat-error *ngIf="form.controls['lname'].invalid">Você deve inserir um nome</mat-error> -->
-                    </mat-form-field>
+                        <mat-error *ngIf="createTestForm.controls['duration'].invalid && !createTestForm.controls['duration'].hasError('required') ">Apenas números</mat-error>
+                        <mat-error *ngIf="createTestForm.controls['duration'].hasError('required')">Você deve escolher o tempo para o teste</mat-error>                    </mat-form-field>
                 </div>
 
                 <div class="col my-5 d-flex justify-content-center">
@@ -41,7 +43,7 @@
                             {{point.name}}
                             </mat-option>
                         </mat-select>
-                        <!-- <mat-error *ngIf="deduct?.hasError('required')">Escolha um valor de desconto</mat-error> -->
+                        <mat-error *ngIf="createTestForm.controls['deduct'].hasError('required')">Escolha um valor de desconto</mat-error>
                     </mat-form-field>
                 </div>
             
