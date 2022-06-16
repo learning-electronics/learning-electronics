@@ -19,4 +19,8 @@ export class LogedinComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  scrollToElement($element: any) {
+    $element.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+  }
+
 }
