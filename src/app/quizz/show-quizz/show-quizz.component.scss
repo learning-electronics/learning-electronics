@@ -17,13 +17,9 @@
     max-width: 90%;
     min-width: 80%;
     max-height: 65%;
-}
-
-.mat-card {
-    max-height: 90%;
     overflow-y: auto;
 }
 
 .mat-radio-button ~ .mat-radio-button {
-    margin-left: 16px;
+    margin-left: 1.5rem;
 }

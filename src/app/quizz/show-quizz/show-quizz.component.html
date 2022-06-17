@@ -5,7 +5,7 @@
     <div class="col d-flex justify-content-center" *ngIf="!end">
         
         
-        <div class="row my-4">
+        <div class="col d-flex justify-content-start">
             <button mat-raised-button style="height: 100%;" [disabled]="currentQuestionId==0 " (click)="getPreviousQuestion()">
                 <mat-icon>arrow_back_ios</mat-icon>
             </button>
@@ -18,23 +18,36 @@
             <h2>Tempo restante: {{minutes}}:{{seconds}}</h2>
             <img id="image" *ngIf="currentQuestion.img != null" [src]="'http://127.0.0.1:8000'+currentQuestion.img" alt="Exercise Image">
             <mat-radio-group class="my-4"[(ngModel)]="selectedValue">
-                <mat-radio-button style="font-size:1.5rem ;" *ngFor="let option of exsOptions.get(currentQuestion.question)" (change)="chooseOption(currentQuestion.question,option)" [value]="option">
+                <mat-radio-button  *ngFor="let option of exsOptions.get(currentQuestion.question)" (change)="chooseOption(currentQuestion.question,option)" [value]="option">
                     {{option}}
                 </mat-radio-button>
             </mat-radio-group>
         </div>
         <!-- button to next question -->
-        <div class="row my-4">
-            <button mat-raised-button  [disabled]="currentQuestionId==examData.nquestions-1" (click)="getNextQuestion()">
+        <div class="col d-flex justify-content-end">
+            <button mat-raised-button  style="height: 100%;"[disabled]="currentQuestionId==examData.nquestions-1" (click)="getNextQuestion()">
                 <mat-icon>arrow_forward_ios</mat-icon>
             </button>
         </div>
     </div>
+    <!-- show results -->
+
+    <div class="row" *ngIf="end">
+        <h1>Classificação obtida foi: {{grade}}</h1>
+        <div *ngFor="let question of exs">
+
+            <div class="col">
+                <p style="font-size: 20px; margin: auto;">Pergunta: {{question.question}}</p>
+                <p>Resposta dada: {{studentAnswer.get(question.question)}}</p>
+                <p>Resposta correta: {{question.correct}}</p>
+            </div>
+        </div>
+        
+    </div>
+
     <button mat-raised-button *ngIf="last" style="width: 40%;" color="primary" (click)="checkAnswers()">Finish</button>
     <!-- display results of the tests -->
-    <div class="col d-flex justify-content-center" *ngIf="end">
-        Classificação obtida foi: {{grade}}
-    </div>
+    
 
 </mat-card>
 <!-- //mat card to show answer -->

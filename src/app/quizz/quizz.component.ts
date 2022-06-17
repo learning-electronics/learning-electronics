@@ -31,9 +31,9 @@ export class QuizzComponent implements OnInit {
 
   ngOnInit(): void {
     this.createTestForm = this._formBuilder.group({
-      nQuestions: new FormControl('', [Validators.required, Validators.min(1),Validators.max(30), Validators.pattern('^[0-9]')]),
+      nQuestions: new FormControl('', [Validators.required, Validators.min(1),Validators.max(30), Validators.pattern('^[0-9]*$')]),
       themes: new FormControl('', [Validators.required]),
-      duration: new FormControl('', [Validators.required,Validators.min(1),Validators.max(60), Validators.pattern('^[0-9]')]),
+      duration: new FormControl('', [Validators.required,Validators.min(1),Validators.max(60), Validators.pattern('^[0-9]*$')]),
       deduct: new FormControl('', [Validators.required]),    
     });
     

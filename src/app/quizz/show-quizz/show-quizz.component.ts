@@ -43,7 +43,7 @@ export class ShowQuizzComponent implements OnInit {
     this.getRandomExs(this.examData.nquestions);
     this.questionValue=20/this.examData.nquestions;
     // this.currentQuestionId=this.examData.nquestions;
-    this.currentQuestionId=0;
+    this.currentQuestionId=-1;
     this.getNextQuestion();
     this.startTimer();
     console.log(this.exs);
@@ -98,28 +98,29 @@ export class ShowQuizzComponent implements OnInit {
     for (let i = 0; i < this.exs.length; i++) {
       if (this.exs[i].correct == this.studentAnswer.get(this.exs[i].question)) {
         this.grade+=this.questionValue;
-      }else {
+      }else if ( this.studentAnswer.get(this.exs[i].question)==undefined ) {
+        this.grade+=0;
+      
+        this.grade+=0;  
+      } else{
         
         this.grade=this.grade-(this.examData.deduct*this.questionValue);
       }
     }
-
     console.log(this.grade);
     this.end=true;
+    this.pauseTimer();
+    this.last=false;
     //navigate to /home after 5 seconds
     setTimeout(() => {
       this._router.navigate(['/home']);
-    }, 4000);
-    
-    
+    }, 30000);
   }
 
    //get 1 question from exs list and remove it from the list
     getNextQuestion(){
       this.currentQuestionId++;
       this.currentQuestion=this.exs[this.currentQuestionId];
-      
-      
       if (this.studentAnswer.has(this.currentQuestion.question)) {
         this.selectedValue=this.studentAnswer.get(this.currentQuestion.question);
       }else{
@@ -140,7 +141,11 @@ export class ShowQuizzComponent implements OnInit {
       
       this.currentQuestion=this.exs[this.currentQuestionId];
       
-      this.selectedValue = this.studentAnswer.get(this.currentQuestion.question);
+      if (this.studentAnswer.has(this.currentQuestion.question)) {
+        this.selectedValue=this.studentAnswer.get(this.currentQuestion.question);
+      }else{
+        this.selectedValue='';
+      }
      
     }
   
