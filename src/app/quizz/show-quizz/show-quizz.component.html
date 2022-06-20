@@ -1,5 +1,5 @@
 <!-- //mat card to show question -->
-<mat-card id="quizz">
+<mat-card *ngIf="!end" id="quizz">
 
     
     <div class="col d-flex justify-content-center" *ngIf="!end">
@@ -30,24 +30,50 @@
             </button>
         </div>
     </div>
-    <!-- show results -->
+   
 
-    <div class="row" *ngIf="end">
-        <h1>Classificação obtida foi: {{grade}}</h1>
-        <div *ngFor="let question of exs">
-
-            <div class="col">
-                <p style="font-size: 20px; margin: auto;">Pergunta: {{question.question}}</p>
-                <p>Resposta dada: {{studentAnswer.get(question.question)}}</p>
-                <p>Resposta correta: {{question.correct}}</p>
-            </div>
-        </div>
-        
-    </div>
-
-    <button mat-raised-button *ngIf="last" style="width: 40%;" color="primary" (click)="checkAnswers()">Finish</button>
+    <button mat-raised-button *ngIf="currentQuestionId==nquestions-1" style="width: 40%;" color="primary" (click)="checkAnswers()">Finish</button>
     <!-- display results of the tests -->
     
 
 </mat-card>
 <!-- //mat card to show answer -->
+
+
+<mat-card *ngIf="end" id="quizz">
+
+    
+    <div class="col d-flex justify-content-center">
+        
+        
+        <div class="col d-flex justify-content-start">
+            <button mat-raised-button style="height: 100%;" [disabled]="currentQuestionId==0 " (click)="getPreviousQuestion()">
+                <mat-icon>arrow_back_ios</mat-icon>
+            </button>
+        </div>
+
+        <div class="row mx-auto my-5">
+            
+            <h1>Classificação obtida foi: {{grade}}</h1>
+            <h1>Pergunta {{currentQuestionId+1}}/{{nquestions}}</h1>
+            <h1 style="text-align: center;">{{currentQuestion.question}}</h1>
+            <!-- show time left -->
+            <h2>Tempo restante: {{minutes}}:{{seconds}}</h2>
+            <img id="image" *ngIf="currentQuestion.img != null" [src]="'http://127.0.0.1:8000'+currentQuestion.img" alt="Exercise Image">
+            <div class="row mx-auto mt-5">
+                <h2>Resposta dada: {{studentAnswer.get(currentQuestion.question)}}</h2>
+                <h2>Resposta correta: {{currentQuestion.correct}}</h2> 
+            </div>
+        </div>
+
+        <!-- button to next question -->
+        <div class="col d-flex justify-content-end">
+            <button mat-raised-button  style="height: 100%;"[disabled]="currentQuestionId==nquestions-1" (click)="getNextQuestion()">
+                <mat-icon>arrow_forward_ios</mat-icon>
+            </button>
+        </div>
+    </div>
+    
+<button mat-raised-button *ngIf="end" style="width: 40%;" color="primary" (click)="goHome()">Voltar para a Home</button>
+
+</mat-card>
