@@ -268,14 +268,14 @@ export class SharedService {
   }
 
   /* Create exercise with circuit solver */
-  addExerciseSolver(file: FormData) {
+  addExerciseSolver(form: FormData) {
     var token = localStorage.getItem('token');
 
     const httpOptions = {
       headers: new HttpHeaders({ Authorization: 'Bearer ' + token })
     };
 
-    return this._http.post(this.EXERCISE_API + '/add_exercise_solver', file, httpOptions);
+    return this._http.post(this.EXERCISE_API + '/add_exercise_solver_iterations/' + form.get('iteracoes'), form, httpOptions);
   }
 
   /* Update exercise's photo */
