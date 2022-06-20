@@ -38,6 +38,10 @@ export class ShowQuizzComponent implements OnInit {
         this.nquestions = data.nquestions;
         this.deduct = data.deduct;
         this.timeLeft=data.timer;
+        this.getRandomExs(this.nquestions);
+        if (this.timeLeft==null) {
+          this.timeLeft=10;
+        }
       }else{
         this.nquestions = data.nquestions;
         this.timeLeft=data.duration;
