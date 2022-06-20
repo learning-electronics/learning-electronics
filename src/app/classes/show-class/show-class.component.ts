@@ -366,4 +366,18 @@ export class ShowClassComponent implements OnInit {
         this.selectionExams.clear() :
         this.dataSourceExams.data.forEach(row => this.selectionExams.select(row));
   }
+
+  retriveTest(data:any){
+    //get exam info
+    console.log(data);
+    console.log("abrir teste");
+    this._service.openTest(this.data.id,data.id,{password:'123'}).subscribe((data: any) => {
+      console.log(data);
+      data.nquestions=data.exercises.length;
+      console.log (data);
+      this._service.openExam(data);
+      this._router.navigate(['/show-quizz']);
+    });
+    
+    }
 }
