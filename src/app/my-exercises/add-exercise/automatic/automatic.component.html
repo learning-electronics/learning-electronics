@@ -58,6 +58,14 @@
             </div>
         </div>
         <div class="col my-3 mx-auto">
+            <div class="row my-3 mx-auto">
+                <mat-form-field class="mx-auto">
+                    <mat-label>Iterações</mat-label>
+                    <input matInput type="number" max="200" formControlName="iteracoes" required>
+                    <mat-error *ngIf="iteracoes?.hasError('required')">Indique o número de iterações</mat-error>
+                </mat-form-field>
+            </div>
+
             <div class="row mx-auto">
                 <image-cropper
                 [ngStyle]="{'opacity': imageChangedEvent == '' ? '0' : '1'}"

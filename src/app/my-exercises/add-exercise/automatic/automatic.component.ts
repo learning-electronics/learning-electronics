@@ -45,7 +45,8 @@ export class AutomaticComponent implements OnInit {
       check : new FormControl(false),
       classrooms: new FormControl([]),
       freq : new FormControl("", [Validators.required]),
-      unit : new FormControl("", [Validators.required])
+      unit : new FormControl("", [Validators.required]),
+      iteracoes : new FormControl("", [Validators.required])
     })
   }
 
@@ -53,6 +54,7 @@ export class AutomaticComponent implements OnInit {
   get question() { return this.form.get('question'); }
   get target() { return this.form.get('target'); }
   get freq() { return this.form.get('freq'); }
+  get iteracoes() { return this.form.get('iteracoes'); }
 
   /*  Submit form action
       Sends all data to the rest in a FormData object
@@ -67,28 +69,24 @@ export class AutomaticComponent implements OnInit {
     formData.append('unit', this.form.get('unit')?.value);
     formData.append('public', this.form.get('check')?.value);
     formData.append('visible', this.form.get('check')?.value == false ? this.form.get('classrooms')?.value : []);
-    console.log(this.form.get('check')?.value == false ? this.form.get('classrooms')?.value : []);
+    formData.append('iteracoes', this.form.get('iteracoes')?.value);
 
-    this._service.addExerciseSolver(formData).subscribe((data: any) => { 
+    this._service.addExerciseSolver(formData).subscribe((data: any) => {
       if(data.v == true) {
         var img = this.uploadPhoto();
-      
-        if(img != null) {  
-          this._service.uploadExercisePhoto(img, Number(data.m)).subscribe((data: any) => {
-            if (data.v == true) {
-              // /* Close the dialog */
-              // this.dialogRef.close();
-              
-              // /* Reload the my_exercises component */
-              // let currentUrl = this._router.url;
-              // this._router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-              //   this._router.navigate([currentUrl]);
-              // });
-              
-              this._snackBar.open('Foto adicionada!', 'Fechar', { "duration": 2500 });
-            }
-          });
-        }
+        var num_added_exs : number = 0;
+        data.m.ids.forEach((element : any) => {
+          if(img != null) {  
+            this._service.uploadExercisePhoto(img, Number(element)).subscribe((data: any) => {
+              if (data.v == true) {
+                num_added_exs++;
+              }
+            });
+          }
+          
+        });
+        
+        this._snackBar.open(num_added_exs + ' exercises added!', 'Fechar', { "duration": 2500 });
       }
     });
   }
