@@ -12,7 +12,7 @@
         </div>
 
         <div class="row mx-auto my-5">
-            <h1>Pergunta {{currentQuestionId+1}}/{{this.examData.nquestions}}</h1>
+            <h1>Pergunta {{currentQuestionId+1}}/{{nquestions}}</h1>
             <h1 style="text-align: center;">{{currentQuestion.question}}</h1>
             <!-- show time left -->
             <h2>Tempo restante: {{minutes}}:{{seconds}}</h2>
@@ -25,7 +25,7 @@
         </div>
         <!-- button to next question -->
         <div class="col d-flex justify-content-end">
-            <button mat-raised-button  style="height: 100%;"[disabled]="currentQuestionId==examData.nquestions-1" (click)="getNextQuestion()">
+            <button mat-raised-button  style="height: 100%;"[disabled]="currentQuestionId==nquestions-1" (click)="getNextQuestion()">
                 <mat-icon>arrow_forward_ios</mat-icon>
             </button>
         </div>

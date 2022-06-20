@@ -181,7 +181,7 @@
                         
                         <ng-container matColumnDef="title">
                             <th [style.width]="'40%'" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Nome">Nome</th>
-                            <td [style.width]="'40%'" mat-cell *matCellDef="let element"> {{element.name}} </td>
+                            <td [style.width]="'40%'" mat-cell *matCellDef="let element" (click)="retriveTest(element)"> {{element.name}} </td>
                         </ng-container>
                       
                         <ng-container matColumnDef="numQuestions">

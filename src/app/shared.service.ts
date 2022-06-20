@@ -507,4 +507,18 @@ export class SharedService {
 
     return this._http.get(this.EXAM_API + '/get_classroom_exams/' + id, httpOptions);
   }
+
+  openTest(classId:number,examId:number,args:any){
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    return this._http.post(this.EXAM_API + '/student/my_classroom/' + classId + '/exams/' + examId, args, httpOptions);
+
+  }
 }
