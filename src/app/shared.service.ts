@@ -72,10 +72,10 @@ export interface classroom {
   providedIn: 'root'
 })
 export class SharedService {
-  readonly ACCOUNT_API = "http://127.0.0.1:8000/account/api";
-  readonly EXERCISE_API = "http://127.0.0.1:8000/exercise/api";
-  readonly CLASSROOM_API = "http://127.0.0.1:8000/classroom/api";
-  readonly EXAM_API = "http://127.0.0.1:8000/exam/api";
+  readonly ACCOUNT_API = "http://localhost:8000/account/api";
+  readonly EXERCISE_API = "http://localhost:8000/exercise/api";
+  readonly CLASSROOM_API = "http://localhost:8000/classroom/api";
+  readonly EXAM_API = "http://localhost:8000/exam/api";
 
   /* Initialize the log status as true or false*/
   private logStatusSource = new BehaviorSubject<boolean>(localStorage.getItem('loggedIn') === 'true' ? true : false);
@@ -508,7 +508,7 @@ export class SharedService {
     return this._http.get(this.EXAM_API + '/get_classroom_exams/' + id, httpOptions);
   }
 
-  openTest(classId:number,examId:number,args:any){
+  openTest(classId: number, examId: number, args: any) {
     var token: any = localStorage.getItem('token');
 
     const httpOptions = {
@@ -519,6 +519,31 @@ export class SharedService {
     };
 
     return this._http.post(this.EXAM_API + '/student/my_classroom/' + classId + '/exams/' + examId, args, httpOptions);
+  }
 
+  submitExam(classId: number, examId: number, info: any) {
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    return this._http.post(this.EXAM_API + '/student/my_classroom/' + classId + '/exams/' + examId + '/submit_exam', info, httpOptions);
+  }
+
+  getClassStats(id: number) {
+    var token: any = localStorage.getItem('token');
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: 'Bearer ' + token
+        })
+    };
+
+    return this._http.get(this.EXAM_API + '/classroom_exams_stats/' + id, httpOptions);
   }
 }

@@ -10,7 +10,7 @@ import { EditPhotoComponent } from './edit-photo/edit-photo.component';
 })
 export class ShowPhotoComponent implements OnInit {
   @Input() user_info!: person;
-  DJANGO_SERVER = 'http://127.0.0.1:8000';
+  DJANGO_SERVER = 'http://localhost:8000';
   imgPath: string = "../../assets/img/default.png";
 
   constructor(public edit_photo_dialog: MatDialog) { }

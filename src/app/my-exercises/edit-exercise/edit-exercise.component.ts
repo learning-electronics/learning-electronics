@@ -16,7 +16,7 @@ export class EditExerciseComponent implements OnInit {
   imageChangedEvent: any = '';
   croppedImage: any = '';
   disabled: boolean = true;
-  DJANGO_SERVER = 'http://127.0.0.1:8000';
+  DJANGO_SERVER = 'http://localhost'
   imgPath: string = "";
   
   constructor(

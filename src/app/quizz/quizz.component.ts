@@ -68,11 +68,11 @@ export class QuizzComponent implements OnInit {
   }
 }
 export const numQuestionsValidator: ValidatorFn = (formGroup: AbstractControl ): ValidationErrors | null  => {
-    var numQuestions = formGroup.get('questions')?.value;
-  
-    if (numQuestions <= 0 || numQuestions > 50) {
-      return {'numQuestionsWrong': true};
-    } else {
-      return null;
-    }
-  };
+  var numQuestions = formGroup.get('questions')?.value;
+
+  if (numQuestions <= 0 || numQuestions > 50) {
+    return {'numQuestionsWrong': true};
+  } else {
+    return null;
+  }
+};

@@ -9,7 +9,7 @@ import { exercise } from 'src/app/shared.service';
 export class ViewExerciseComponent implements OnInit {
   @Input() data!: exercise | undefined;
   @Input() grid: boolean = false;
-  DJANGO_SERVER = 'http://127.0.0.1:8000';
+  DJANGO_SERVER = 'http://localhost'
   imgPath: string = "";
   resolution: boolean = this.data?.resol == null || this.data?.resol == '' ? false : true;
 

@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { DesassociateElementComponent } from '../desassociate-element/desassociate-element.component';
+import { StartExamComponent } from '../start-exam/start-exam.component';
 
 @Component({
   selector: 'app-show-class',
@@ -24,6 +25,8 @@ export class ShowClassComponent implements OnInit {
   @ViewChild(MatSort) sortExercises: MatSort;
   @ViewChild(MatPaginator) paginatorExams: MatPaginator;
   @ViewChild(MatSort) sortExams: MatSort;
+  @ViewChild(MatPaginator) paginatorStats: MatPaginator;
+  @ViewChild(MatSort) sortStats: MatSort;
 
   displayedColumnsMembers: string[] = ['select', 'type', 'first_name', 'last_name'];
   dataSourceMembers = new MatTableDataSource<any>();
@@ -37,17 +40,24 @@ export class ShowClassComponent implements OnInit {
   dataSourceExams = new MatTableDataSource<any>();
   selectionExams = new SelectionModel<any>(true, []);
 
+  displayedColumnsStats: string[] = ['student', 'exam_name', 'final_mark', 'date_submitted'];
+  dataSourceStats = new MatTableDataSource<any>();
+  selectionStats = new SelectionModel<any>(true, []);
+
   pageSizeMembers: number = 10;
   sortedDataMembers: any[] = [];
   pageSizeExercises: number = 10;
   sortedDataExercises: any[] = [];
   pageSizeExams: number = 10;
   sortedDataExams: any[] = [];
+  pageSizeStats: number = 10;
+  sortedDataStats: any[] = [];
 
   all_members: any[] = [];
   all_exercises: exercise[] = [];
   all_themes: theme[] = [];
   all_exams: any[] = [];
+  all_stats: any[] = [];
 
   name: string = "";
   data: any;
@@ -65,10 +75,20 @@ export class ShowClassComponent implements OnInit {
           this.refreshTable();
         });
 
-        this._service.getClassroomExams(data.id).subscribe((data: any) => {
+        this._service.getClassroomExams(this.data.id).subscribe((data: any) => {
           this.all_exams = data;
           console.log(this.all_exams);
-          //this.refreshTable();
+        });
+
+        this._service.getClassStats(this.data.id).subscribe((data: any) => {
+          data.forEach((submited_exam: any) => {
+            // Get the correct date format
+            submited_exam.date_submitted = moment(submited_exam.date_submitted).format('DD-MM-YYYY');
+            this.all_stats.push(submited_exam);
+          });
+          
+          this.dataSourceStats.data = this.all_stats;
+          console.log(this.all_stats);
         });
       }
     });
@@ -95,6 +115,9 @@ export class ShowClassComponent implements OnInit {
 
     this.dataSourceExams.sort = this.sortExams;
     this.dataSourceExams.paginator = this.paginatorExams;
+
+    this.dataSourceStats.sort = this.sortStats;
+    this.dataSourceStats.paginator = this.paginatorStats;
   }
 
   /* Sort Exercises Data for the table */
@@ -143,7 +166,7 @@ export class ShowClassComponent implements OnInit {
     this.dataSourceMembers = new MatTableDataSource(this.sortedDataMembers);
   }
 
-  /* Sort Exa,s Data for the table */
+  /* Sort Exams Data for the table */
   sortDataExams(sort: Sort) {
     const data = this.all_exams.slice();
     if (!sort.active || sort.direction === '') {
@@ -164,6 +187,29 @@ export class ShowClassComponent implements OnInit {
     });
 
     this.dataSourceExams = new MatTableDataSource(this.sortedDataExams);
+  }
+
+  /* Sort Stats Data for the table */
+  sortDataStats(sort: Sort) {
+    const data = this.all_stats.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedDataStats = data;
+      return;
+    }
+
+    this.sortedDataStats = data.sort((a, b) => {  
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'student':
+          return this.compare(a.student, b.student, isAsc);
+        case 'date':
+          return this.compareDate(a.date, b.date, isAsc);
+        default:
+          return 0;
+      }
+    });
+
+    this.dataSourceStats = new MatTableDataSource(this.sortedDataStats);
   }
 
   /* Compare 2 elements of the table string or number */
@@ -193,6 +239,11 @@ export class ShowClassComponent implements OnInit {
   applyFilterExams(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSourceExams.filter = filterValue.trim().toLowerCase(); 
+  }
+
+  applyFilterStats(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSourceStats.filter = filterValue.trim().toLowerCase(); 
   }
 
   /* Update the table's information */
@@ -299,7 +350,7 @@ export class ShowClassComponent implements OnInit {
     data.type = 'member';
     data.classroom_id = this.data.id;
 
-    const dialogRef = this.popup_dialog.open(DesassociateElementComponent, { data: data });
+    this.popup_dialog.open(DesassociateElementComponent, { data: data });
   }
 
   /* Desassociate selected exercise(s) from the classroom */
@@ -318,7 +369,7 @@ export class ShowClassComponent implements OnInit {
     data.type = 'exercise';
     data.classroom_id = this.data.id;
 
-    const dialogRef = this.popup_dialog.open(DesassociateElementComponent, { data: data });
+    this.popup_dialog.open(DesassociateElementComponent, { data: data });
   }
 
   desassociateExams() {}
@@ -367,17 +418,7 @@ export class ShowClassComponent implements OnInit {
         this.dataSourceExams.data.forEach(row => this.selectionExams.select(row));
   }
 
-  retriveTest(data:any){
-    //get exam info
-    console.log(data);
-    console.log("abrir teste");
-    this._service.openTest(this.data.id,data.id,{password:'123'}).subscribe((data: any) => {
-      console.log(data);
-      data.nquestions=data.exercises.length;
-      console.log (data);
-      this._service.openExam(data);
-      this._router.navigate(['/show-quizz']);
-    });
-    
-    }
+  confirmExam(data:any) {
+    this.popup_dialog.open(StartExamComponent, { data: {class: this.data, exam: data} });
+  }
 }

@@ -22,7 +22,7 @@ export class ShowGameComponent implements OnInit {
   @Input() socket_id! : string;
   
 
-  DJANGO_SERVER = 'http://127.0.0.1:8000';
+  DJANGO_SERVER = 'http://localhost:8000';
   
   question : string = "";
   options : string[] = [];
