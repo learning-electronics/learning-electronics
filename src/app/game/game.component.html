@@ -4,7 +4,7 @@
         <div class="col">
             <div class="row-2 mt-3 ml-5">
                 <mat-form-field appearance="fill">
-                    <mat-label>Select your room</mat-label>
+                    <mat-label>Selecionar Sala</mat-label>
                     <mat-select (selectionChange)="changeRoom($event.value)">
                         <mat-option *ngFor="let room of rooms" [value]="room" routerLink="/game" [state]="{ id: 'estadooo' }">
                             {{room}}
@@ -14,7 +14,7 @@
             </div>
     
             <div class="row-1 ml-5">
-                <button mat-raised-button color="accent" *ngIf="!room_flag" (click)="createRoom()">Create room</button>
+                <button mat-raised-button color="accent" *ngIf="!room_flag" (click)="createRoom()">Criar Sala</button>
             </div>
             
             <div class="row mx-auto">

@@ -14,7 +14,7 @@
             <div class="row mt-3">
                 <form [formGroup]="form">
                     <mat-form-field appearance="fill">
-                        <mat-label>Send message</mat-label>
+                        <mat-label>Enviar mensagem</mat-label>
                         <input  matInput type="text" formControlName="msg" >
                         <button *ngIf="form.get('msg')?.value" matSuffix mat-icon-button aria-label="Clear" (click)="sendMessage()">
                             <mat-icon>send</mat-icon>

@@ -7,7 +7,7 @@
         <div class="row" *ngIf="!show_answer && show_question">
             <div class="col">
                 <div class="row">
-                    <h1>Time left: {{counter}}</h1>
+                    <h1>Tempo Restante: {{counter}}</h1>
                 </div>
 
                 <div class="row">
@@ -44,7 +44,7 @@
                         value={{ready_value}}>
                         </mat-spinner>
                         
-                        {{n_ready}}/{{n_players}} Players Ready
+                        {{n_ready}}/{{n_players}} Jogadores Prontos
                     </mat-card>
                 </div>
 
@@ -57,18 +57,18 @@
             </div>
         </div>
     </div>
-    <mat-card *ngIf="show_answer && !correct_answer">Correct answer: {{answer}}</mat-card>
-    <mat-card *ngIf="correct_answer && show_answer">Correct!</mat-card>
-    <mat-card *ngIf="!correct_answer && show_answer">Wrong!</mat-card>
+    <mat-card *ngIf="show_answer && !correct_answer">Resposta Correta: {{answer}}</mat-card>
+    <mat-card *ngIf="correct_answer && show_answer">Correto!</mat-card>
+    <mat-card *ngIf="!correct_answer && show_answer">Errado!</mat-card>
     <mat-card *ngIf="game_over && show_results_flag">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
             <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef> Name </th>
+              <th mat-header-cell *matHeaderCellDef> Nome </th>
               <td mat-cell *matCellDef="let element"> {{element.name}} </td>
             </ng-container>
 
             <ng-container matColumnDef="points">
-              <th mat-header-cell *matHeaderCellDef> Points </th>
+              <th mat-header-cell *matHeaderCellDef> Pontos </th>
               <td mat-cell *matCellDef="let element"> {{element.points}} </td>
             </ng-container>
           
@@ -76,6 +76,6 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
     </mat-card>
-    <mat-card *ngIf="game_over">The game is over!</mat-card>
+    <mat-card *ngIf="game_over">O jogo acabou!</mat-card>
     <!-- replay button -->
 </mat-card>

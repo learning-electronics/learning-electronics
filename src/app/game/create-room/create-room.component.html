@@ -2,7 +2,7 @@
 <form [formGroup]="form">
     <div class="col">
     <mat-form-field class="example-form-field" appearance="fill">
-        <mat-label>New Room Name</mat-label>
+        <mat-label>Nome da nova sala</mat-label>
         <input matInput formControlName="roomInput" (input)="onRoomInput()" required>
         <mat-error *ngIf="room?.hasError('required')">Crie uma sala</mat-error>
         <mat-error *ngIf="room?.invalid && !room?.hasError('required')">Nome já usado</mat-error>
@@ -10,11 +10,11 @@
     </div>
     <div class="col">
     <mat-form-field>
-        <mat-label>Number of Exercises</mat-label>
+        <mat-label>Número de exercícios</mat-label>
         <input matInput formControlName="numExercises" required>
     </mat-form-field>
     </div>
     <div class="col">
-    <button mat-icon-button (click)="sendNewRoomData()">Send</button>
+    <button mat-icon-button (click)="sendNewRoomData()">Enviar</button>
     </div>
 </form>
