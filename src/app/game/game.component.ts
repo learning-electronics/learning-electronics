@@ -35,10 +35,10 @@ export class GameComponent implements OnInit {
         this.user_info = data.info as person;
       }
     });
-  }  
-
+  }
+  
   ngOnInit(): void {
-    this.socket = io("http://localhost:3000");
+    this.socket = io("http://localhost:3000")
     this.rooms = ["None"];
   }
 

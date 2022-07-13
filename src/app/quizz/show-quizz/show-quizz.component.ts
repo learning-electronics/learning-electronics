@@ -47,6 +47,8 @@ export class ShowQuizzComponent implements OnInit {
         if (this.timeLeft == null) {
           this.timeLeft = 10;
         }
+      } else if (data.answers != undefined) {
+        // this.exs = data.
       } else {
         this.nquestions = data.nquestions;
         this.timeLeft=data.duration;
@@ -127,24 +129,32 @@ export class ShowQuizzComponent implements OnInit {
     //display grade with onyl 2 decimal cases
     this.grade = Math.round(this.grade*100)/100;
     
-    // Submit the Exam
-    var submit: any = {'final_mark': this.grade < 0 ? 0 : this.grade, 'answers': {}};
-    for (let i = 0; i < this.exs.length; i++) {
-      submit.answers[(this.exs[i].id).toString()] = this.studentAnswer.get(this.exs[i].id);
-    }
-
-    this._service.submitExam(this.class_id, this.exam_id, submit).subscribe((data: any) => {
-      console.log(data);
-      if (data.v) {
-        this.end = true;
-        this.pauseTimer();
-        this.currentQuestionId = 0;
-
-        this._snackBar.open("Exame finalizado!", "Fechar", { "duration": 2500 });
-      } else {
-        this._snackBar.open("Erro ao finalizar exame!", "Fechar", { "duration": 2500 });
+    if (this.exam_id == undefined && this.class_id == undefined) {
+      this.end = true;
+      this.pauseTimer();
+      this.currentQuestionId = -1;
+      this.getNextQuestion();
+    } else {
+      // Submit the Exam
+      var submit: any = {'final_mark': this.grade < 0 ? 0 : this.grade, 'answers': {}};
+      for (let i = 0; i < this.exs.length; i++) {
+        submit.answers[(this.exs[i].id).toString()] = this.studentAnswer.get(this.exs[i].id);
       }
-    });
+
+      this._service.submitExam(this.class_id, this.exam_id, submit).subscribe((data: any) => {
+        console.log(data);
+        if (data.v) {
+          this.end = true;
+          this.pauseTimer();
+          this.currentQuestionId = -1;
+          this.getNextQuestion();
+
+          this._snackBar.open("Exame finalizado!", "Fechar", { "duration": 2500 });
+        } else {
+          this._snackBar.open("Erro ao finalizar exame!", "Fechar", { "duration": 2500 });
+        }
+      });
+    } 
   }
     
   //go home

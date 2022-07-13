@@ -48,9 +48,9 @@
             <h1 style="text-align: center;">{{currentQuestion.question}}</h1>
             <!-- show time left -->
             <h2>Tempo restante: {{minutes}}:{{seconds}}</h2>
-            <img id="image" *ngIf="currentQuestion.img != null" [src]="'http://127.0.0.1:8000'+currentQuestion.img" alt="Exercise Image">
+            <img id="image" *ngIf="currentQuestion.img != null" [src]="'http://localhost:8000'+currentQuestion.img" alt="Exercise Image">
             <div class="row mx-auto mt-5">
-                <h2>Resposta dada: {{studentAnswer.get(currentQuestion.question)}}</h2>
+                <h2>Resposta dada: {{studentAnswer.get(currentQuestion.id)}}</h2>
                 <h2>Resposta correta: {{currentQuestion.correct}}</h2> 
             </div>
         </div>

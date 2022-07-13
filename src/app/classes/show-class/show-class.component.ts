@@ -80,16 +80,18 @@ export class ShowClassComponent implements OnInit {
           console.log(this.all_exams);
         });
 
-        this._service.getClassStats(this.data.id).subscribe((data: any) => {
-          data.forEach((submited_exam: any) => {
-            // Get the correct date format
-            submited_exam.date_submitted = moment(submited_exam.date_submitted).format('DD-MM-YYYY');
-            this.all_stats.push(submited_exam);
+        if (this.data.type != 'Student') {
+          this._service.getClassStats(this.data.id).subscribe((data: any) => {
+            data.forEach((submited_exam: any) => {
+              // Get the correct date format
+              submited_exam.date_submitted = moment(submited_exam.date_submitted).format('DD-MM-YYYY');
+              this.all_stats.push(submited_exam);
+            });
+            
+            this.dataSourceStats.data = this.all_stats;
+            console.log(this.all_stats);
           });
-          
-          this.dataSourceStats.data = this.all_stats;
-          console.log(this.all_stats);
-        });
+        }
       }
     });
   }

@@ -16,7 +16,7 @@ export class EditExerciseComponent implements OnInit {
   imageChangedEvent: any = '';
   croppedImage: any = '';
   disabled: boolean = true;
-  DJANGO_SERVER = 'http://localhost'
+  DJANGO_SERVER = 'http://localhost:8000'
   imgPath: string = "";
   
   constructor(
@@ -67,9 +67,10 @@ export class EditExerciseComponent implements OnInit {
       this.form.controls['classrooms'].disable();
     } else {
       var lst: any = [];
+      console.log(this.data.exercise);
+      this.form.controls['classrooms'].enable();
       this.data.exercise.visible.forEach((c: any) => { lst.push(c.id)  });
       this.form.controls['classrooms'].setValue(lst);
-      this.form.controls['classrooms'].enable();
     }
   }
 

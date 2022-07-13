@@ -1,8 +1,16 @@
-FROM node:latest as node
+FROM node:alpine as builder
+RUN apk update && apk add --no-cache make git
+
 WORKDIR /app
+
 COPY . .
-RUN npm install npm@8.11.0 --legacy-peer-deps
+RUN npm install
 RUN npm run build --prod
 
 FROM nginx:alpine
-COPY --from=node /app/dist/learning-electronics /usr/share/nginx/html
+
+RUN rm -rf /usr/share/nginx/html/* && rm -rf /etc/nginx/conf.d/default.conf
+COPY ./default.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/dist/learning-electronics /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
