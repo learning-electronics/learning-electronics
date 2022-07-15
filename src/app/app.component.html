@@ -2,7 +2,7 @@
     'linear-gradient( rgba(0, 0, 0,' + theme + '), rgba(0, 0, 0,' + theme + ')),'+ 
     'url(../assets/img/' + currentComponent + '-background' + '.png)'}"
     autosize class="h-100">
-    <mat-sidenav #sidenav mode="side" opened="true">
+    <mat-sidenav #sidenav mode="side" opened="true" [class.mat-elevation-z8]="true">
         <mat-nav-list>
             <mat-list-item>
                 <mat-slide-toggle class="slide" [formControl]="toggleControl"></mat-slide-toggle>
