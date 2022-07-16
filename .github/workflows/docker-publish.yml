@@ -3,8 +3,8 @@ name: Build & Push
 on:
   push:
     branches: 'main'
-  paths-ignore:
-    - 'README.md'
+    paths-ignore:
+      - 'README.md'
   workflow_dispatch:
 
 jobs:
