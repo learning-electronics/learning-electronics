@@ -1,2 +1,33 @@
-<app-logedout *ngIf="!loggedIn"></app-logedout>
-<app-logedin *ngIf="loggedIn"></app-logedin>
+<div class="row home d-flex w-100 h-100">      
+    <div class="col-8 mx-auto">
+        <p style="margin-top: 25vh;">BEM VINDO AO</p>
+        <img class="welcome" src="../../assets/img/home.png">
+        <p>A NEW WAY OF LEARNING</p>
+    </div>
+    <div *ngIf="!loggedIn" class="col">
+        <mat-card [class.mat-elevation-z9]="true" style="margin-top: 25vh;">
+            <div class="col">
+                <div class="row mt-3 mb-4">
+                    <h1><b>LOGIN</b></h1>
+                </div>
+                    <div class="row my-3">
+                    <button mat-button color="primary" (click)="login()">Entrar</button>
+                </div>
+                <div class="row my-4">
+                    <img class="le-img" src="../assets/img/le.png">
+                </div>
+                <hr class="solid">
+                <div class="row my-3">
+                    <button mat-button color="accent" routerLink="/register">Registar</button>
+                </div>
+                <div class="row my-3">
+                    <button mat-button color="accent" (click)="recoverPassword()">Recuperar Password</button>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>
+
+<div class="row w-100 h-100" style="background-color: #F7F7F7">
+
+</div>

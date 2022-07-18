@@ -22,8 +22,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { HttpClientModule } from '@angular/common/http';
-import { LogedinComponent } from './home/logedin/logedin.component';
-import { LogedoutComponent } from './home/logedout/logedout.component';
 import { LibraryComponent } from './library/library.component';
 import { ProfileComponent } from './profile/profile.component';
 import { QuizzComponent } from './quizz/quizz.component';
@@ -94,8 +92,6 @@ import { StartExamComponent } from './classes/start-exam/start-exam.component';
     PageNotFoundComponent,
     LoginComponent,
     RegisterComponent,
-    LogedinComponent,
-    LogedoutComponent,
     LibraryComponent,
     ProfileComponent,
     QuizzComponent,

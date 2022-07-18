@@ -9,21 +9,37 @@ h1, h2, h3, h4, h5 {
     margin: auto;
 }
 
-.container {
-    align-content: center;
+.home {
+    background-image: url(../../assets/img/home-background.jpg); 
+    background-position: center; 
+    background-attachment: fixed; 
+    background-repeat: no-repeat; 
+    background-size: cover;
 }
 
 .mat-card {
-    border-radius: 20px;
+    margin: auto;
+    border-radius: 25px;
     width: 70%;
-    margin-right: 50%;
-    
+    max-width: 500px;
+    min-width: 350px;
 }
 
-hr.solid {
-    width: 80%;
+.welcome {
+    width: 70%;
+    min-width: 148px;
     margin: auto;
-    border-top: 3px solid primary;
+    display: block;
+}
+
+P {
+    font-weight: 450;
+    font-size: 2rem;
+    line-height: 1.2;
+    text-align: center;
+    margin: auto;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
 }
 
 .mat-button {
@@ -31,3 +47,6 @@ hr.solid {
     width: 50%;
 }
 
+.row {
+    margin-left: 0px !important;
+}
