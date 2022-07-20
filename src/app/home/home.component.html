@@ -1,33 +1,249 @@
-<div class="row home d-flex w-100 h-100">      
-    <div class="col-8 mx-auto">
-        <p style="margin-top: 25vh;">BEM VINDO AO</p>
-        <img class="welcome" src="../../assets/img/home.png">
-        <p>A NEW WAY OF LEARNING</p>
-    </div>
-    <div *ngIf="!loggedIn" class="col">
-        <mat-card [class.mat-elevation-z9]="true" style="margin-top: 25vh;">
-            <div class="col">
-                <div class="row mt-3 mb-4">
-                    <h1><b>LOGIN</b></h1>
-                </div>
-                    <div class="row my-3">
-                    <button mat-button color="primary" (click)="login()">Entrar</button>
-                </div>
-                <div class="row my-4">
-                    <img class="le-img" src="../assets/img/le.png">
-                </div>
-                <hr class="solid">
-                <div class="row my-3">
-                    <button mat-button color="accent" routerLink="/register">Registar</button>
-                </div>
-                <div class="row my-3">
-                    <button mat-button color="accent" (click)="recoverPassword()">Recuperar Password</button>
-                </div>
+<div class="row home d-flex w-100 h-100">
+    <div class="jumbotron">
+        <div class="row m-5 justify-content-center align-items-center">
+            <div class="col-8 mx-auto">
+                <p class="welcome-p" style="margin-top: 12%;">BEM VINDO AO</p>
+                <img class="welcome-img" src="../../assets/img/home.png">
+                <p class="welcome-p">A NEW WAY OF LEARNING</p>
             </div>
-        </mat-card>
+            <div *ngIf="!loggedIn" class="col">
+                <mat-card [class.mat-elevation-z9]="true" style="margin-top: 20%;">
+                    <div class="col">
+                        <div class="row mt-3 mb-4">
+                            <h1 style="font-size: 1.5rem"><b>LOGIN</b></h1>
+                        </div>
+                            <div class="row my-3">
+                            <button mat-button color="primary" (click)="login()"><b>ENTRAR</b></button>
+                        </div>
+                        <div class="row my-4">
+                            <img class="le-img" src="../assets/img/le.png">
+                        </div>
+                        <hr class="solid">
+                        <div class="row my-3">
+                            <button mat-button color="accent" routerLink="/register"><b>REGISTAR</b></button>
+                        </div>
+                        <div class="row my-3">
+                            <button mat-button color="accent" (click)="recoverPassword()"><b>RECUPERAR PASSWORD</b></button>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="row w-100 h-100" style="background-color: #F7F7F7">
+<div class="col w-100" style="background-color: #F7F7F7">
+    <section class="bg-white">
+        <div class="container p-5">
+            <h1 class="m-4">SOBRE O LEARNING-ELECTRONICS</h1>
+            <p class="text-center">A plataforma Learning Eletronics visa re-inventar os métodos de aprendizagem clássicos. Através de maior interação didátca fornecendo assim um ambiente competitivo e dinâmico para alunos na área de eletŕonica.</p>
+            <p *ngIf="more">Falar mais sobre</p>
 
+            <p class="text-center mt-4" *ngIf="!more">
+                <button mat-raised-button class="mx-auto" (click)="more = !more">
+                 Ver mais <mat-icon>expand_more</mat-icon>
+                </button>
+            </p>
+            <p class="text-center mt-4" *ngIf="more">
+                <button mat-raised-button class="mx-auto" (click)="more = !more">
+                 Ver menos <mat-icon>expand_less</mat-icon>
+                </button>
+            </p>
+
+            <div class="row m-5">
+                <div class="col-2 about-col">
+                    <mat-icon class="about-icon" style="align-self: center">library_books</mat-icon>
+                </div>
+
+                <div class="col mx-2">
+                    <h2>Exercícios</h2>
+                    <p>Questões de escolha múltipla com 4 opções</p>
+                </div>
+            </div>
+
+            <div class="row m-5">
+                <div class="col mx-2">
+                    <h2 style="text-align: right;">Testes</h2>
+                    <p style="text-align: right;">Podes realizar testes autopropostos escolhendo tema(s), tempo e desconto das perguntas erradas.</p>
+                </div>
+
+                <div class="col-2 about-col">
+                    <mat-icon class="about-icon">quizz</mat-icon>
+                </div>
+            </div>
+
+            <div class="row m-5">
+                <div class="col-2 about-col">
+                    <mat-icon class="about-icon" style="align-self: center">insights</mat-icon>
+                </div>
+
+                <div class="col mx-2">
+                    <h2>Estatísticas</h2>
+                    <p>Estatísticas quanto ao número de perguntas respondidas, testes realizados e cobertura das temáticas.</p>
+                </div>
+            </div>
+
+            <div class="row m-5">
+                <div class="col mx-2">
+                    <h2 style="text-align: right;">Jogos</h2>
+                    <p style="text-align: right;">Compete contra os teus colegas realizando o mesmo teste ao mesmo tempo.</p>
+                </div>
+
+                <div class="col-2 about-col">
+                    <mat-icon class="about-icon">gamepad</mat-icon>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="bg-ligth">
+        <div class="container p-5">
+            <div class="row">
+                <div class="col about-col">
+                    <img class="m-3 about-img" src="../../assets/img/student.png">
+                </div>
+
+                <div class="col">
+                    <h2>Alunos</h2>
+                    <p>O aluno poderá realizar vários quizzes sobre circuitos eletrónicos, estes podem estar em formato de teste ou em formato ludico através de jogos e desafios.
+                    O aluno também terá acesso ao conteúdo de aprendizagem em formato de biblioteca pública.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <h2 style="text-align: right;">Docentes</h2>
+                    <p style="text-align: right;">O docente poderá adicionar conteúdo de aprendizagem (exercícios) de forma manual ou automática.
+                    Poderá também adicionar testes à sua biblioteca pessoal, podendo escolher a visiblidade dos mesmos (ex: público, privado ou apenas em turmas selecionadas).
+                    O docente também terá acesso às estatísticas das suas turmas.
+                    </p>
+                </div>
+
+                <div class="col about-col">
+                    <img class="m-3 about-img" src="../../assets/img/teacher.png">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background-color: rgb(230, 230, 230)">
+        <div class="container p-5">
+            <h1 class="mt-5">A NOSSA EQUIPA</h1>
+            <div class="team-container mx-5">
+                <article class="team-card">
+                    <div class="team-circle"></div>
+
+                    <img src="../../assets/img/team/andre.png" alt="" class="team-img">
+
+                    <h3>André Clérigo</h3>
+                    <span>Aluno</span>
+                    
+                    <a mat-icon-button class="team-link" href="https://github.com/andreclerigo" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    </a>
+                </article>
+
+                <article class="team-card">
+                    <div class="team-circle"></div>
+
+                    <img src="../../assets/img/team/carlos.png" alt="" class="team-img">
+
+                    <h3 class="team-title">Carlos Costa</h3>
+                    <span>Aluno</span>
+
+                    <a mat-icon-button class="team-link" href="https://github.com/carlosrjpcosta" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    </a>
+                </article>
+
+                <article class="team-card">
+                    <div class="team-circle"></div>
+
+                    <img src="../../assets/img/team/claudio.png" alt="" class="team-img">
+
+                    <h3 class="team-title">Cláudio Asensio</h3>
+                    <span>Aluno</span>
+
+                    <a mat-icon-button class="team-link" href="https://github.com/ClaudioAsensio" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    </a>
+                </article>
+
+                <article class="team-card">
+                    <div class="team-circle"></div>
+
+                    <img src="../../assets/img/team/edgar.png" alt="" class="team-img">
+
+                    <h3 class="team-title">Edgar Sousa</h3>
+                    <span>Aluno</span>
+
+                    <a mat-icon-button class="team-link" href="https://github.com/EdgarSousa" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    </a>
+                </article>
+
+                <article class="team-card">
+                    <div class="team-circle"></div>
+
+                    <img src="../../assets/img/team/hugo.png" alt="" class="team-img">
+
+                    <h3 class="team-title">Hugo Domingos</h3>
+                    <span>Aluno</span>
+
+                    <a mat-icon-button class="team-link" href="https://github.com/Hugo-Domingos" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    </a>
+                </article>
+
+                <article class="team-card">
+                    <div class="team-circle"></div>
+
+                    <img src="../../assets/img/team/tiago.png" alt="" class="team-img">
+
+                    <h3 class="team-title">Tiago Marques</h3>
+                    <span>Aluno</span>
+
+                    <a mat-icon-button class="team-link" href="https://github.com/Tiagura" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    </a>
+                </article>
+                
+                <article class="team-card">
+                    <div class="team-circle"></div>
+
+                    <img src="../../assets/img/team/helder_zagalo.png" alt="" class="team-img">
+
+                    <h3 class="team-title">Helder Zagalo</h3>
+                    <span>Orientador</span>
+
+                    <a mat-icon-button class="team-link" href="https://www.ua.pt/pt/p/10316375" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                </article>
+
+                <article class="team-card">
+                    <div class="team-circle"></div>
+
+                    <img src="../../assets/img/team/joao_matos.png" alt="" class="team-img">
+
+                    <h3 class="team-title">Nuno Matos</h3>
+                    <span>Co-orientador</span>
+                    
+                    <a mat-icon-button class="team-link" href="https://pt.linkedin.com/in/joao-nuno-matos-b3173951" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                </article>
+            </div>
+            
+            <img class="m-3" src="../../assets/img/footer.png" style="width: 100%; height: 100%; object-fit: contain;">
+
+            <p class="text-center mt-3">Um projeto open-source disponível em 
+                <a mat-icon-button href="https://github.com/learning-electronics/" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+            </p>
+            
+            <p class="text-center">Learning-Electronics, Universidade de Aveiro e Instituto de Telecomunicações © 2022</p>
+        </div>
+    </section>
 </div>

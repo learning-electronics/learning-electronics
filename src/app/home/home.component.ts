@@ -13,6 +13,7 @@ import { RecoverPasswordComponent } from './recover-password/recover-password.co
 export class HomeComponent implements OnInit {
   subscription: Subscription = new Subscription();
   loggedIn: boolean = false;
+  more: boolean = false;
 
   constructor(private _service: SharedService, public login_dialog: MatDialog) { }
 
