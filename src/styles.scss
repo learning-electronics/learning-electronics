@@ -32,11 +32,7 @@ $angular-dark-theme: mat.define-dark-theme(
   )
 );
 
-.darkMode {
-  @include mat.all-component-colors($angular-dark-theme);
-}
-
-.darkModeProfile {
+.darkMode, .darkModeProfile {
   @include mat.all-component-colors($angular-dark-theme);
 }
 

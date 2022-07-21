@@ -2,3 +2,38 @@
     display: block;
     background-color: #e6e6e6;
 }
+
+.mat-stroked-button {
+    margin: auto;
+    width: 50%;
+}
+
+.file {
+    transform: scale(3);
+    align-self: center;
+    padding: 0px;
+}
+
+.flex-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-img {
+    width: 30%;
+}
+
+.a-pdf, .a-pdf:visited, .a-pdf:hover, .a-pdf:active {
+    color: inherit;
+}
+
+@media screen and (max-width: 990px) {
+    .user-img {
+       width: 60%;
+    }
+
+    .mat-stroked-button {
+        width: 90%;
+    }
+}

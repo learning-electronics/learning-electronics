@@ -8,8 +8,12 @@
                 <mat-slide-toggle class="slide" [formControl]="toggleControl"></mat-slide-toggle>
             </mat-list-item>
 
-            <mat-list-item (click)="isExpanded = !isExpanded">
+            <mat-list-item  *ngIf="!smallScreen" (click)="isExpanded = !isExpanded">
                 <mat-icon mat-list-icon class="chevron-button sidenav-button" [ngClass]="{'rotated': isExpanded}">chevron_right</mat-icon>
+            </mat-list-item>
+
+            <mat-list-item  *ngIf="smallScreen">
+                <mat-icon mat-list-icon class="chevron-button sidenav-button">remove</mat-icon>
             </mat-list-item>
     
             <mat-list-item routerLink="">

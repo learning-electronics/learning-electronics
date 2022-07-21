@@ -1,5 +1,5 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, HostBinding } from '@angular/core';
+import { Component, HostBinding, HostListener } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -24,6 +24,7 @@ export class AppComponent {
   currentComponent: string = "home";
   theme: number = 0;
   teacher: boolean = false;
+  smallScreen: boolean = false;
 
   constructor(private _overlay: OverlayContainer, private _service: SharedService, private _router: Router, public login_dialog: MatDialog, private _snackBar: MatSnackBar) {
     this.checkTeacherStatus();
@@ -45,6 +46,11 @@ export class AppComponent {
         }
       });
     }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    event.target.innerWidth <= 700 ? this.smallScreen = true : this.smallScreen = false;
   }
 
   ngOnInit() {

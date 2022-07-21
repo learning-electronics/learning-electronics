@@ -107,5 +107,8 @@
 			}
 		}
 	},
-	"defaultProject": "learning-electronics"
+  "defaultProject": "learning-electronics",
+  "cli": {
+    "analytics": false
+  }
 }
