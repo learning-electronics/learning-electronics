@@ -8,6 +8,7 @@ import { account_response, person, SharedService } from '../shared.service';
 import * as _moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
+import { LoginComponent } from '../home/login/login.component';
 const moment = _moment;
 
 export const DATE_FORMAT = {
@@ -37,7 +38,7 @@ export class RegisterComponent implements OnInit {
   minPw: number = 8;
   form!: FormGroup;
 
-  constructor(private _formBuilder: FormBuilder, private _snackBar: MatSnackBar, private _service: SharedService, private _router: Router, public terms_dialog: MatDialog) { }
+  constructor(private _formBuilder: FormBuilder, private _snackBar: MatSnackBar, private _service: SharedService, private _router: Router, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.form = this._formBuilder.group({
@@ -113,11 +114,20 @@ export class RegisterComponent implements OnInit {
 
   openTerms() {
     this.form.controls['terms'].setValue(!this.form.controls['terms'].value);
-    const dialogRef = this.terms_dialog.open(TermsConditionsComponent, {
+    const dialogRef = this.dialog.open(TermsConditionsComponent, {
       width: '80%',
       height: '80%'
     });
-  }  
+  }
+
+  /* Open Login Dialog */
+  login() {
+    const dialogRef = this.dialog.open(LoginComponent, {
+      width: '30%',
+      minWidth: '330px',
+      maxWidth: '500px',
+    });
+  }
 }
 
 export const passwordMatchValidator: ValidatorFn = (formGroup: AbstractControl ): ValidationErrors | null => {

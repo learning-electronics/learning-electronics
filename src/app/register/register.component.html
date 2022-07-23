@@ -1,83 +1,89 @@
-<div class="row d-flex justify-content-center w-100 h-100">
-    <mat-card [class.mat-elevation-z5]="true">
-        <form [formGroup]="form" (ngSubmit)="submit()">
-            <div class="col">
-                <div class="row my-3 mx-auto">
-                        <div class="col d-flex justify-content-center">
-                            <mat-form-field class="mx-auto">
-                                <mat-label>Primeiro Nome</mat-label>
-                                <input matInput appearance="fill" placeholder="John" formControlName="fname" required>
-                                <mat-error *ngIf="form.controls['fname'].invalid">Você deve inserir um nome</mat-error>
-                            </mat-form-field>
-                        </div>
-                        
-                        <div class="col d-flex justify-content-center">
-                            <mat-form-field class="mx-auto">
-                                <mat-label>Último Nome</mat-label>
-                                <input matInput placeholder="Doe" formControlName="lname" required>
-                                <mat-error *ngIf="form.controls['lname'].invalid">Você deve inserir um nome</mat-error>
-                            </mat-form-field>
-                        </div>
-                </div>
+<div class="col w-100">
+    <div class="container p-5">
+        <h1 class="text-center my-5" style="font-size: 2rem; font-weight: 450;">Registo</h1>
 
-                <div class="row my-3 mx-auto">
-                    <mat-form-field class="mx-auto">
-                        <mat-label>Email</mat-label>
-                        <input matInput placeholder="name@example.com" formControlName="email" required>
-                        <mat-error *ngIf="form.controls['email'].invalid">{{getErrorMessageEmail()}}</mat-error>
-                    </mat-form-field>
-                </div>
-
-                <div class="row my-3 mx-auto">
-                    <mat-form-field >
-                        <mat-label>Password</mat-label>
-                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" (input)="onPasswordInput()" required>
-                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                        </button>
-                        <mat-error *ngIf="password?.hasError('required')">Você deve inserir uma password</mat-error>
-                        <mat-error *ngIf="password?.hasError('minlength')">A password deve ter no minímo {{minPw}} caracteres</mat-error>
-                    </mat-form-field>
-                </div>
-
-                <div class="row my-3 mx-auto">
-                    <mat-form-field >
-                        <mat-label>Confirmar Password</mat-label>
-                        <input matInput [type]="hide_confirm ? 'password' : 'text'" formControlName="password2" (input)="onPasswordInput()" required>
-                        <button mat-icon-button matSuffix (click)="hide_confirm = !hide_confirm" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                            <mat-icon>{{hide_confirm ? 'visibility_off' : 'visibility'}}</mat-icon>
-                        </button>
-                        <mat-error *ngIf="password2?.hasError('required')">Confirme a sua password</mat-error>
-                        <mat-error *ngIf="password2?.invalid && !password2?.hasError('required')">As passwords não são iguais</mat-error>
-                    </mat-form-field>
-                </div>
-
-                <div class="row my-3 mx-auto">
-                    <mat-form-field>
-                        <mat-label>Data de Nascimento</mat-label>
-                        <input matInput [matDatepicker]="picker" formControlName="bday" required>
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                        <mat-error *ngIf="form.controls['bday'].invalid">Data introduzida inválida</mat-error>
-                    </mat-form-field>
-                </div>
-
-                <div class="row my-3 mx-auto">
-                    <div class="col"></div>
-                    
-                    <div class="col my-auto mx-auto">
-                        <mat-checkbox class="ml-2" formControlName="terms" color="primary">
-                            <u (click)="openTerms()">Aceito os termos e condições</u>
+        <mat-card [class.mat-elevation-z5]="true">
+            <form [formGroup]="form" (ngSubmit)="submit()">
+                <div class="col">
+                    <div class="row my-3 mx-auto">
+                            <div class="col d-flex justify-content-center">
+                                <mat-form-field class="mx-auto">
+                                    <mat-label>Primeiro Nome</mat-label>
+                                    <input matInput appearance="fill" placeholder="John" formControlName="fname" required>
+                                    <mat-error *ngIf="form.controls['fname'].invalid">Você deve inserir um nome</mat-error>
+                                </mat-form-field>
+                            </div>
+                            
+                            <div class="col d-flex justify-content-center">
+                                <mat-form-field class="mx-auto">
+                                    <mat-label>Último Nome</mat-label>
+                                    <input matInput placeholder="Doe" formControlName="lname" required>
+                                    <mat-error *ngIf="form.controls['lname'].invalid">Você deve inserir um nome</mat-error>
+                                </mat-form-field>
+                            </div>
+                    </div>
+    
+                    <div class="row my-3 mx-auto">
+                        <mat-form-field class="mx-auto">
+                            <mat-label>Email</mat-label>
+                            <input matInput placeholder="name@example.com" formControlName="email" required>
+                            <mat-error *ngIf="form.controls['email'].invalid">{{getErrorMessageEmail()}}</mat-error>
+                        </mat-form-field>
+                    </div>
+    
+                    <div class="row my-3 mx-auto">
+                        <mat-form-field >
+                            <mat-label>Password</mat-label>
+                            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" (input)="onPasswordInput()" required>
+                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                            <mat-error *ngIf="password?.hasError('required')">Você deve inserir uma password</mat-error>
+                            <mat-error *ngIf="password?.hasError('minlength')">A password deve ter no minímo {{minPw}} caracteres</mat-error>
+                        </mat-form-field>
+                    </div>
+    
+                    <div class="row my-3 mx-auto">
+                        <mat-form-field >
+                            <mat-label>Confirmar Password</mat-label>
+                            <input matInput [type]="hide_confirm ? 'password' : 'text'" formControlName="password2" (input)="onPasswordInput()" required>
+                            <button mat-icon-button matSuffix (click)="hide_confirm = !hide_confirm" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                <mat-icon>{{hide_confirm ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                            <mat-error *ngIf="password2?.hasError('required')">Confirme a sua password</mat-error>
+                            <mat-error *ngIf="password2?.invalid && !password2?.hasError('required')">As passwords não são iguais</mat-error>
+                        </mat-form-field>
+                    </div>
+    
+                    <div class="row my-3 mx-auto">
+                        <mat-form-field>
+                            <mat-label>Data de Nascimento</mat-label>
+                            <input matInput [matDatepicker]="picker" formControlName="bday" required>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-error *ngIf="form.controls['bday'].invalid">Data introduzida inválida</mat-error>
+                        </mat-form-field>
+                    </div>
+    
+                    <div class="row my-3">
+                        <mat-checkbox class="mx-auto" formControlName="terms" color="primary" style="width: fit-content;">
+                            <u (click)="openTerms()">Aceito os termos</u>
                         </mat-checkbox>
                     </div>
-                    
-                    <div class="col"></div>
-                </div>
 
-                <div class="row mt-4 mb-1 mx-auto">
-                    <button mat-raised-button color="accent" type="submit" mat-button>Registar</button>
+                    <div class="row mt-4">
+                        <p class="text-center">Já tens conta? <a href="javascript:void(0);" (click)="login()">Entra na tua conta</a></p>
+                    </div>
+    
+                    <div class="row mb-1 mx-auto">
+                        <button mat-raised-button color="accent" type="submit" mat-button>Registar</button>
+                    </div>
                 </div>
-            </div>
-        </form>
-    </mat-card>
+            </form>
+        </mat-card>
+    </div>
+
+    <div class="container pb-2">
+        <app-footer></app-footer>
+    </div>
 </div>

@@ -3,7 +3,7 @@
         <div class="row m-5 justify-content-center align-items-center">
             <div class="col-8 mx-auto">
                 <p class="welcome-p" style="margin-top: 12%;">BEM VINDO AO</p>
-                <img class="welcome-img" src="../../assets/img/home.png">
+                <a href="/"><img class="welcome-img" src="../../assets/img/home.png"></a>
                 <p class="welcome-p">A NEW WAY OF LEARNING</p>
             </div>
             <div *ngIf="!loggedIn" class="col">
@@ -104,7 +104,7 @@
                 </div>
 
                 <div class="col">
-                    <h2>Alunos</h2>
+                    <h2>Aluno</h2>
                     <p>O aluno poderá realizar vários quizzes sobre circuitos eletrónicos, estes podem estar em formato de teste ou em formato ludico através de jogos e desafios.
                     O aluno também terá acesso ao conteúdo de aprendizagem em formato de biblioteca pública.</p>
                 </div>
@@ -238,7 +238,9 @@
         </div>
     </section>
     
-    <div class="container pb-2" style="background-color: #e6e6e6">
-        <app-footer></app-footer>
-    </div>
+    <section style="background-color: #e6e6e6">
+        <div class="container pb-2">
+            <app-footer></app-footer>
+        </div>
+    </section>
 </div>

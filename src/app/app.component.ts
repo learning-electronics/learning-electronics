@@ -89,8 +89,7 @@ export class AppComponent {
   public onRouterOutletActivate(event : any) {
     if (event.constructor.name == "ProfileComponent" || event.constructor.name == "RegisterComponent") {
       this.currentComponent = "profile";
-    }
-    if (event.constructor.name == "HomeComponent" || event.constructor.name == "FaqComponent") {
+    }else if (event.constructor.name == "HomeComponent" || event.constructor.name == "FaqComponent") {
       this.currentComponent = "none";
     } else {
       this.currentComponent = "other";
@@ -140,8 +139,9 @@ export class AppComponent {
   /* Open Login Dialog */
   login() {
     const dialogRef = this.login_dialog.open(LoginComponent, {
-      width: '20%',
-      height: '52%'
+      width: '30%',
+      minWidth: '330px',
+      maxWidth: '500px',
     });
   }
 

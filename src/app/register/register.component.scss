@@ -1,8 +1,6 @@
 mat-card {
     border-radius: 20px;
     margin: auto;
-    width: 50%;
-    height: 55%;
 }
 
 .mat-raised-button {
@@ -13,4 +11,10 @@ mat-card {
 u {    
     border-bottom: 1px dashed #000;
     text-decoration: none;
+}
+
+@media screen and (max-width: 770px) {
+    .mat-raised-button {
+        width: 50%;
+    }
 }
