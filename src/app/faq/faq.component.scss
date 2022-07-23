@@ -28,12 +28,33 @@
     color: inherit;
 }
 
+.faq-img {
+    width: 20%;
+    object-fit: contain;
+}
+
 @media screen and (max-width: 990px) {
     .user-img {
-       width: 60%;
+       width: 70%;
+       max-width: 90px;
     }
 
     .mat-stroked-button {
         width: 90%;
+        max-width: 120px;
     }
+
+    mat-expansion-panel {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .faq-img {
+        width: 50%;
+        max-width: 200px;
+    }
+}
+
+mat-expansion-panel {
+    height: fit-content;
 }

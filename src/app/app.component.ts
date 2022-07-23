@@ -54,6 +54,8 @@ export class AppComponent {
   }
 
   ngOnInit() {
+    window.innerWidth <= 700 ? this.smallScreen = true : this.smallScreen = false;
+    
     /* Listen for form changes */
     this.toggleControl.valueChanges.subscribe((toggled) => {
       this.className = toggled ? 'darkMode' : '';

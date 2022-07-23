@@ -81,9 +81,9 @@ import { ShowQuizzComponent } from './quizz/show-quizz/show-quizz.component';
 import { PageSizeExamsDirective } from './directive/page-size-exams.directive';
 import { PageSizeClassExamsDirective } from './directive/page-size-class-exams.directive';
 import { EditExamComponent } from './my-exams/edit-exam/edit-exam.component';
-import { OurTeamComponent } from './home/our-team/our-team.component';
 import { WordComponent } from './my-exercises/add-exercise/word/word.component';
 import { StartExamComponent } from './classes/start-exam/start-exam.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -135,9 +135,9 @@ import { StartExamComponent } from './classes/start-exam/start-exam.component';
     PageSizeExamsDirective,
     PageSizeClassExamsDirective,
     EditExamComponent,
-    OurTeamComponent,
     WordComponent,
     StartExamComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
