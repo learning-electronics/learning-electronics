@@ -32,8 +32,6 @@ export class ShowPhotoComponent implements OnInit {
   /* Open Edit Photo Dialog */
   editPhoto() {
     const dialogRef = this.edit_photo_dialog.open(EditPhotoComponent, {
-      width: '40%',
-      height: '70%',
       data: this.imgPath
     });
   }

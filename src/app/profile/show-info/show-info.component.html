@@ -1,29 +1,28 @@
 <mat-card [class.mat-elevation-z5]="true">
-    <div class="row">
-        <h1><b>Perfil de {{type}}</b></h1>
-    </div>
+    <h1><b>Perfil de {{type}}</b></h1>
+
     <div class="row">
         <form [formGroup]="form">
             <div class="col">
                 <div class="row my-3 mx-auto">
-                        <div class="col d-flex justify-content-center">
-                            <mat-form-field class="mx-auto" appearance="fill">
-                                <mat-label>Primeiro Nome</mat-label>
-                                <input matInput placeholder="John" formControlName="fname" required>
-                                <mat-error *ngIf="form.controls['fname'].invalid">Você deve inserir um nome</mat-error>
-                            </mat-form-field>
-                        </div>
-                        
-                        <div class="col d-flex justify-content-center">
-                            <mat-form-field class="mx-auto" appearance="fill">
-                                <mat-label>Último Nome</mat-label>
-                                <input matInput placeholder="Doe" formControlName="lname" required>
-                                <mat-error *ngIf="form.controls['lname'].invalid">Você deve inserir um nome</mat-error>
-                            </mat-form-field>
-                        </div>
+                    <div class="col d-flex justify-content-center">
+                        <mat-form-field class="mx-auto" appearance="fill">
+                            <mat-label>Primeiro Nome</mat-label>
+                            <input matInput placeholder="John" formControlName="fname" required>
+                            <mat-error *ngIf="form.controls['fname'].invalid">Você deve inserir um nome</mat-error>
+                        </mat-form-field>
+                    </div>
+                    
+                    <div class="col d-flex justify-content-center">
+                        <mat-form-field class="mx-auto" appearance="fill">
+                            <mat-label>Último Nome</mat-label>
+                            <input matInput placeholder="Doe" formControlName="lname" required>
+                            <mat-error *ngIf="form.controls['lname'].invalid">Você deve inserir um nome</mat-error>
+                        </mat-form-field>
+                    </div>
                 </div>
 
-                <div class="row my-3 mx-5">
+                <div class="row my-3 mx-auto">
                     <mat-form-field class="mx-auto" appearance="fill">
                         <mat-label>Email</mat-label>
                         <input matInput formControlName="email" required>
@@ -56,11 +55,11 @@
                 <div class="row mt-4 mb-1 mx-auto">
                     <div class="col"></div>
 
-                    <div class="col-1">
+                    <div class="col-1" style="width: fit-content">
                         <button mat-mini-fab class="mx-4" *ngIf="!disabled" color="primary" (click)="submit()"><mat-icon>upload</mat-icon></button>  
                     </div>
 
-                    <div class="col-1">
+                    <div class="col-1" style="width: fit-content">
                         <button mat-mini-fab class="mx-4" color="primary" (click)="edit()"><mat-icon>edit</mat-icon></button>     
                     </div>
                 </div>
