@@ -1,20 +1,21 @@
-img{
-    size:20px;
-    padding: 5px;
-    width: 30%;
-    margin-left: auto;
-    margin-right: auto;
+img {
+    width: 85%;
+    height: auto;
+    max-width: 500px;
+    object-fit: contain;
 }
 
-mat-card {
-    border-radius: 20px;
-    width: 90%;
-    margin-right: 50%;
-    min-width: 800px;
-    text-align: center;
+h1 {
+    font-size: 2rem;
+    font-weight: 500;
 }
 
-.mat-button {
+.mat-raised-button {
+    width: fit-content;
     margin: auto;
-    width: 15%;
+}
+
+:host {
+    display: block;
+    background-color: #e6e6e6;
 }
