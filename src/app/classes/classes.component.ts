@@ -87,8 +87,6 @@ export class ClassesComponent implements OnInit {
   /* Open Dialog for adding a class */
   addClass() {
     const dialogRef = this.add_class_dialog.open(AddClassComponent, {
-      width: '30%',
-      height: '50%', 
       minWidth: '300px',
     });
   }
@@ -127,8 +125,6 @@ export class ClassesComponent implements OnInit {
   /* Login to a classroom */
   insertCredentialsClassroom(info: any) {
     const dialogRef = this.login_class_dialog.open(ClassPasswordComponent, {
-      width: '25%',
-      height: '29%', 
       minWidth: '250px',
       data: info 
     });

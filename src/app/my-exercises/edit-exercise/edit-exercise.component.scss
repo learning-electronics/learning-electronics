@@ -6,4 +6,9 @@ image-cropper {
 
 .mat-mini-fab {
     transform: scale(1.1);
-  }
+}
+
+mat-dialog-content {
+    max-height: 90vh;
+    padding-bottom: 10px;
+}

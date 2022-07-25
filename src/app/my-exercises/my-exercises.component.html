@@ -1,81 +1,72 @@
-<div class="row d-flex justify-content-center w-100 h-100">
-    <div class="col my-5 mx-auto">
-        <div class="row my-2">
-            <p>Os meus Exercícios</p>
+<div class="container">
+    <p class="my-5">Os meus Exercícios</p>
+    
+    <mat-toolbar>
+        <div class="col-2 mt-2">
+            <mat-form-field style="font-size: 0.95rem;">
+                <mat-label>Filtrar</mat-label>
+                <input matInput (keyup)="applyFilter($event)" #input>
+                <mat-icon>search</mat-icon>
+            </mat-form-field>
+        </div>
+        
+        <div class="col">
+            <button style="display: relative; float: right;"
+                mat-raised-button color="warn" *ngIf="selection.selected.length > 0" (click)="deleteExercises()">
+                Eliminar Exercício{{ selection.selected.length > 1 ? 's' : '' }}
+            </button>
         </div>
 
-        <div class="row mx-5 mt-3">
-            <mat-toolbar>
-                <div class="col-2 mt-2">
-                    <mat-form-field style="font-size: 0.95rem;">
-                        <mat-label>Filtrar</mat-label>
-                        <input matInput (keyup)="applyFilter($event)" #input>
-                        <mat-icon>search</mat-icon>
-                    </mat-form-field>
-                </div>
-                
-                <div class="col"></div>
-                
-                <div class="col-1 mx-5">
-                    <button mat-raised-button color="warn" *ngIf="selection.selected.length > 0" (click)="deleteExercises()">
-                        Eliminar Exercício{{ selection.selected.length > 1 ? 's' : '' }}
-                    </button>
-                </div>
-
-                <div class="col-2">
-                    <button mat-raised-button color="primary" (click)="addEx()">Adicionar Exercício</button>
-                </div>
-            </mat-toolbar>
-            <table  mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
-                <!-- Checkbox Column -->
-
-                <ng-container matColumnDef="select">
-                    <th [style.width]="'5%'" mat-header-cell *matHeaderCellDef >
-                        <mat-checkbox (change)="$event ? masterToggle() : null" 
-                                        [checked]="selection.hasValue() && isAllSelected()"
-                                        [indeterminate]="selection.hasValue() && !isAllSelected()">
-                        </mat-checkbox>
-                    </th>
-                    <td [style.width]="'5%'" mat-cell *matCellDef="let row">
-                        <mat-checkbox (click)="$event.stopPropagation()"
-                                        (change)="$event ? selection.toggle(row) : null"
-                                        [checked]="selection.isSelected(row)">
-                        </mat-checkbox>
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="question">
-                    <th [style.width]="'40%'" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Pergunta">Pergunta</th>
-                    <td [style.width]="'40%'" (click)="editEx(element)" mat-cell *matCellDef="let element"> {{element.question}} </td>
-                </ng-container>
-              
-                <ng-container matColumnDef="theme">
-                    <th mat-header-cell *matHeaderCellDef>Temas</th>
-                    <td (click)="editEx(element)" mat-cell *matCellDef="let element"> {{element.theme}} </td>
-                </ng-container>
-              
-                <ng-container matColumnDef="classes">
-                    <th mat-header-cell *matHeaderCellDef>Visibilidade</th>
-                    <td (click)="editEx(element)" mat-cell *matCellDef="let element"> {{element.classes}} </td>
-                </ng-container>
-            
-              
-                <ng-container matColumnDef="date">
-                    <th [style.width]="'10%'" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Data">Data</th>
-                    <td [style.width]="'10%'" (click)="editEx(element)" mat-cell *matCellDef="let element"> {{element.date}} </td>
-                </ng-container>
-              
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-                <!-- Row shown when there is no matching data. -->
-                <tr class="mat-row" *matNoDataRow>
-                    <td class="mat-cell" colspan="4">Não há perguntas que correspondam ao filtro "{{input.value}}"</td>
-                </tr>
-
-            </table>
-            <mat-paginator appPageSizeExercises [length]="pageSize" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Seleciona página dos Exercícios">
-            </mat-paginator>
+        <div class="col">
+            <button style="display: relative; float: right;" mat-raised-button color="primary" (click)="addEx()">Adicionar Exercício</button>
         </div>
-    </div>
+    </mat-toolbar>
+    <table  mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+            <th [style.width]="'5%'" mat-header-cell *matHeaderCellDef >
+                <mat-checkbox (change)="$event ? masterToggle() : null" 
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()">
+                </mat-checkbox>
+            </th>
+            <td [style.width]="'5%'" mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()"
+                                (change)="$event ? selection.toggle(row) : null"
+                                [checked]="selection.isSelected(row)">
+                </mat-checkbox>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="question">
+            <th [style.width]="'40%'" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Pergunta">Pergunta</th>
+            <td [style.width]="'40%'" (click)="editEx(element)" mat-cell *matCellDef="let element"> {{element.question}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="theme">
+            <th mat-header-cell *matHeaderCellDef>Temas</th>
+            <td (click)="editEx(element)" mat-cell *matCellDef="let element"> {{element.theme}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="classes">
+            <th mat-header-cell *matHeaderCellDef>Visibilidade</th>
+            <td (click)="editEx(element)" mat-cell *matCellDef="let element"> {{element.classes}} </td>
+        </ng-container>
+    
+        
+        <ng-container matColumnDef="date">
+            <th [style.width]="'10%'" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Data">Data</th>
+            <td [style.width]="'10%'" (click)="editEx(element)" mat-cell *matCellDef="let element"> {{element.date}} </td>
+        </ng-container>
+        
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">Não há perguntas que correspondam ao filtro "{{input.value}}"</td>
+        </tr>
+    </table>
+    <mat-paginator appPageSizeExercises [length]="pageSize" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Seleciona página dos Exercícios">
+    </mat-paginator>
 </div>

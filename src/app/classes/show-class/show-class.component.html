@@ -1,281 +1,262 @@
-<div class="row d-flex justify-content-center w-100">
-    <div class="row my-4">
-        <div class="row my-2">
-            <p>Página da turma - {{data.name}}</p>
-        </div>
-    </div>
+<div class="container">
+    <p class="my-5">Página da turma - {{data.name}}</p>
 
-    <div class="row">
-        <mat-tab-group mat-align-tabs="center">
-            <mat-tab label="Membros">
-                <div class="row mx-5 mt-3">
-                    <mat-toolbar>
-                        <div class="col-2 mt-2">
-                            <mat-form-field style="font-size: 0.95rem;">
-                                <mat-label>Filtrar</mat-label>
-                                <input matInput (keyup)="applyFilterMembers($event)" #inputM>
-                                <mat-icon>search</mat-icon>
-                            </mat-form-field>
-                        </div>
-                        
-                        <div class="col"></div>
-
-                        <div class="col-2">
-                            <button mat-raised-button *ngIf="selectionMembers.selected.length > 0"
-                                color="warn" (click)="desassociateMembers()">
-                                Desassociar Aluno{{ selectionMembers.selected.length > 1 ? 's' : '' }}
-                            </button>
-                        </div>
-                    </mat-toolbar>
-                    <table mat-table [dataSource]="dataSourceMembers" matSort (matSortChange)="sortDataMembers($event)" class="mat-elevation-z8">
-                        <!-- Checkbox Column -->
-
-                        <ng-container matColumnDef="select">
-                            <th [style.width]="'8%'" mat-header-cell *matHeaderCellDef >
-                                <mat-checkbox (change)="$event ? masterToggleMembers() : null" 
-                                                [checked]="selectionMembers.hasValue() && isAllSelectedMembers()"
-                                                [indeterminate]="selectionMembers.hasValue() && !isAllSelectedMembers()">
-                                </mat-checkbox>
-                            </th>
-                            <td [style.width]="'8%'" mat-cell *matCellDef="let row">
-                                <mat-checkbox *ngIf="row.type == 'Estudante'" (click)="$event.stopPropagation()"
-                                                (change)="$event ? selectionMembers.toggle(row) : null"
-                                                [checked]="selectionMembers.isSelected(row)">
-                                </mat-checkbox>
-                            </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="type">
-                            <th mat-header-cell *matHeaderCellDef>Tipo</th>
-                            <td mat-cell *matCellDef="let element"> {{element.type}} </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="first_name">
-                            <th mat-header-cell mat-sort-header *matHeaderCellDef>Primeiro Nome</th>
-                            <td mat-cell *matCellDef="let element"> {{element.first_name}} </td>
-                        </ng-container>
-                        
-                        <ng-container matColumnDef="last_name">
-                            <th mat-header-cell mat-sort-header *matHeaderCellDef>Último Nome</th>
-                            <td mat-cell *matCellDef="let element"> {{element.last_name}} </td>
-                        </ng-container>
-                        
-                        <tr mat-header-row *matHeaderRowDef="displayedColumnsMembers"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumnsMembers;"></tr>
-        
-                        <!-- Row shown when there is no matching data. -->
-                        <tr class="mat-row" *matNoDataRow>
-                            <td class="mat-cell" colspan="4">Não há membros que correspondam ao filtro "{{inputM.value}}"</td>
-                        </tr>
-                    </table>
-                    <mat-paginator appPageSizeClassMembers [length]="pageSizeMembers" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Seleciona página dos Membros">
-                    </mat-paginator>
+    <mat-tab-group mat-align-tabs="center">
+        <mat-tab label="Membros">
+            <mat-toolbar class="mt-2">
+                <div class="col-2 mt-2">
+                    <mat-form-field style="font-size: 0.95rem;">
+                        <mat-label>Filtrar</mat-label>
+                        <input matInput (keyup)="applyFilterMembers($event)" #inputM>
+                        <mat-icon>search</mat-icon>
+                    </mat-form-field>
                 </div>
-            </mat-tab>
-    
-            <mat-tab label="Exercícios">
-                <div class="row mx-5 mt-3">
-                    <mat-toolbar>
-                        <div class="col-2 mt-2">
-                            <mat-form-field style="font-size: 0.95rem;">
-                                <mat-label>Filtrar</mat-label>
-                                <input matInput (keyup)="applyFilterExercises($event)" #inputE>
-                                <mat-icon>search</mat-icon>
-                            </mat-form-field>
-                        </div>
-                        
-                        <div class="col"></div>
 
-                        <div class="col-3">
-                            <button mat-raised-button *ngIf="selectionExercises.selected.length > 0"
-                                color="warn" (click)="desassociateExercises()">   
-                                Desassociar Exercício{{ selectionExercises.selected.length > 1 ? 's' : '' }}
-                            </button>
-                        </div>
-                    </mat-toolbar>
-                    
-                     <table mat-table [dataSource]="dataSourceExercises" matSort (matSortChange)="sortDataExercises($event)" class="mat-elevation-z8">
-                        <!-- Checkbox Column -->
-
-                        <ng-container matColumnDef="select">
-                            <th [style.width]="'8%'" mat-header-cell *matHeaderCellDef >
-                                <mat-checkbox (change)="$event ? masterToggleExercises() : null" 
-                                                [checked]="selectionExercises.hasValue() && isAllSelectedExercises()"
-                                                [indeterminate]="selectionExercises.hasValue() && !isAllSelectedExercises()">
-                                </mat-checkbox>
-                            </th>
-                            <td [style.width]="'8%'" mat-cell *matCellDef="let row">
-                                <mat-checkbox (click)="$event.stopPropagation()"
-                                                (change)="$event ? selectionExercises.toggle(row) : null"
-                                                [checked]="selectionExercises.isSelected(row)">
-                                </mat-checkbox>
-                            </td>
-                        </ng-container>
-                        
-                        <ng-container matColumnDef="question">
-                            <th [style.width]="'40%'" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Pergunta">Pergunta</th>
-                            <td [style.width]="'40%'" mat-cell *matCellDef="let element"> {{element.question}} </td>
-                        </ng-container>
-                      
-                        <ng-container matColumnDef="theme">
-                            <th mat-header-cell *matHeaderCellDef>Temas</th>
-                            <td mat-cell *matCellDef="let element"> {{element.theme}} </td>
-                        </ng-container>
-        
-                        <ng-container matColumnDef="date">
-                            <th [style.width]="'15%'" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Data">Data</th>
-                            <td [style.width]="'15%'" mat-cell *matCellDef="let element"> {{element.date}} </td>
-                        </ng-container>
-                      
-                        <tr mat-header-row *matHeaderRowDef="displayedColumnsExercises"></tr>
-                        <tr mat-row (click)="popup(row)" *matRowDef="let row; columns: displayedColumnsExercises;"></tr>
-        
-                        <!-- Row shown when there is no matching data. -->
-                        <tr class="mat-row" *matNoDataRow>
-                            <td class="mat-cell" colspan="4">Não há perguntas que correspondam ao filtro "{{inputE.value}}"</td>
-                        </tr>
-                    </table>
-                    <mat-paginator appPageSizeClassExs [length]="pageSizeExercises" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Seleciona página dos Exercícios">
-                    </mat-paginator>
-                </div>
-            </mat-tab>
-    
-            <mat-tab label="Testes">
-                <div class="row mx-5 mt-3">
-                    <mat-toolbar>
-                        <div class="col-2 mt-2">
-                            <mat-form-field style="font-size: 0.95rem;">
-                                <mat-label>Filtrar</mat-label>
-                                <input matInput (keyup)="applyFilterExams($event)" #inputExam>
-                                <mat-icon>search</mat-icon>
-                            </mat-form-field>
-                        </div>
-                        
-                        <div class="col"></div>
-
-                        <div class="col-3">
-                            <button mat-raised-button *ngIf="selectionExams.selected.length > 0"
-                                color="warn" (click)="desassociateExams()">   
-                                Desassociar Teste{{ selectionExams.selected.length > 1 ? 's' : '' }}
-                            </button>
-                        </div>
-                    </mat-toolbar>
-                    
-                     <table mat-table [dataSource]="dataSourceExams" matSort (matSortChange)="sortDataExams($event)" class="mat-elevation-z8">
-                        <!-- Checkbox Column -->
-
-                        <ng-container matColumnDef="select">
-                            <th [style.width]="'8%'" mat-header-cell *matHeaderCellDef >
-                                <mat-checkbox (change)="$event ? masterToggleExams() : null" 
-                                                [checked]="selectionExams.hasValue() && isAllSelectedExams()"
-                                                [indeterminate]="selectionExams.hasValue() && !isAllSelectedExams()">
-                                </mat-checkbox>
-                            </th>
-                            <td [style.width]="'8%'" mat-cell *matCellDef="let row">
-                                <mat-checkbox (click)="$event.stopPropagation()"
-                                                (change)="$event ? selectionExams.toggle(row) : null"
-                                                [checked]="selectionExams.isSelected(row)">
-                                </mat-checkbox>
-                            </td>
-                        </ng-container>
-                        
-                        <ng-container matColumnDef="title">
-                            <th [style.width]="'40%'" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Nome">Nome</th>
-                            <td [style.width]="'40%'" mat-cell *matCellDef="let element"> {{element.name}} </td>
-                        </ng-container>
-                      
-                        <ng-container matColumnDef="numQuestions">
-                            <th mat-header-cell *matHeaderCellDef>Número de Questões</th>
-                            <td mat-cell *matCellDef="let element"> {{element.number_of_exercises}} </td>
-                        </ng-container>
-        
-                        <ng-container matColumnDef="password">
-                            <th [style.width]="'15%'" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Data">Data</th>
-                            <td [style.width]="'15%'" mat-cell *matCellDef="let element"> {{element.date}} </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="timer">
-                            <th [style.width]="'15%'" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Data">Data</th>
-                            <td [style.width]="'15%'" mat-cell *matCellDef="let element"> {{element.date}} </td>
-                        </ng-container>
-                      
-                        <tr mat-header-row *matHeaderRowDef="displayedColumnsExams"></tr>
-                        <tr mat-row (click)="confirmExam(row)" *matRowDef="let row; columns: displayedColumnsExams;"></tr>
-        
-                        <!-- Row shown when there is no matching data. -->
-                        <tr class="mat-row" *matNoDataRow>
-                            <td class="mat-cell" colspan="4">Não há perguntas que correspondam ao filtro "{{inputExam.value}}"</td>
-                        </tr>
-                    </table>
-                    <mat-paginator appPageSizeClassExs [length]="pageSizeExams" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Seleciona página dos Testes">
-                    </mat-paginator>
-                </div>
-            </mat-tab>
-
-            <mat-tab *ngIf="data.type != 'Student'" label="Estatísticas">
-                <div class="row mx-5 mt-3">
-                    <mat-toolbar>
-                        <div class="col-2 mt-2">
-                            <mat-form-field style="font-size: 0.95rem;">
-                                <mat-label>Filtrar</mat-label>
-                                <input matInput (keyup)="applyFilterStats($event)" #inputStats>
-                                <mat-icon>search</mat-icon>
-                            </mat-form-field>
-                        </div>
-                        
-                        <div class="col"></div>
-                    </mat-toolbar>
-                    
-                     <table mat-table [dataSource]="dataSourceStats" matSort (matSortChange)="sortDataStats($event)" class="mat-elevation-z8">
-                        <ng-container matColumnDef="student">
-                            <th [style.width]="'40%'" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Nome">Nome</th>
-                            <td [style.width]="'40%'" mat-cell *matCellDef="let element"> {{element.student}} </td>
-                        </ng-container>
-                      
-                        <ng-container matColumnDef="exam_name">
-                            <th mat-header-cell *matHeaderCellDef>Teste Realizado</th>
-                            <td mat-cell *matCellDef="let element"> {{element.exam_name}} </td>
-                        </ng-container>
-        
-                        <ng-container matColumnDef="final_mark">
-                            <th [style.width]="'15%'" mat-header-cell *matHeaderCellDef>Classificação</th>
-                            <td [style.width]="'15%'" mat-cell *matCellDef="let element"> {{element.final_mark}} </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="date_submitted">
-                            <th [style.width]="'15%'" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Data">Data Submissão</th>
-                            <td [style.width]="'15%'" mat-cell *matCellDef="let element"> {{element.date_submitted}} </td>
-                        </ng-container>
-                      
-                        <tr mat-header-row *matHeaderRowDef="displayedColumnsStats"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumnsStats;"></tr>
-        
-                        <!-- Row shown when there is no matching data. -->
-                        <tr class="mat-row" *matNoDataRow>
-                            <td class="mat-cell" colspan="4">Não há estudantes que correspondam ao filtro "{{inputExam.value}}"</td>
-                        </tr>
-                    </table>
-                    <mat-paginator appPageSizeClassExs [length]="pageSizeExams" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Seleciona página dos Testes">
-                    </mat-paginator>
-                </div>
-            </mat-tab>
-    
-            <mat-tab label="Definições">
-                <div *ngIf="data.type == 'Teacher'">
-                    <button mat-raised-button color="warn" (click)="deleteClassroom()">
-                        <mat-icon>delete</mat-icon>
-                        Eliminar Turma
+                <div class="col">
+                    <button style="display: relative; float: right;"
+                        mat-raised-button *ngIf="selectionMembers.selected.length > 0"
+                        color="warn" (click)="desassociateMembers()">
+                        Desassociar Aluno{{ selectionMembers.selected.length > 1 ? 's' : '' }}
                     </button>
                 </div>
+            </mat-toolbar>
 
-                <div *ngIf="data.type == 'Student'">
-                    Código da Turma
-                    <button mat-raised-button color="warn" (click)="leaveClassroom()">
-                        <mat-icon>logout</mat-icon>
-                        Sair da Turma
+            <table mat-table [dataSource]="dataSourceMembers" matSort (matSortChange)="sortDataMembers($event)" class="mat-elevation-z8">
+                <!-- Checkbox Column -->
+                <ng-container matColumnDef="select">
+                    <th [style.width]="'8%'" mat-header-cell *matHeaderCellDef >
+                        <mat-checkbox (change)="$event ? masterToggleMembers() : null" 
+                                        [checked]="selectionMembers.hasValue() && isAllSelectedMembers()"
+                                        [indeterminate]="selectionMembers.hasValue() && !isAllSelectedMembers()">
+                        </mat-checkbox>
+                    </th>
+                    <td [style.width]="'8%'" mat-cell *matCellDef="let row">
+                        <mat-checkbox *ngIf="row.type == 'Estudante'" (click)="$event.stopPropagation()"
+                                        (change)="$event ? selectionMembers.toggle(row) : null"
+                                        [checked]="selectionMembers.isSelected(row)">
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef>Tipo</th>
+                    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="first_name">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>Primeiro Nome</th>
+                    <td mat-cell *matCellDef="let element"> {{element.first_name}} </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="last_name">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>Último Nome</th>
+                    <td mat-cell *matCellDef="let element"> {{element.last_name}} </td>
+                </ng-container>
+                
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsMembers"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsMembers;"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">Não há membros que correspondam ao filtro "{{inputM.value}}"</td>
+                </tr>
+            </table>
+            <mat-paginator appPageSizeClassMembers [length]="pageSizeMembers" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Seleciona página dos Membros">
+            </mat-paginator>
+        </mat-tab>
+
+        <mat-tab label="Exercícios">
+            <mat-toolbar class="mt-2">
+                <div class="col-2 mt-2">
+                    <mat-form-field style="font-size: 0.95rem;">
+                        <mat-label>Filtrar</mat-label>
+                        <input matInput (keyup)="applyFilterExercises($event)" #inputE>
+                        <mat-icon>search</mat-icon>
+                    </mat-form-field>
+                </div>
+
+                <div class="col">
+                    <button style="display: relative; float: right;" 
+                        mat-raised-button *ngIf="selectionExercises.selected.length > 0" color="warn" (click)="desassociateExercises()">   
+                        Desassociar Exercício{{ selectionExercises.selected.length > 1 ? 's' : '' }}
                     </button>
                 </div>
-            </mat-tab>
-        </mat-tab-group>
-    </div>
+            </mat-toolbar>
+
+            <table mat-table [dataSource]="dataSourceExercises" matSort (matSortChange)="sortDataExercises($event)" class="mat-elevation-z8">
+                <!-- Checkbox Column -->
+                <ng-container matColumnDef="select">
+                    <th [style.width]="'8%'" mat-header-cell *matHeaderCellDef >
+                        <mat-checkbox (change)="$event ? masterToggleExercises() : null" 
+                                        [checked]="selectionExercises.hasValue() && isAllSelectedExercises()"
+                                        [indeterminate]="selectionExercises.hasValue() && !isAllSelectedExercises()">
+                        </mat-checkbox>
+                    </th>
+                    <td [style.width]="'8%'" mat-cell *matCellDef="let row">
+                        <mat-checkbox (click)="$event.stopPropagation()"
+                                        (change)="$event ? selectionExercises.toggle(row) : null"
+                                        [checked]="selectionExercises.isSelected(row)">
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="question">
+                    <th [style.width]="'40%'" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Pergunta">Pergunta</th>
+                    <td [style.width]="'40%'" mat-cell *matCellDef="let element"> {{element.question}} </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="theme">
+                    <th mat-header-cell *matHeaderCellDef>Temas</th>
+                    <td mat-cell *matCellDef="let element"> {{element.theme}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="date">
+                    <th [style.width]="'15%'" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Data">Data</th>
+                    <td [style.width]="'15%'" mat-cell *matCellDef="let element"> {{element.date}} </td>
+                </ng-container>
+                
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsExercises"></tr>
+                <tr mat-row (click)="popup(row)" *matRowDef="let row; columns: displayedColumnsExercises;"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">Não há perguntas que correspondam ao filtro "{{inputE.value}}"</td>
+                </tr>
+            </table>
+            <mat-paginator appPageSizeClassExs [length]="pageSizeExercises" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Seleciona página dos Exercícios">
+            </mat-paginator>
+        </mat-tab>
+
+        <mat-tab label="Testes">
+            <mat-toolbar class="mt-2">
+                <div class="col-2 mt-2">
+                    <mat-form-field style="font-size: 0.95rem;">
+                        <mat-label>Filtrar</mat-label>
+                        <input matInput (keyup)="applyFilterExams($event)" #inputExam>
+                        <mat-icon>search</mat-icon>
+                    </mat-form-field>
+                </div>
+
+                <div class="col">
+                    <button style="display: relative; float: right;"
+                        mat-raised-button *ngIf="selectionExams.selected.length > 0" color="warn" (click)="desassociateExams()">   
+                        Desassociar Teste{{ selectionExams.selected.length > 1 ? 's' : '' }}
+                    </button>
+                </div>
+            </mat-toolbar>
+            
+            <table mat-table [dataSource]="dataSourceExams" matSort (matSortChange)="sortDataExams($event)" class="mat-elevation-z8">
+                <!-- Checkbox Column -->
+                <ng-container matColumnDef="select">
+                    <th [style.width]="'8%'" mat-header-cell *matHeaderCellDef >
+                        <mat-checkbox (change)="$event ? masterToggleExams() : null" 
+                                        [checked]="selectionExams.hasValue() && isAllSelectedExams()"
+                                        [indeterminate]="selectionExams.hasValue() && !isAllSelectedExams()">
+                        </mat-checkbox>
+                    </th>
+                    <td [style.width]="'8%'" mat-cell *matCellDef="let row">
+                        <mat-checkbox (click)="$event.stopPropagation()"
+                                        (change)="$event ? selectionExams.toggle(row) : null"
+                                        [checked]="selectionExams.isSelected(row)">
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="title">
+                    <th [style.width]="'40%'" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Nome">Nome</th>
+                    <td [style.width]="'40%'" mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="numQuestions">
+                    <th mat-header-cell *matHeaderCellDef>Número de Questões</th>
+                    <td mat-cell *matCellDef="let element"> {{element.number_of_exercises}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="password">
+                    <th [style.width]="'15%'" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Data">Data</th>
+                    <td [style.width]="'15%'" mat-cell *matCellDef="let element"> {{element.date}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="timer">
+                    <th [style.width]="'15%'" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Data">Data</th>
+                    <td [style.width]="'15%'" mat-cell *matCellDef="let element"> {{element.date}} </td>
+                </ng-container>
+                
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsExams"></tr>
+                <tr mat-row (click)="confirmExam(row)" *matRowDef="let row; columns: displayedColumnsExams;"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">Não há perguntas que correspondam ao filtro "{{inputExam.value}}"</td>
+                </tr>
+            </table>
+            <mat-paginator appPageSizeClassExs [length]="pageSizeExams" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Seleciona página dos Testes">
+            </mat-paginator>
+        </mat-tab>
+
+        <mat-tab *ngIf="data.type != 'Student'" label="Estatísticas">
+            <div class="row mx-5 mt-3">
+                <mat-toolbar>
+                    <div class="col-2 mt-2">
+                        <mat-form-field style="font-size: 0.95rem;">
+                            <mat-label>Filtrar</mat-label>
+                            <input matInput (keyup)="applyFilterStats($event)" #inputStats>
+                            <mat-icon>search</mat-icon>
+                        </mat-form-field>
+                    </div>
+                    
+                    <div class="col"></div>
+                </mat-toolbar>
+                
+                    <table mat-table [dataSource]="dataSourceStats" matSort (matSortChange)="sortDataStats($event)" class="mat-elevation-z8">
+                    <ng-container matColumnDef="student">
+                        <th [style.width]="'40%'" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Nome">Nome</th>
+                        <td [style.width]="'40%'" mat-cell *matCellDef="let element"> {{element.student}} </td>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="exam_name">
+                        <th mat-header-cell *matHeaderCellDef>Teste Realizado</th>
+                        <td mat-cell *matCellDef="let element"> {{element.exam_name}} </td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="final_mark">
+                        <th [style.width]="'15%'" mat-header-cell *matHeaderCellDef>Classificação</th>
+                        <td [style.width]="'15%'" mat-cell *matCellDef="let element"> {{element.final_mark}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="date_submitted">
+                        <th [style.width]="'15%'" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Data">Data Submissão</th>
+                        <td [style.width]="'15%'" mat-cell *matCellDef="let element"> {{element.date_submitted}} </td>
+                    </ng-container>
+                    
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsStats"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumnsStats;"></tr>
+    
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">Não há estudantes que correspondam ao filtro "{{inputExam.value}}"</td>
+                    </tr>
+                </table>
+                <mat-paginator appPageSizeClassExs [length]="pageSizeExams" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Seleciona página dos Testes">
+                </mat-paginator>
+            </div>
+        </mat-tab>
+
+        <mat-tab label="Definições">
+            <div *ngIf="data.type == 'Teacher'">
+                <button mat-raised-button color="warn" (click)="deleteClassroom()">
+                    <mat-icon>delete</mat-icon>
+                    Eliminar Turma
+                </button>
+            </div>
+
+            <div *ngIf="data.type == 'Student'">
+                Código da Turma
+                <button mat-raised-button color="warn" (click)="leaveClassroom()">
+                    <mat-icon>logout</mat-icon>
+                    Sair da Turma
+                </button>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
 </div>

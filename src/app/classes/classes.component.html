@@ -1,56 +1,49 @@
-<div class="row d-flex justify-content-center w-100 h-100">
-    <div class="col my-5 mx-auto">
-        <div class="row my-2">
-            <p>Lista de Turmas</p>
+<div class="container">
+    <p class="text-center my-5">Lista de Turmas</p>
+
+    <mat-toolbar>
+        <div class="col-1 mt-2">
+            <mat-form-field style="font-size: 0.95rem;">
+                <mat-label>Filtrar</mat-label>
+                <input matInput (keyup)="applyFilter($event)" #input>
+                <mat-icon>search</mat-icon>
+            </mat-form-field>
         </div>
-
-        <div class="row mx-5 mt-3">
-            <mat-toolbar>
-                <div class="col-2 mt-2">
-                    <mat-form-field style="font-size: 0.95rem;">
-                        <mat-label>Filtrar</mat-label>
-                        <input matInput (keyup)="applyFilter($event)" #input>
-                        <mat-icon>search</mat-icon>
-                    </mat-form-field>
-                </div>
-                
-                <div class="col"></div>
-                
-                <div class="col-1 mx-5">
-                    <button mat-raised-button color="primary" *ngIf="type == 'Teacher'" (click)="addClass()">Criar Turma</button>
-                </div>
-            </mat-toolbar>
-            <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
-                <ng-container matColumnDef="access">
-                    <th mat-header-cell *matHeaderCellDef>Acesso</th>
-                    <td mat-cell *matCellDef="let element"> <mat-icon *ngIf="!element.access">lock</mat-icon> <mat-icon *ngIf="element.access">lock_open</mat-icon> </td>
-                </ng-container>
-
-                <ng-container matColumnDef="name">
-                    <th mat-header-cell mat-sort-header *matHeaderCellDef>Nome</th>
-                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                </ng-container>
-                
-                <ng-container matColumnDef="teacher">
-                    <th mat-header-cell mat-sort-header *matHeaderCellDef>Professor</th>
-                    <td mat-cell *matCellDef="let element"> {{element.teacher}} </td>
-                </ng-container>
-                
-                <ng-container matColumnDef="number_students">
-                    <th mat-header-cell mat-sort-header *matHeaderCellDef>Nº de Alunos</th>
-                    <td mat-cell *matCellDef="let element"> {{element.number_students}} </td>
-                </ng-container>
-                
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="redirectClass(row)"></tr>
-
-                <!-- Row shown when there is no matching data. -->
-                <tr class="mat-row" *matNoDataRow>
-                    <td class="mat-cell" colspan="4">Não há turmas que correspondam ao filtro "{{input.value}}"</td>
-                </tr>
-            </table>
-            <mat-paginator appPageSizeClasses [length]="pageSize" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Seleciona página das Turmas">
-            </mat-paginator>
+        
+        <div class="col">
+            <button style="display: relative; float: right;" 
+                mat-raised-button color="primary" *ngIf="type == 'Teacher'" (click)="addClass()">Criar Turma</button>
         </div>
-    </div>
+    </mat-toolbar>
+    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
+        <ng-container matColumnDef="access">
+            <th mat-header-cell *matHeaderCellDef>Acesso</th>
+            <td mat-cell *matCellDef="let element"> <mat-icon *ngIf="!element.access">lock</mat-icon> <mat-icon *ngIf="element.access">lock_open</mat-icon> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef>Nome</th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="teacher">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef>Professor</th>
+            <td mat-cell *matCellDef="let element"> {{element.teacher}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="number_students">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef>Nº de Alunos</th>
+            <td mat-cell *matCellDef="let element"> {{element.number_students}} </td>
+        </ng-container>
+        
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="redirectClass(row)"></tr>
+
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">Não há turmas que correspondam ao filtro "{{input.value}}"</td>
+        </tr>
+    </table>
+    <mat-paginator appPageSizeClasses [length]="pageSize" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Seleciona página das Turmas">
+    </mat-paginator>
 </div>
