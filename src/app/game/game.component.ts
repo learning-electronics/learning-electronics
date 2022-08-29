@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { SharedService, person } from '../shared.service';
 import io from "socket.io-client";
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { SharedService, person } from '../shared.service';
+import { MatDialog } from '@angular/material/dialog';
 import { CreateRoomComponent } from './create-room/create-room.component';
 
 export interface DialogData {
@@ -18,18 +17,15 @@ export interface DialogData {
 })
 
 export class GameComponent implements OnInit {
-
   user_info!: person;
   socket: any;
   connections: string[] = [];
   rooms: string[] = [];
   selected_room: string = "";
   last_room: string = "";
-  room_flag: boolean = false;
   socket_id: string = "";
-  newRoomName: string = "";
 
-  constructor(private router : Router,private _service: SharedService, public dialog: MatDialog) {
+  constructor(private _service: SharedService, public dialog: MatDialog) {
     this._service.getAccount().subscribe((data: any) => {
       if (data.v == true) {
         this.user_info = data.info as person;
@@ -39,26 +35,22 @@ export class GameComponent implements OnInit {
   
   ngOnInit(): void {
     this.socket = io("http://localhost:3000")
-    this.rooms = ["None"];
   }
 
   ngAfterViewInit() {
     // receives the current list of sockets that are connected to the server
-    this.socket.on("connections", (connections : any) => {
-      this.connections = connections;
-    });
+    this.socket.on("connections", (connections : any) => { this.connections = connections });
 
     // associates the socket id to the username of the client
     this.socket.on("socket_id", (id : any) => {
       this.socket_id = id;
-      this.socket.emit("nname",this.user_info?.first_name);
+      this.socket.emit("nname", this.user_info?.first_name);
     });
 
     // receives the current list of rooms from the server
     this.socket.on("loadRooms", (rooms : string[]) => {
-      this.rooms = rooms;    
+      this.rooms = rooms;
     });
-    
   }
 
   ngOnDestroy() {
@@ -68,13 +60,10 @@ export class GameComponent implements OnInit {
   // when creating a room it opens a dialog to insert the values of the new room
   createRoom() {
     const dialogRef = this.dialog.open(CreateRoomComponent, {
-      data: {
-        rooms: this.rooms
-      },
+      data: { rooms: this.rooms },
     });
     
     dialogRef.afterClosed().subscribe(result => {
-      
       if(result != null) {
         this.socket.emit("createRoom", this.socket_id, result);
       }
@@ -82,16 +71,15 @@ export class GameComponent implements OnInit {
     //snackbar a dizer se criou com sucesso
   }
   
-  changeRoom(room_id:any) {    
+  changeRoom(room_id: any) {    
     if(room_id == "None") {
-      this.room_flag = false;
-      this.last_room=this.selected_room;
+      this.last_room = this.selected_room;
       this.selected_room = "";
     } else {
-      this.room_flag = true;
       this.last_room = this.selected_room;
       this.selected_room = room_id;
     }
-    this.socket.emit("change_room", this.selected_room,this.last_room);
+
+    this.socket.emit("change_room", this.selected_room, this.last_room);
   }
 }

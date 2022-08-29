@@ -7,7 +7,7 @@
                 <div class="col">
                     <div class="row my-3 mx-auto">
                             <div class="col d-flex justify-content-center">
-                                <mat-form-field class="mx-auto">
+                                <mat-form-field class="mx-auto" (keydown.enter)="lname.focus(); $event.preventDefault()">
                                     <mat-label>Primeiro Nome</mat-label>
                                     <input matInput appearance="fill" placeholder="John" formControlName="fname" required>
                                     <mat-error *ngIf="form.controls['fname'].invalid">Você deve inserir um nome</mat-error>
@@ -15,26 +15,26 @@
                             </div>
                             
                             <div class="col d-flex justify-content-center">
-                                <mat-form-field class="mx-auto">
+                                <mat-form-field class="mx-auto" (keydown.enter)="email.focus(); $event.preventDefault()">
                                     <mat-label>Último Nome</mat-label>
-                                    <input matInput placeholder="Doe" formControlName="lname" required>
+                                    <input matInput placeholder="Doe" formControlName="lname" required #lname>
                                     <mat-error *ngIf="form.controls['lname'].invalid">Você deve inserir um nome</mat-error>
                                 </mat-form-field>
                             </div>
                     </div>
     
                     <div class="row my-3 mx-auto">
-                        <mat-form-field class="mx-auto">
+                        <mat-form-field class="mx-auto" (keydown.enter)="pw.focus(); $event.preventDefault()">
                             <mat-label>Email</mat-label>
-                            <input matInput placeholder="name@example.com" formControlName="email" required>
+                            <input matInput placeholder="name@example.com" formControlName="email" required #email>
                             <mat-error *ngIf="form.controls['email'].invalid">{{getErrorMessageEmail()}}</mat-error>
                         </mat-form-field>
                     </div>
     
                     <div class="row my-3 mx-auto">
-                        <mat-form-field >
+                        <mat-form-field (keydown.enter)="pw2.focus(); $event.preventDefault()">
                             <mat-label>Password</mat-label>
-                            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" (input)="onPasswordInput()" required>
+                            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" (input)="onPasswordInput()" required #pw>
                             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                             </button>
@@ -44,9 +44,9 @@
                     </div>
     
                     <div class="row my-3 mx-auto">
-                        <mat-form-field >
+                        <mat-form-field (keydown.enter)="bday.focus(); $event.preventDefault()">
                             <mat-label>Confirmar Password</mat-label>
-                            <input matInput [type]="hide_confirm ? 'password' : 'text'" formControlName="password2" (input)="onPasswordInput()" required>
+                            <input matInput [type]="hide_confirm ? 'password' : 'text'" formControlName="password2" (input)="onPasswordInput()" required #pw2>
                             <button mat-icon-button matSuffix (click)="hide_confirm = !hide_confirm" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                 <mat-icon>{{hide_confirm ? 'visibility_off' : 'visibility'}}</mat-icon>
                             </button>
@@ -56,9 +56,9 @@
                     </div>
     
                     <div class="row my-3 mx-auto">
-                        <mat-form-field>
+                        <mat-form-field (keydown.enter)="submit(); $event.preventDefault()">
                             <mat-label>Data de Nascimento</mat-label>
-                            <input matInput [matDatepicker]="picker" formControlName="bday" required>
+                            <input matInput [matDatepicker]="picker" formControlName="bday" required #bday>
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                             <mat-error *ngIf="form.controls['bday'].invalid">Data introduzida inválida</mat-error>

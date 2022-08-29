@@ -8,7 +8,22 @@
 }
 
 p {
-    font-size: xxx-large;
-    font-weight: 500;
+    font-size: 2rem;
+    font-weight: 450;
     text-align: center;
+    line-height: 27px;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+form {
+    width: 200px;
+}
+
+@media screen and (max-width: 420px) {
+    form {
+        max-width: 100px;
+    }
 }

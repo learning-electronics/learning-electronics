@@ -16,6 +16,7 @@
                     <mat-form-field class="mx-auto">
                         <mat-label>Número de Questões</mat-label>
                         <input type="number" matInput formControlName="questions" name="Questões" (input)="onQuestionsInput()" required>
+                        <mat-error *ngIf="numQuestions?.hasError('required')">Introduza o número de questões</mat-error>
                         <mat-error *ngIf="numQuestions?.invalid && !numQuestions?.hasError('required')">Número de Questões deve ser entre 1 e 50</mat-error>
                     </mat-form-field>
                 </div>

@@ -89,7 +89,7 @@ export class AppComponent {
   public onRouterOutletActivate(event : any) {
     if (event.constructor.name == "ProfileComponent" || event.constructor.name == "RegisterComponent") {
       this.currentComponent = "profile";
-    }else if (event.constructor.name == "HomeComponent" || event.constructor.name == "FaqComponent") {
+    } else if (event.constructor.name == "HomeComponent" || event.constructor.name == "FaqComponent" || event.constructor.name == "GameComponent") {
       this.currentComponent = "none";
     } else {
       this.currentComponent = "other";
@@ -130,7 +130,7 @@ export class AppComponent {
   /* Check if the class component is available */
   gameRouting() {
     if (this.loggedIn == true) {
-      this._router.navigate(['/game']);
+      this._router.navigate(['/rooms']);
     } else {
       this.login();
     }

@@ -16,12 +16,13 @@ export class CreateRoomComponent implements OnInit {
   ngOnInit(): void {
     this.form = this._formBuilder.group({
       roomInput: new FormControl("", [Validators.required]),
-      numExercises: new FormControl("")
-    }, {validator: roomValidator(this.data)}); 
+      questions: new FormControl("", [Validators.required])
+    }, {validator: [roomValidator(this.data), numQuestionsValidator]}); 
   }
 
   /* Shorthands for form controls (used from within template) */
   get room() { return this.form.get('roomInput'); }
+  get numQuestions() { return this.form.get('questions'); }
 
   /* Update validation when the room input changes */
   onRoomInput() {
@@ -31,13 +32,20 @@ export class CreateRoomComponent implements OnInit {
       this.room?.setErrors(null);
   }
 
+  /* Update validation when the questgions input changes */
+  onQuestionsInput() {
+    if (this.form.hasError('numQuestionsWrong'))
+      this.numQuestions?.setErrors([{'numQuestionsWrong': true}]);
+    else
+      this.numQuestions?.setErrors(null);
+  }
+
   // sends dialog data to game component(name of the room to be created)
   sendNewRoomData() {    
     if (this.form.valid) {
       this.dialogRef.close({name: this.form.get('roomInput')?.value, numExercises: this.form.get('numExercises')?.value});
     }
   }
-
 }
 
 export const roomValidator = (data: DialogData): ValidatorFn => {
@@ -49,6 +57,16 @@ export const roomValidator = (data: DialogData): ValidatorFn => {
       return { nameWrong: true };
     }
 
+    return null;
+  }
+}
+
+export const numQuestionsValidator: ValidatorFn = (formGroup: AbstractControl ): ValidationErrors | null  => {
+  var numQuestions = formGroup.get('questions')?.value;
+
+  if (numQuestions <= 0 || numQuestions > 50) {
+    return {'numQuestionsWrong': true};
+  } else {
     return null;
   }
 }

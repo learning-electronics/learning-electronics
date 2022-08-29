@@ -1,8 +1,8 @@
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, NgModel } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
-import { list } from 'postcss';
 import { PopupComponent } from '../popup/popup.component';
 import { exercise, SharedService, theme } from '../shared.service';
 
@@ -29,15 +29,15 @@ export class LibraryComponent implements OnInit {
   all_themes: theme[] = [];
   tree_data: Node[] = [];
   selected_toggle: string = 'list';
+  form: FormGroup;
 
-  constructor(private _service: SharedService, public popup_dialog: MatDialog) {
+  constructor(private _service: SharedService, public popup_dialog: MatDialog, private _formBuilder: FormBuilder) {
     this._service.getThemes().subscribe((themes: any) => {
       themes.forEach((theme: theme) => {
         this.all_themes.push(theme);
         this.tree_data.push({ name: theme.name, id: theme.id, children: [] });
       });
 
-      
       this._service.getExercises().subscribe((exercises: any) => {
         exercises.forEach((ex: exercise) => {
           this.all_exercises.push(ex);
@@ -58,7 +58,11 @@ export class LibraryComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.form = this._formBuilder.group({ search: new FormControl("") });
   }
+
+  /* Shorthands for form controls (used from within template) */
+  get search() { return this.form.get('search'); }
 
   onToggleChange(value: string) {
     this.selected_toggle = value;
@@ -66,9 +70,21 @@ export class LibraryComponent implements OnInit {
 
   popup(node: Node) {
     /* Open Popup Dialog */
-    const dialogRef = this.popup_dialog.open(PopupComponent, {
-      data: this.getExFromNode(node)
-    });
+    const dialogRef = this.popup_dialog.open(PopupComponent, { data: this.getExFromNode(node) });
+  }
+
+  searchExercise(event: Event) {
+    const n = Number((event.target as HTMLInputElement).value);
+    var ex_query = this.getExFromNode({ id: n, name: 'search'});
+
+    if (ex_query != undefined) {
+      /* Open Popup Dialog */
+      const dialogRef = this.popup_dialog.open(PopupComponent, { data: ex_query });
+      this.search?.setErrors(null);
+    } else {
+      console.log('not found');
+      this.search?.setErrors([{'exerciseNotFound': true}]);
+    }
   }
 
   getExFromNode(node: Node) {

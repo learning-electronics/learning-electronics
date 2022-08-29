@@ -1,38 +1,59 @@
-<mat-card>
+<div class="container-fluid">
+    <div class="container">
+        <div class="row justify-content-center">
+            <p class="my-5">Jogos</p>
+        </div>
 
-    <div class="row d-flex justify-content-center w-100 h-100">
-        <div class="col">
-            <div class="row-2 mt-3 ml-5">
-                <mat-form-field appearance="fill">
-                    <mat-label>Selecionar Sala</mat-label>
-                    <mat-select (selectionChange)="changeRoom($event.value)">
-                        <mat-option *ngFor="let room of rooms" [value]="room" routerLink="/game" [state]="{ id: 'estadooo' }">
-                            {{room}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-    
-            <div class="row-1 ml-5">
-                <button mat-raised-button color="accent" *ngIf="!room_flag" (click)="createRoom()">Criar Sala</button>
-            </div>
-            
-            <div class="row mx-auto">
-                <div class="col ml-5">
-                    <app-show-game id="showGame" *ngIf="room_flag" [socket]="socket" [socket_id]="socket_id" [room_id]="selected_room" ></app-show-game>
+        <mat-card>
+            <div style="height: 250px;"></div>
+            <!-- <div class="col">
+                <div class="row-2 mt-3 ml-5">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Selecionar Sala</mat-label>
+                        <mat-select (selectionChange)="changeRoom($event.value)">
+                            <mat-option *ngFor="let room of rooms" [value]="room" routerLink="/game" [state]="{ id: 'estadooo' }">
+                                {{room}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </div>
-    
-                <div class="col-3">
-                    <app-room id="chat" *ngIf="room_flag" [socket_id]="socket_id" [socket]="socket" [room_id]="selected_room"></app-room>
+        
+                <div class="row-1 ml-5">
+                    <button mat-raised-button color="accent" *ngIf="!room_flag" (click)="createRoom()">Criar Sala</button>
                 </div>
-            </div>
+                
+                <div class="row mx-auto">
+                    <div class="col ml-5">
+                        <app-show-game id="showGame" *ngIf="room_flag" [socket]="socket" [socket_id]="socket_id" [room_id]="selected_room" ></app-show-game>
+                    </div>
+        
+                    <div class="col-3">
+                        <app-room id="chat" *ngIf="room_flag" [socket_id]="socket_id" [socket]="socket" [room_id]="selected_room"></app-room>
+                    </div>
+                </div>
+            </div> -->
+        </mat-card>
+
+        <div class="row my-4">
+            <button mat-raised-button color="accent" class="mx-auto" style="width: fit-content;" (click)="createRoom()">Criar Sala</button>
+        </div>
+        
+        <mat-divider class="my-5"></mat-divider>
+
+        <div *ngIf="rooms.length == 0">
+            <h1 class="my-5">Não há salas disponíveis</h1>
         </div>
     </div>
-    
 
+    <mat-grid-list cols="4" rowHeight="1:1.45" [gutterSize]="'10px'" *ngIf="rooms.length != 0">
+        <mat-grid-tile *ngFor="let room of rooms">
+            <mat-card>
+                {{room}}
+            </mat-card>
+        </mat-grid-tile>
+    </mat-grid-list>
 
-
-
-
-</mat-card>
-
+    <div class="container pt-5 pb-2">
+        <app-footer></app-footer>
+    </div>
+</div>

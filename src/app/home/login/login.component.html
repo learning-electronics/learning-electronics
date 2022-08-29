@@ -3,7 +3,7 @@
     <form [formGroup]="form" (ngSubmit)="submit()">
         <div class="col">
             <div class="row my-3 mx-auto">
-                <mat-form-field>
+                <mat-form-field (keydown.enter)="password.focus(); $event.preventDefault()">
                     <mat-label>Email</mat-label>
                     <input matInput placeholder="name@example.com" formControlName="email" required>
                     <mat-error *ngIf="form.controls['email'].invalid">{{getErrorMessageEmail()}}</mat-error>
@@ -11,10 +11,10 @@
             </div>
 
             <div class="row my-3 mx-auto">
-                <mat-form-field >
+                <mat-form-field (keydown.enter)="submit(); $event.preventDefault()">
                     <mat-label>Password</mat-label>
-                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
-                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required #password>
+                    <button mat-icon-button matSuffix (click)="hide = !hide; $event.preventDefault()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                     <mat-error *ngIf="form.controls['password'].invalid">Você deve inserir uma password</mat-error>

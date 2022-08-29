@@ -1,20 +1,26 @@
-
-<form [formGroup]="form">
-    <div class="col">
-    <mat-form-field class="example-form-field" appearance="fill">
-        <mat-label>Nome da nova sala</mat-label>
-        <input matInput formControlName="roomInput" (input)="onRoomInput()" required>
-        <mat-error *ngIf="room?.hasError('required')">Crie uma sala</mat-error>
-        <mat-error *ngIf="room?.invalid && !room?.hasError('required')">Nome já usado</mat-error>
-    </mat-form-field>
-    </div>
-    <div class="col">
-    <mat-form-field>
-        <mat-label>Número de exercícios</mat-label>
-        <input matInput formControlName="numExercises" required>
-    </mat-form-field>
-    </div>
-    <div class="col">
-    <button mat-icon-button (click)="sendNewRoomData()">Enviar</button>
-    </div>
-</form>
+<h2 class="text-center" mat-dialog-title>Criar sala de jogo</h2>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="form">
+        <div class="row my-3">
+            <mat-form-field>
+                <mat-label>Nome da sala</mat-label>
+                <input matInput formControlName="roomInput" (input)="onRoomInput()" required>
+                <mat-error *ngIf="room?.hasError('required')">Crie uma sala</mat-error>
+                <mat-error *ngIf="room?.invalid && !room?.hasError('required')">Nome já usado</mat-error>
+            </mat-form-field>
+        </div>
+    
+        <div class="row my-3">
+            <mat-form-field>
+                <mat-label>Número de questões</mat-label>
+                <input type="number" matInput formControlName="questions" name="Questões" (input)="onQuestionsInput()" required>
+                <mat-error *ngIf="numQuestions?.hasError('required')">Introduza o número de questões</mat-error>
+                <mat-error *ngIf="numQuestions?.invalid && !numQuestions?.hasError('required')">Número de Questões deve ser entre 1 e 50</mat-error>
+            </mat-form-field>
+        </div>
+    
+        <div class="row">
+            <button mat-icon-button (click)="sendNewRoomData()">Enviar</button>
+        </div>
+    </form>
+</mat-dialog-content>

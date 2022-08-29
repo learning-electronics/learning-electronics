@@ -29,7 +29,7 @@ const routes: Routes = [
   { path: 'my_exercises', component: MyExercisesComponent },
   { path: 'my_exams', component: MyExamsComponent },
   { path: 'quizz', component: QuizzComponent },
-  { path: 'game', component: GameComponent },
+  { path: 'rooms', component: GameComponent },
   { path: 'game', component: RoomComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'success-register', component: SuccessRegisterComponent },
