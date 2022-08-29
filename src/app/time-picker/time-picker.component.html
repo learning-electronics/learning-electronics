@@ -1,0 +1,44 @@
+<p>Tempo por pergunta (mm : ss)</p>
+<div class="row">
+    <div class="col"></div>
+
+    <div class="col" style="width: 45px !important;">
+        <div class="row">
+            <button class="mx-auto mb-2" mat-icon-button (click)="changeMinute(mm, 'add')"><mat-icon>keyboard_arrow_up</mat-icon></button>
+        </div>
+
+        <div class="row parent">
+            <mat-form-field class="mx-auto mat-subheading-2 my-form-field">
+                <div style="text-align: center">
+                    <input type="number" [(ngModel)]="minutes" (keyup)="checkMinuteValue(mm)" (keydown)="onChangeMinute($event)" matInput #mm>
+                </div>
+            </mat-form-field>
+        </div>
+        
+        <div class="row">
+            <button class="mx-auto mt-2" mat-icon-button (click)="changeMinute(mm, 'sub')"><mat-icon>keyboard_arrow_down</mat-icon></button>
+        </div>
+    </div>
+    
+    <h3 class="m-0 p-0" style="width: fit-content; align-self: center;"><b>:</b></h3>
+
+    <div class="col" style="width: 45px !important;">
+        <div class="row">
+            <button class="mx-auto mb-2" mat-icon-button (click)="changeSecond(ss, 'add')"><mat-icon>keyboard_arrow_up</mat-icon></button>
+        </div>
+
+        <div class="row parent">
+            <mat-form-field class="mx-auto mat-subheading-2 my-form-field">
+                <div style="text-align: center">
+                    <input type="number" [(ngModel)]="seconds" (keyup)="checkSecondValue(ss)" (keydown)="onChangeSecond($event)" matInput #ss>
+                </div>
+            </mat-form-field>
+        </div>
+        
+        <div class="row">
+            <button class="mx-auto mt-2" mat-icon-button (click)="changeSecond(ss, 'sub')"><mat-icon>keyboard_arrow_down</mat-icon></button>
+        </div>
+    </div>
+
+    <div class="col"></div>
+</div>

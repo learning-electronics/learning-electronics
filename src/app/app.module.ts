@@ -84,6 +84,7 @@ import { EditExamComponent } from './my-exams/edit-exam/edit-exam.component';
 import { WordComponent } from './my-exercises/add-exercise/word/word.component';
 import { StartExamComponent } from './classes/start-exam/start-exam.component';
 import { FooterComponent } from './footer/footer.component';
+import { TimePickerComponent } from './time-picker/time-picker.component';
 
 @NgModule({
   declarations: [
@@ -138,6 +139,7 @@ import { FooterComponent } from './footer/footer.component';
     WordComponent,
     StartExamComponent,
     FooterComponent,
+    TimePickerComponent,
   ],
   imports: [
     BrowserModule,

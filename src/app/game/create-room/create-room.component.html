@@ -1,4 +1,4 @@
-<h2 class="text-center" mat-dialog-title>Criar sala de jogo</h2>
+<h2 class="text-center" mat-dialog-title>Configurar sala de jogo</h2>
 <mat-dialog-content class="mat-typography">
     <form [formGroup]="form">
         <div class="row my-3">
@@ -18,9 +18,13 @@
                 <mat-error *ngIf="numQuestions?.invalid && !numQuestions?.hasError('required')">Número de Questões deve ser entre 1 e 50</mat-error>
             </mat-form-field>
         </div>
+
+        <div class="row my-3">
+            <app-time-picker (onTimerPicked)="getTimerValue($event)"></app-time-picker>
+        </div>
     
-        <div class="row">
-            <button mat-icon-button (click)="sendNewRoomData()">Enviar</button>
+        <div class="row my-2">
+            <button mat-raised-button color="accent" class="mx-auto" style="width: fit-content" (click)="sendNewRoomData()">Criar Sala</button>
         </div>
     </form>
 </mat-dialog-content>

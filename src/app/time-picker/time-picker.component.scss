@@ -1,0 +1,31 @@
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.parent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.my-form-field .mat-form-field-wrapper {
+  margin-bottom: -2.6em;
+  margin-top: -1.2em;
+}
+
+.my-form-field .mat-form-field-infix {
+  border-top: 0em;
+}
+
+p {
+  text-align: center;
+}
