@@ -1,6 +1,6 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, HostBinding, HostListener } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -16,7 +16,7 @@ import { SharedService, account_response } from './shared.service';
 export class AppComponent {
   @HostBinding('class') className = '';
   subscription: Subscription = new Subscription();
-  toggleControl = new FormControl(false);
+  toggleControl = new UntypedFormControl(false);
   
   title: string = 'learning-electronics';
   isExpanded: boolean = false;

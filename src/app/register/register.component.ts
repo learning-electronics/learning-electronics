@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FormGroup, FormControl, Validators,  ValidationErrors, ValidatorFn, AbstractControl, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators,  ValidationErrors, ValidatorFn, AbstractControl, UntypedFormBuilder } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { Router } from '@angular/router';
@@ -36,19 +36,19 @@ export class RegisterComponent implements OnInit {
   hide: boolean = true;
   hide_confirm: boolean = true;
   minPw: number = 8;
-  form!: FormGroup;
+  form!: UntypedFormGroup;
 
-  constructor(private _formBuilder: FormBuilder, private _snackBar: MatSnackBar, private _service: SharedService, private _router: Router, public dialog: MatDialog) { }
+  constructor(private _formBuilder: UntypedFormBuilder, private _snackBar: MatSnackBar, private _service: SharedService, private _router: Router, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.form = this._formBuilder.group({
-      fname: new FormControl('', [Validators.required]),
-      lname: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      fname: new UntypedFormControl('', [Validators.required]),
+      lname: new UntypedFormControl('', [Validators.required]),
+      email: new UntypedFormControl('', [Validators.required, Validators.email]),
       password: ['', [Validators.required, Validators.minLength(this.minPw)]],
       password2: ['', [Validators.required]],
-      bday: new FormControl('', [Validators.required]),
-      terms: new FormControl(false, [Validators.requiredTrue])    
+      bday: new UntypedFormControl('', [Validators.required]),
+      terms: new UntypedFormControl(false, [Validators.requiredTrue])    
     }, {validator: passwordMatchValidator});
   }
 

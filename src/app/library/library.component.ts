@@ -1,6 +1,6 @@
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, NgModel } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, NgModel } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { PopupComponent } from '../popup/popup.component';
@@ -29,9 +29,9 @@ export class LibraryComponent implements OnInit {
   all_themes: theme[] = [];
   tree_data: Node[] = [];
   selected_toggle: string = 'list';
-  form: FormGroup;
+  form: UntypedFormGroup;
 
-  constructor(private _service: SharedService, public popup_dialog: MatDialog, private _formBuilder: FormBuilder) {
+  constructor(private _service: SharedService, public popup_dialog: MatDialog, private _formBuilder: UntypedFormBuilder) {
     this._service.getThemes().subscribe((themes: any) => {
       themes.forEach((theme: theme) => {
         this.all_themes.push(theme);
@@ -58,7 +58,7 @@ export class LibraryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.form = this._formBuilder.group({ search: new FormControl("") });
+    this.form = this._formBuilder.group({ search: new UntypedFormControl("") });
   }
 
   /* Shorthands for form controls (used from within template) */

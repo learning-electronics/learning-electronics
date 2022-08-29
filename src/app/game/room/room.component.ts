@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 // import { Location } from '@angular/common';
 
 export interface chat_data {
@@ -13,8 +13,8 @@ export interface chat_data {
   styleUrls: ['./room.component.scss']
 })
 export class RoomComponent implements OnInit {
-  form: FormGroup = new FormGroup({
-    msg: new FormControl(''),
+  form: UntypedFormGroup = new UntypedFormGroup({
+    msg: new UntypedFormControl(''),
   });
   @ViewChild('chat_box') chat_box:ElementRef;
   constructor() { }

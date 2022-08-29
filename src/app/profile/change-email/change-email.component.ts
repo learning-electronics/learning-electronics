@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SharedService } from 'src/app/shared.service';
@@ -11,16 +11,16 @@ import { SharedService } from 'src/app/shared.service';
 })
 export class ChangeEmailComponent implements OnInit {
   hide: boolean = true;
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   
-  constructor(private _formBuilder: FormBuilder, private _snackBar: MatSnackBar, private _service: SharedService) { }
+  constructor(private _formBuilder: UntypedFormBuilder, private _snackBar: MatSnackBar, private _service: SharedService) { }
 
   ngOnInit(): void {
     this.form = this._formBuilder.group({
-      email_old: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      email2: new FormControl('', [Validators.required, Validators.email]),   
+      email_old: new UntypedFormControl('', [Validators.required, Validators.email]),
+      password: new UntypedFormControl('', [Validators.required]),
+      email: new UntypedFormControl('', [Validators.required, Validators.email]),
+      email2: new UntypedFormControl('', [Validators.required, Validators.email]),   
     }, {validator: emailMatchValidator});
   }
 

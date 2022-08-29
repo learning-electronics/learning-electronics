@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -13,9 +13,9 @@ import { account_response, SharedService } from 'src/app/shared.service';
 export class ClassPasswordComponent implements OnInit {
   info_class: any;
   hide: boolean = true;
-  form!: FormGroup;
+  form!: UntypedFormGroup;
 
-  constructor(private _formBuilder: FormBuilder, 
+  constructor(private _formBuilder: UntypedFormBuilder, 
     private _snackBar: MatSnackBar, 
     private _service: SharedService,
     private _router: Router,
@@ -25,7 +25,7 @@ export class ClassPasswordComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.form = this._formBuilder.group({ password: new FormControl('', [Validators.required]) });
+    this.form = this._formBuilder.group({ password: new UntypedFormControl('', [Validators.required]) });
   }
 
   /* Submit thed form to login into the classroom */

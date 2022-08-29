@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogData } from '../game.component';
 
@@ -9,14 +9,14 @@ import { DialogData } from '../game.component';
   styleUrls: ['./create-room.component.scss']
 })
 export class CreateRoomComponent implements OnInit {
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private _formBuilder: FormBuilder, private dialogRef: MatDialogRef<CreateRoomComponent>) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private _formBuilder: UntypedFormBuilder, private dialogRef: MatDialogRef<CreateRoomComponent>) { }
 
   ngOnInit(): void {
     this.form = this._formBuilder.group({
-      roomInput: new FormControl("", [Validators.required]),
-      questions: new FormControl("", [Validators.required])
+      roomInput: new UntypedFormControl("", [Validators.required]),
+      questions: new UntypedFormControl("", [Validators.required])
     }, {validator: [roomValidator(this.data), numQuestionsValidator]}); 
   }
 

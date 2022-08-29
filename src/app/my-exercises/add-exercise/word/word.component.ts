@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
@@ -11,14 +11,14 @@ import { classroom, SharedService, theme } from 'src/app/shared.service';
   styleUrls: ['./word.component.scss']
 })
 export class WordComponent implements OnInit {
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   fileChangedEvent : any = "";
   themes: theme[] = [];
   units: string[] = [];
   classrooms: classroom[] = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
-    private _formBuilder: FormBuilder,
+    private _formBuilder: UntypedFormBuilder,
     private _service: SharedService,
     private _snackBar: MatSnackBar
   ) {
@@ -29,8 +29,8 @@ export class WordComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this._formBuilder.group({
-      word : new FormControl("", [Validators.required]),
-      check : new FormControl(false)
+      word : new UntypedFormControl("", [Validators.required]),
+      check : new UntypedFormControl(false)
     })
   }
 

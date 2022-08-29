@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -14,13 +14,13 @@ export class AddClassComponent implements OnInit {
   hide: boolean = true;
   hide_confirm: boolean = true;
   minPw: number = 6;
-  form!: FormGroup;
+  form!: UntypedFormGroup;
 
-  constructor(private _formBuilder: FormBuilder, private _service: SharedService, private _snackBar: MatSnackBar, private _router: Router, private dialogRef: MatDialogRef<AddClassComponent>) { }
+  constructor(private _formBuilder: UntypedFormBuilder, private _service: SharedService, private _snackBar: MatSnackBar, private _router: Router, private dialogRef: MatDialogRef<AddClassComponent>) { }
 
   ngOnInit(): void {
     this.form = this._formBuilder.group({
-      name: new FormControl('', [Validators.required]),
+      name: new UntypedFormControl('', [Validators.required]),
       password: ['', [Validators.required, Validators.minLength(this.minPw)]],
       password2: ['', [Validators.required]], 
     }, {validator: passwordMatchValidator});

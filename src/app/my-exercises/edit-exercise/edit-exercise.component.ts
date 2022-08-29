@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { SharedService } from 'src/app/shared.service';
   styleUrls: ['./edit-exercise.component.scss']
 })
 export class EditExerciseComponent implements OnInit {
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   imageChangedEvent: any = '';
   croppedImage: any = '';
   disabled: boolean = true;
@@ -20,7 +20,7 @@ export class EditExerciseComponent implements OnInit {
   imgPath: string = "";
   
   constructor(
-    private _formBuilder: FormBuilder,
+    private _formBuilder: UntypedFormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any, 
     private _service: SharedService, 
     private _snackBar: MatSnackBar,
@@ -44,19 +44,19 @@ export class EditExerciseComponent implements OnInit {
     } 
 
     this.form = this._formBuilder.group({
-      question: new FormControl( {value: this.data.exercise.question, disabled: this.disabled }, [Validators.required]),
-      answers: new FormControl(
+      question: new UntypedFormControl( {value: this.data.exercise.question, disabled: this.disabled }, [Validators.required]),
+      answers: new UntypedFormControl(
         { 
           value: this.data.exercise.ans1 + ";" + this.data.exercise.ans2 + ";" + this.data.exercise.ans3 + ";" + this.data.exercise.correct,
           disabled: this.disabled 
         }
       ),
-      classrooms: new FormControl({value: lst, disabled: this.disabled }),
-      check: new FormControl({value: this.data.exercise.public, disabled: this.disabled }, [Validators.required]),
-      theme: new FormControl({ value: this.data.exercise.theme, disabled: this.disabled }, [Validators.required]),
-      unit: new FormControl({ value: this.data.exercise.unit, disabled: this.disabled }, [Validators.required]),
-      resolution: new FormControl({ value: this.data.exercise.resol, disabled: this.disabled }),
-      image: new FormControl(""),
+      classrooms: new UntypedFormControl({value: lst, disabled: this.disabled }),
+      check: new UntypedFormControl({value: this.data.exercise.public, disabled: this.disabled }, [Validators.required]),
+      theme: new UntypedFormControl({ value: this.data.exercise.theme, disabled: this.disabled }, [Validators.required]),
+      unit: new UntypedFormControl({ value: this.data.exercise.unit, disabled: this.disabled }, [Validators.required]),
+      resolution: new UntypedFormControl({ value: this.data.exercise.resol, disabled: this.disabled }),
+      image: new UntypedFormControl(""),
     }, {validator: answerValidator}); 
   }
 

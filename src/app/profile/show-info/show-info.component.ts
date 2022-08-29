@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -36,12 +36,12 @@ export class ShowInfoComponent implements OnInit {
   progress: number = 0;
   type: string = 'Aluno';
 
-  form: FormGroup = new FormGroup({
-    fname: new FormControl({ value: "", disabled: this.disabled }, [Validators.required]),
-    lname: new FormControl({ value: "", disabled: this.disabled }, [Validators.required]),
-    bday: new FormControl({ value: "", disabled: this.disabled }, [Validators.required]),
-    email: new FormControl({ value: "", disabled: this.disabled }),
-    joined: new FormControl({ value: "", disabled: true }),
+  form: UntypedFormGroup = new UntypedFormGroup({
+    fname: new UntypedFormControl({ value: "", disabled: this.disabled }, [Validators.required]),
+    lname: new UntypedFormControl({ value: "", disabled: this.disabled }, [Validators.required]),
+    bday: new UntypedFormControl({ value: "", disabled: this.disabled }, [Validators.required]),
+    email: new UntypedFormControl({ value: "", disabled: this.disabled }),
+    joined: new UntypedFormControl({ value: "", disabled: true }),
   });
   
   constructor(private _snackBar: MatSnackBar, private _service: SharedService, private _router: Router) { }

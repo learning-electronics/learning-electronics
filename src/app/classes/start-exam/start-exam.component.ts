@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { SharedService } from 'src/app/shared.service';
 export class StartExamComponent implements OnInit {
   hide: boolean = true;
 
-  form: FormGroup = new FormGroup({ password: new FormControl('', [Validators.required]) });
+  form: UntypedFormGroup = new UntypedFormGroup({ password: new UntypedFormControl('', [Validators.required]) });
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
     private _service: SharedService, 

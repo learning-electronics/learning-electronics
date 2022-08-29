@@ -1,6 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -35,9 +35,9 @@ export class AddExamComponent implements OnInit {
   disable_submit = true;
   hide: boolean = true;
 
-  form!: FormGroup;
+  form!: UntypedFormGroup;
 
-  constructor(private _formBuilder: FormBuilder,
+  constructor(private _formBuilder: UntypedFormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,  
     private _service: SharedService,
     private _router: Router,
@@ -52,14 +52,14 @@ export class AddExamComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this._formBuilder.group({
-      name: new FormControl("", [Validators.required]),
-      questions: new FormControl("", [Validators.required]),
-      password: new FormControl(null),
-      deduct: new FormControl("", [Validators.required]),
-      check: new FormControl(false),
-      classrooms: new FormControl([]),
-      timer: new FormControl(""),
-      repeat: new FormControl(true),
+      name: new UntypedFormControl("", [Validators.required]),
+      questions: new UntypedFormControl("", [Validators.required]),
+      password: new UntypedFormControl(null),
+      deduct: new UntypedFormControl("", [Validators.required]),
+      check: new UntypedFormControl(false),
+      classrooms: new UntypedFormControl([]),
+      timer: new UntypedFormControl(""),
+      repeat: new UntypedFormControl(true),
     }, {validator: numQuestionsValidator});
 
     this.dataSource.filterPredicate = (data: exercise, filter: string): boolean => {

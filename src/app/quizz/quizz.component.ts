@@ -1,6 +1,6 @@
 import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators,  ValidationErrors, ValidatorFn, AbstractControl, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators,  ValidationErrors, ValidatorFn, AbstractControl, UntypedFormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { exercise, SharedService, theme } from '../shared.service';
@@ -13,14 +13,14 @@ import { exercise, SharedService, theme } from '../shared.service';
 })
 export class QuizzComponent implements OnInit {
 
-  createTestForm!: FormGroup;
+  createTestForm!: UntypedFormGroup;
   all_themes: theme [] = [];
   all_exs: any[] = [];
   possible_exs: exercise[] = [];
   points: any[] = [{name: 'Nada', value: 0}, {name: '25%', value: 0.25}, {name: '33%', value: 1/3}, {name: '50%', value: 0.5}];
 
 
-  constructor(private _snackBar: MatSnackBar,private _formBuilder: FormBuilder,private _service: SharedService, private _router: Router) {
+  constructor(private _snackBar: MatSnackBar,private _formBuilder: UntypedFormBuilder,private _service: SharedService, private _router: Router) {
     this._service.getThemes().subscribe((data: any) => {
       this.all_themes = data as theme[];
       this._service.getExercises().subscribe((data: any) => {
@@ -31,10 +31,10 @@ export class QuizzComponent implements OnInit {
 
   ngOnInit(): void {
     this.createTestForm = this._formBuilder.group({
-      nQuestions: new FormControl('', [Validators.required, Validators.min(1),Validators.max(30), Validators.pattern('^[0-9]*$')]),
-      themes: new FormControl('', [Validators.required]),
-      duration: new FormControl('', [Validators.required,Validators.min(1),Validators.max(60), Validators.pattern('^[0-9]*$')]),
-      deduct: new FormControl('', [Validators.required]),    
+      nQuestions: new UntypedFormControl('', [Validators.required, Validators.min(1),Validators.max(30), Validators.pattern('^[0-9]*$')]),
+      themes: new UntypedFormControl('', [Validators.required]),
+      duration: new UntypedFormControl('', [Validators.required,Validators.min(1),Validators.max(60), Validators.pattern('^[0-9]*$')]),
+      deduct: new UntypedFormControl('', [Validators.required]),    
     });
     
    

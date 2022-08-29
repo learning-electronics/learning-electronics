@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { passwordMatchValidator } from 'src/app/register/register.component';
@@ -15,13 +15,13 @@ export class ChangePasswordComponent implements OnInit {
   hide_new: boolean = true;
   hide_new2: boolean = true;
   minPw: number = 8;
-  form!: FormGroup;
+  form!: UntypedFormGroup;
 
-  constructor(private _formBuilder: FormBuilder, private _snackBar: MatSnackBar, private _service: SharedService, private dialogRef: MatDialogRef<ChangePasswordComponent>) { }
+  constructor(private _formBuilder: UntypedFormBuilder, private _snackBar: MatSnackBar, private _service: SharedService, private dialogRef: MatDialogRef<ChangePasswordComponent>) { }
 
   ngOnInit(): void {
     this.form = this._formBuilder.group({
-      password_old: new FormControl('', [Validators.required]),
+      password_old: new UntypedFormControl('', [Validators.required]),
       password: ['', [Validators.required, Validators.minLength(this.minPw)]],
       password2: ['', [Validators.required]],
     }, {validator: passwordMatchValidator});

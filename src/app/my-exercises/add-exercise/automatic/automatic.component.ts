@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { AddExerciseComponent } from '../add-exercise.component';
   styleUrls: ['./automatic.component.scss']
 })
 export class AutomaticComponent implements OnInit {
-  form! : FormGroup;
+  form! : UntypedFormGroup;
   fileChangedEvent : any = "";
   imageChangedEvent: any = '';
   croppedImage: any = '';
@@ -23,7 +23,7 @@ export class AutomaticComponent implements OnInit {
   ModalTitle: string;
   
   constructor(
-    private _formBuilder: FormBuilder,
+    private _formBuilder: UntypedFormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _service: SharedService,
     private _snackBar: MatSnackBar,
@@ -38,15 +38,15 @@ export class AutomaticComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this._formBuilder.group({
-      cirpath : new FormControl("", [Validators.required]),
-      theme : new FormControl("", [Validators.required]),
-      question : new FormControl("", [Validators.required]),
-      target : new FormControl("", [Validators.required]),
-      check : new FormControl(false),
-      classrooms: new FormControl([]),
-      freq : new FormControl("", [Validators.required]),
-      unit : new FormControl("", [Validators.required]),
-      iteracoes : new FormControl("", [Validators.required])
+      cirpath : new UntypedFormControl("", [Validators.required]),
+      theme : new UntypedFormControl("", [Validators.required]),
+      question : new UntypedFormControl("", [Validators.required]),
+      target : new UntypedFormControl("", [Validators.required]),
+      check : new UntypedFormControl(false),
+      classrooms: new UntypedFormControl([]),
+      freq : new UntypedFormControl("", [Validators.required]),
+      unit : new UntypedFormControl("", [Validators.required]),
+      iteracoes : new UntypedFormControl("", [Validators.required])
     })
   }
 

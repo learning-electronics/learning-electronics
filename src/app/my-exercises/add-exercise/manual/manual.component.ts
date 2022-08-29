@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { AddExerciseComponent } from '../add-exercise.component';
   styleUrls: ['./manual.component.scss']
 })
 export class ManualComponent implements OnInit {
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   ModalTitle: string;
   imageChangedEvent: any = '';
   croppedImage: any = '';
@@ -22,7 +22,7 @@ export class ManualComponent implements OnInit {
   classrooms: classroom[] = [];
 
   constructor(
-    private _formBuilder: FormBuilder, 
+    private _formBuilder: UntypedFormBuilder, 
     @Inject(MAT_DIALOG_DATA) public data: any, 
     private _service: SharedService,
     private _snackBar: MatSnackBar,
@@ -37,13 +37,13 @@ export class ManualComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this._formBuilder.group({
-      question: new FormControl("", [Validators.required]),
-      answers: new FormControl("", [Validators.required]),
-      theme: new FormControl("", [Validators.required]),
-      unit: new FormControl("", [Validators.required]),
-      check: new FormControl(false),
-      classrooms: new FormControl([]),
-      resolution: new FormControl("")
+      question: new UntypedFormControl("", [Validators.required]),
+      answers: new UntypedFormControl("", [Validators.required]),
+      theme: new UntypedFormControl("", [Validators.required]),
+      unit: new UntypedFormControl("", [Validators.required]),
+      check: new UntypedFormControl(false),
+      classrooms: new UntypedFormControl([]),
+      resolution: new UntypedFormControl("")
     }, {validator: answerValidator});
   }
 

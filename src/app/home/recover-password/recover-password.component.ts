@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SharedService } from 'src/app/shared.service';
@@ -10,8 +10,8 @@ import { SharedService } from 'src/app/shared.service';
   styleUrls: ['./recover-password.component.scss']
 })
 export class RecoverPasswordComponent implements OnInit {
-  form: FormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+  form: UntypedFormGroup = new UntypedFormGroup({
+    email: new UntypedFormControl('', [Validators.required, Validators.email]),
   });
 
   constructor(private _snackBar: MatSnackBar, private _service: SharedService, private dialogRef: MatDialogRef<RecoverPasswordComponent>) { }

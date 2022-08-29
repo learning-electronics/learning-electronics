@@ -1,6 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -35,9 +35,9 @@ export class EditExamComponent implements OnInit {
   disable_submit = false;
   hide: boolean = true;
 
-  form!: FormGroup;
+  form!: UntypedFormGroup;
 
-  constructor(private _formBuilder: FormBuilder,
+  constructor(private _formBuilder: UntypedFormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _service: SharedService,
     private _router: Router,
@@ -59,14 +59,14 @@ export class EditExamComponent implements OnInit {
     });
     
     this.form = this._formBuilder.group({
-      name: new FormControl(this.filled_data.name, [Validators.required]),
-      questions: new FormControl(this.filled_data.number_of_exercises, [Validators.required]),
-      password: new FormControl(null),
-      deduct: new FormControl(this.points.find((p: any) => p.value == this.filled_data.deduct).value, [Validators.required]),
-      check: new FormControl(this.filled_data.public),
-      classrooms: new FormControl(class_ids),
-      timer: new FormControl(this.filled_data.timer),
-      repeat: new FormControl(this.filled_data.repeat),
+      name: new UntypedFormControl(this.filled_data.name, [Validators.required]),
+      questions: new UntypedFormControl(this.filled_data.number_of_exercises, [Validators.required]),
+      password: new UntypedFormControl(null),
+      deduct: new UntypedFormControl(this.points.find((p: any) => p.value == this.filled_data.deduct).value, [Validators.required]),
+      check: new UntypedFormControl(this.filled_data.public),
+      classrooms: new UntypedFormControl(class_ids),
+      timer: new UntypedFormControl(this.filled_data.timer),
+      repeat: new UntypedFormControl(this.filled_data.repeat),
     }, {validator: numQuestionsValidator});
 
     this.dataSource.filterPredicate = (data: exercise, filter: string): boolean => {

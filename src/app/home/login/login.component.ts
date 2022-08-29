@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { login, SharedService, account_response } from 'src/app/shared.service';
 import { MatDialogRef } from '@angular/material/dialog';
 
@@ -12,10 +12,10 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class LoginComponent implements OnInit {
   hide: boolean = true;
 
-  form: FormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required]),
-    check: new FormControl(false)
+  form: UntypedFormGroup = new UntypedFormGroup({
+    email: new UntypedFormControl('', [Validators.required, Validators.email]),
+    password: new UntypedFormControl('', [Validators.required]),
+    check: new UntypedFormControl(false)
   });
   
   constructor(private _snackBar: MatSnackBar, private _service: SharedService, private dialogRef: MatDialogRef<LoginComponent>) { }
