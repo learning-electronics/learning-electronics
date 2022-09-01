@@ -18,7 +18,6 @@ export class AppComponent {
   subscription: Subscription = new Subscription();
   toggleControl = new UntypedFormControl(false);
   
-  title: string = 'learning-electronics';
   isExpanded: boolean = false;
   loggedIn: boolean = false;
   currentComponent: string = "home";
@@ -89,7 +88,7 @@ export class AppComponent {
   public onRouterOutletActivate(event : any) {
     if (event.constructor.name == "ProfileComponent" || event.constructor.name == "RegisterComponent") {
       this.currentComponent = "profile";
-    } else if (event.constructor.name == "HomeComponent" || event.constructor.name == "FaqComponent" || event.constructor.name == "GameComponent") {
+    } else if (event.constructor.name == "HomeComponent" || event.constructor.name == "FaqComponent" || event.constructor.name == "GameComponent" || event.constructor.name == "ShowGameComponent") {
       this.currentComponent = "none";
     } else {
       this.currentComponent = "other";

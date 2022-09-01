@@ -1,3 +1,4 @@
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
@@ -14,11 +15,25 @@ export class HomeComponent implements OnInit {
   subscription: Subscription = new Subscription();
   loggedIn: boolean = false;
   more: boolean = false;
+  theme: number = 0;
+  changes: any;
 
-  constructor(private _service: SharedService, public login_dialog: MatDialog) { }
+  constructor(private _service: SharedService, public login_dialog: MatDialog, private _overlay: OverlayContainer) { }
 
   ngOnInit() :void{
     this.subscription = this._service.currentLogStatus.subscribe(logStatus => this.loggedIn = logStatus);
+  }
+  
+  ngAfterContentInit(): void {
+    this.changes = new MutationObserver((mutations: MutationRecord[]) => {
+      mutations.forEach((mutation: MutationRecord) => {
+        this.theme = this._overlay.getContainerElement().classList.contains('darkMode') ? 0.5 : 0;
+      });
+    });
+
+    this.changes.observe(this._overlay.getContainerElement(), {
+      attributeFilter: ['class'],
+    });
   }
   
   ngOnDestroy() {

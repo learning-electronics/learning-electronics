@@ -1,4 +1,5 @@
-<div class="row home d-flex w-100 h-100">
+<div class="row home d-flex w-100 h-100" [ngClass]="{colorTest: true}"
+    [ngStyle]="{ 'background-image': 'linear-gradient( rgba(0, 0, 0,' + theme + '), rgba(0, 0, 0,' + theme + ')), url(../assets/img/home-background.png)'}">
     <div class="jumbotron">
         <div class="row m-5 justify-content-center align-items-center">
             <div class="col-8 mx-auto">
@@ -33,7 +34,7 @@
 </div>
 
 <div class="col w-100">
-    <section class="bg-white">
+    <section [ngStyle]="{ 'background': 'linear-gradient( rgba(0, 0, 0,' + theme + '), rgba(0, 0, 0,' + theme + ')), #FFFFFF'}">
         <div class="container p-5">
             <h1 class="m-4">SOBRE O LEARNING-ELECTRONICS</h1>
             <p class="text-center">A plataforma Learning Eletronics visa re-inventar os métodos de aprendizagem clássicos. Através de maior interação didátca fornecendo assim um ambiente competitivo e dinâmico para alunos na área de eletŕonica.</p>
@@ -96,7 +97,7 @@
         </div>
     </section>
     
-    <section style="background-color: #F7F7F7">
+    <section [ngStyle]="{ 'background': 'linear-gradient( rgba(0, 0, 0,' + theme + '), rgba(0, 0, 0,' + theme + ')), #F7F7F7'}">
         <div class="container p-5">
             <div class="row">
                 <div class="col about-col">
@@ -126,7 +127,7 @@
         </div>
     </section>
 
-    <section style="background-color: #e6e6e6">
+    <section [ngStyle]="{ 'background': 'linear-gradient( rgba(0, 0, 0,' + theme + '), rgba(0, 0, 0,' + theme + ')), #E6E6E6'}">
         <div class="container p-5">
             <h1 class="mt-5">A NOSSA EQUIPA</h1>
             <div class="team-container mx-5">
@@ -238,7 +239,7 @@
         </div>
     </section>
     
-    <section style="background-color: #e6e6e6">
+    <section [ngStyle]="{ 'background': 'linear-gradient( rgba(0, 0, 0,' + theme + '), rgba(0, 0, 0,' + theme + ')), #E6E6E6'}">
         <div class="container pb-2">
             <app-footer></app-footer>
         </div>
