@@ -1,29 +1,36 @@
-:host {
-    display: block;
-    background-color: #F7F7F7;
-}
-
-p {
+.title {
     font-size: 2rem;
     font-weight: 450;
     text-align: center;
 }
 
+p {
+    text-align: center;
+}
+
 h1 {
     text-align: center;
-    font-size: 2rem;
 }
 
-#showGame {
-    text-align: center;
-    //float:none; 
-    width:50%;
-    // max-width: 800px;
-    height:50%;
+img {
+    max-width: 250px;
+    min-width: 140px;
+    float: right;
+    display: block;
+    margin-right: 40px;
 }
 
-#chat{
-    float:none;
-    width:50%;
-    height:1024px;
+.game-info {
+    text-align: left;
+    margin-left: 40px;
+}
+
+@media screen and (max-width: 438px) {
+    img {
+        margin-right: 0px;;
+    }
+
+    .game-info {
+        margin-left: 20px;
+    }
 }

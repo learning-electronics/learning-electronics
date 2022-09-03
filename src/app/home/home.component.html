@@ -1,14 +1,15 @@
 <div class="row home d-flex w-100 h-100" [ngClass]="{colorTest: true}"
     [ngStyle]="{ 'background-image': 'linear-gradient( rgba(0, 0, 0,' + theme + '), rgba(0, 0, 0,' + theme + ')), url(../assets/img/home-background.png)'}">
     <div class="jumbotron">
-        <div class="row m-5 justify-content-center align-items-center">
-            <div class="col-8 mx-auto">
+        <div class="row m-5 welcome justify-content-center align-items-center">
+            <div class="col-8 mx-auto le">
                 <p class="welcome-p" style="margin-top: 12%;">BEM VINDO AO</p>
                 <a href="/"><img class="welcome-img" src="../../assets/img/home.png"></a>
                 <p class="welcome-p">A NEW WAY OF LEARNING</p>
             </div>
-            <div *ngIf="!loggedIn" class="col">
-                <mat-card [class.mat-elevation-z9]="true" style="margin-top: 20%;">
+           
+            <div *ngIf="!loggedIn" class="col-4 login">
+                <mat-card [class.mat-elevation-z9]="true" style="margin-top: 20%;" class="login-card">
                     <div class="col">
                         <div class="row mt-3 mb-4 mx-0">
                             <h1 style="font-size: 1.5rem"><b>LOGIN</b></h1>
@@ -51,7 +52,7 @@
                 </button>
             </p>
 
-            <div class="row m-5">
+            <div class="row info m-5">
                 <div class="col-2 about-col">
                     <mat-icon class="about-icon" style="align-self: center">library_books</mat-icon>
                 </div>
@@ -62,7 +63,7 @@
                 </div>
             </div>
 
-            <div class="row m-5">
+            <div class="row info m-5">
                 <div class="col mx-2">
                     <h2 style="text-align: right;">Testes</h2>
                     <p style="text-align: right;">Podes realizar testes autopropostos escolhendo tema(s), tempo e desconto das perguntas erradas.</p>
@@ -73,7 +74,7 @@
                 </div>
             </div>
 
-            <div class="row m-5">
+            <div class="row info m-5">
                 <div class="col-2 about-col">
                     <mat-icon class="about-icon" style="align-self: center">insights</mat-icon>
                 </div>
@@ -84,7 +85,7 @@
                 </div>
             </div>
 
-            <div class="row m-5">
+            <div class="row info m-5">
                 <div class="col mx-2">
                     <h2 style="text-align: right;">Jogos</h2>
                     <p style="text-align: right;">Compete contra os teus colegas realizando o mesmo teste ao mesmo tempo.</p>

@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { io } from 'socket.io-client';
 import { SharedService, exercise } from 'src/app/shared.service';
 
 interface Result {
@@ -14,14 +16,22 @@ const RESULTS_DATA : Result[] = [];
   styleUrls: ['./show-game.component.scss']
 })
 export class ShowGameComponent implements OnInit {
+  subscription: Subscription = new Subscription();
+  room_id! : string;
+  socket : any;
+  socket_id! : string;
+  last_room: string;
+  username: string;
 
-  constructor(private service : SharedService) { }
+  constructor(private _service : SharedService) {
+    this.subscription = this._service.gameOpened.subscribe((data: any) => {
+      this.room_id = data.room_id;
+      this.last_room = data.last_room;
+      this.username = data.username;
+    });
+  }
 
-  @Input() room_id! : string;
-  @Input() socket : any;
-  @Input() socket_id! : string;
   
-
   DJANGO_SERVER = 'http://localhost:8000';
   
   question : string = "";
@@ -36,7 +46,6 @@ export class ShowGameComponent implements OnInit {
   all_exercises : exercise[] = [];
   started : boolean = false;
   game_over : boolean = false;
-  // toggle : boolean = false;
   n_players : number = 0;
   n_ready : number = 0;
   ready_value : number = 0;
@@ -54,8 +63,18 @@ export class ShowGameComponent implements OnInit {
   show_results_flag : boolean = false;
 
   ngOnInit(): void {
+    this.socket = io("http://localhost:3000");
+
+    // associates the socket id to the username of the client
+    this.socket.on("socket_id", (id : any) => {
+      this.socket_id = id;
+      this.socket.emit("nname", this.username);
+    });
+
+    this.socket.emit("change_room", this.room_id, this.last_room);
+
     this.socket.emit("client_get_question", this.room_id);
-    this.service.getExercises().subscribe((data: any) => {
+    this._service.getExercises().subscribe((data: any) => {
       data.forEach((ex: exercise) => {
         this.all_exercises.push(ex);
       });
@@ -63,7 +82,10 @@ export class ShowGameComponent implements OnInit {
 
     this.socket.emit("client_get_totalPlayers", this.room_id);
     this.socket.emit("client_get_players_ready", this.room_id);
+  }
 
+  ngOnDestroy() {
+    this.socket.disconnect();
   }
 
   ngAfterViewInit() {
@@ -162,13 +184,12 @@ export class ShowGameComponent implements OnInit {
     });
 
     this.socket.on("players_ready", (n_ready:number) => {
-      this.n_ready=n_ready;
-      console.log(this.n_ready);
+      this.n_ready = n_ready;
       this.ready_value = (this.n_ready / this.n_players) * 100;
     });
     
     this.socket.on("totalPlayers", (n_players:number) => {
-      this.n_players = n_players ;
+      this.n_players = n_players;
       this.ready_value = (this.n_ready / this.n_players) * 100;
     });
 
@@ -187,7 +208,7 @@ export class ShowGameComponent implements OnInit {
   }
 
   shuffleArray(array : string[]) {
-    for(var i = array.length-1; i > 0; i--) {
+    for (var i = array.length-1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i+1));
       var temp = array[i];
       array[i] = array[j];

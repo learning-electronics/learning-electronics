@@ -1,11 +1,36 @@
-#main-mat-card {
-    border-radius: 20px;
-    margin: auto;
-    // width: 50%;
-    //height: 800px;
-    background-color:transparent;
-    //height: 40%;
+:host {
+    display: block;
+    background-color: #F7F7F7;
 }
+
+h2 {
+    text-align: center;
+}
+
+.spinner-background{
+    .mat-progress-spinner{
+        display: inline;
+    }
+}
+
+.spinner-grey {
+    ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+        stroke: lightgrey;
+    } 
+}
+
+@media screen and (max-width: 1400px) {
+    .game {
+        width: 100% !important;
+        margin-bottom: 0px !important;
+    }
+}
+
+#showGame {
+    text-align: center;
+    height: 100%;
+}
+
 
 #options{
     font-size: large;
@@ -22,13 +47,6 @@
     border-radius: 15px;
     max-width: 300px;
     min-width: 200px;
-}
-
-#play{
-    font-size: 80px;
-    // position:absolute;
-    // top:410px;
-    // right:50px;
 }
 
 table {

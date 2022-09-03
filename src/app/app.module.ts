@@ -48,7 +48,7 @@ import { RecoverPasswordComponent } from './home/recover-password/recover-passwo
 import { ChangeEmailComponent } from './profile/change-email/change-email.component';
 import { GameComponent } from './game/game.component';
 import { MatSelectModule } from '@angular/material/select';
-import { RoomComponent } from './game/room/room.component';
+import { ChatComponent } from './game/chat/chat.component';
 import { MyExercisesComponent } from './my-exercises/my-exercises.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ManualComponent } from './my-exercises/add-exercise/manual/manual.component';
@@ -111,7 +111,7 @@ import { TimePickerComponent } from './time-picker/time-picker.component';
     RecoverPasswordComponent,
     ChangeEmailComponent,
     GameComponent,
-    RoomComponent,
+    ChatComponent,
     MyExercisesComponent,
     ShowGameComponent,
     ManualComponent,

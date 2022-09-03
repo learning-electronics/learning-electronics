@@ -2,21 +2,21 @@
     <mat-card-content>
         <div class="col">
             <div class="row my-1">
-                <h2>Chat da Sala {{room_id}}</h2>
+                <h2>Chat</h2>
             </div>
 
-            <div id="Msgs" class="row my-2" #chat_box>
+            <div id="Msgs" class="row mx-1 my-2" #chat_box>
                 <div *ngFor="let item of chat ">
                     <b>{{item.src}}</b> : {{item.data}}
                 </div>
             </div>
             
-            <div class="row mt-3">
+            <div class="row mx-auto mt-3">
                 <form [formGroup]="form">
                     <mat-form-field appearance="fill">
                         <mat-label>Enviar mensagem</mat-label>
                         <input  matInput type="text" formControlName="msg" >
-                        <button *ngIf="form.get('msg')?.value" matSuffix mat-icon-button aria-label="Clear" (click)="sendMessage()">
+                        <button matSuffix mat-icon-button (click)="sendMessage()">
                             <mat-icon>send</mat-icon>
                         </button>
                     </mat-form-field>

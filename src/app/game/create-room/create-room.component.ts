@@ -9,8 +9,8 @@ import { DialogData } from '../game.component';
   styleUrls: ['./create-room.component.scss']
 })
 export class CreateRoomComponent implements OnInit {
-  minutes: number;
-  seconds: number;
+  minutes: number = 10;
+  seconds: number = 0;
   form!: UntypedFormGroup;
   
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private _formBuilder: UntypedFormBuilder, private dialogRef: MatDialogRef<CreateRoomComponent>) { }
@@ -19,7 +19,7 @@ export class CreateRoomComponent implements OnInit {
     this.form = this._formBuilder.group({
       roomInput: new UntypedFormControl("", [Validators.required]),
       questions: new UntypedFormControl("", [Validators.required])
-    }, {validator: [roomValidator(this.data), numQuestionsValidator]}); 
+    }, {validator: [roomValidator(this.data), numQuestionsValidator]});
   }
 
   /* Shorthands for form controls (used from within template) */
@@ -49,10 +49,9 @@ export class CreateRoomComponent implements OnInit {
 
   // sends dialog data to game component(name of the room to be created)
   sendNewRoomData() {
-    console.log(this.minutes, this.seconds);
-    /* if (this.form.valid) {
-      this.dialogRef.close({name: this.form.get('roomInput')?.value, numExercises: this.form.get('numExercises')?.value});
-    } */
+    if (this.form.valid) {
+      this.dialogRef.close({name: this.form.get('roomInput')?.value, numExercises: this.form.get('questions')?.value, time: (this.minutes * 60 + this.seconds)});
+    }
   }
 }
 

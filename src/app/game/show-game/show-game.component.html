@@ -1,81 +1,85 @@
-<mat-card>
-    <div class="col my-auto mx-auto">
-        <div class="row">
-            <h2>Sala {{room_id}}</h2>
-        </div>
-
-        <div class="row" *ngIf="!show_answer && show_question">
-            <div class="col">
-                <div class="row">
-                    <h1>Tempo Restante: {{counter}}</h1>
-                </div>
-
-                <div class="row">
-                    <h1>{{question}}</h1>
-                </div>
-
-                <div class="row">
-                    <img id="image" *ngIf="image_url != ''" [src]="image_url" alt="Exercise Image">
-                </div>
-
-                <div class="row">
-                    <div aria-label="Select an option" >
-                        <div *ngFor="let option of options" >
-                            <button [ngStyle]="{'background-color': option == res ? '#ff4081' : '#009688' }" id="options" mat-raised-button color="primary" [value]="option" (click)="getOption(option)">
-                                {{option}}
-                            </button>
-                            <br>
-                            <br>
-                        </div>       
+<div class="container" style="height: 100vh !important">
+    <div class="row h-100">
+        <div class="col-9 my-5 game">
+            <mat-card id="showGame">
+                <h2>Sala {{room_id}}</h2>
+        
+                <div class="row" *ngIf="!show_answer && show_question">
+                    <div class="col">
+                        <div class="row">
+                            <h1>Tempo Restante: {{counter}}</h1>
+                        </div>
+        
+                        <div class="row">
+                            <h1>{{question}}</h1>
+                        </div>
+        
+                        <div class="row">
+                            <img id="image" *ngIf="image_url != ''" [src]="image_url" alt="Exercise Image">
+                        </div>
+        
+                        <div class="row">
+                            <div aria-label="Select an option" >
+                                <div *ngFor="let option of options" >
+                                    <button [ngStyle]="{'background-color': option == res ? '#ff4081' : '#009688' }" id="options" mat-raised-button color="primary" [value]="option" (click)="getOption(option)">
+                                        {{option}}
+                                    </button>
+                                    <br>
+                                    <br>
+                                </div>       
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-
-            <div class="col">
-                <div class="row" style="font-size: 1.2rem;margin-top: 05%;">
-                    <mat-card *ngIf="!started" style="width:10rem; height:10rem;margin-left: 2%;">
-
-                        <mat-spinner 
-                        class="example-margin"
-                        color="accent"
-                        mode="determinate"
-                        value={{ready_value}}>
-                        </mat-spinner>
-                        
-                        {{n_ready}}/{{n_players}} Jogadores Prontos
-                    </mat-card>
+                
+                <div class="row">
+                    <div class="col">
+                        <div *ngIf="!started">
+                            <div class="spinner-background">
+                                <div class="spinner-grey">
+                                    <mat-spinner class="background" mode="determinate" value="100"></mat-spinner>
+                                </div>
+                                
+                                <mat-spinner color="primary" mode="determinate" value={{ready_value}}></mat-spinner>
+                            </div>
+                            
+                            {{n_ready}}/{{n_players}} Jogadores Prontos
+                        </div>
+                    </div>
+                    
+        
+                    <div class="col">
+                        <button mat-icon-button><mat-icon *ngIf="!started && !pready" id="play" color="primary" (click)="playerReady()">play_circle_outline</mat-icon></button>
+                        <!-- not readybutton -->
+                        <button mat-icon-button><mat-icon  *ngIf="!started && pready" id="play" color="primary" (click)="playerNotReady()">stop_circle</mat-icon></button>
+                    </div>
                 </div>
-
-            </div>
-
-            <div class="col-2" style="margin-top: 15%;">
-                <mat-icon *ngIf="!started && !pready" id="play" color="primary" (click)="playerReady()">play_circle_outline</mat-icon>
-                <!-- not readybutton -->
-                <mat-icon  *ngIf="!started && pready" id="play" color="primary" (click)="playerNotReady()">stop_circle</mat-icon>
-            </div>
+                <mat-card *ngIf="show_answer && !correct_answer">Resposta Correta: {{answer}}</mat-card>
+                <mat-card *ngIf="correct_answer && show_answer">Correto!</mat-card>
+                <mat-card *ngIf="!correct_answer && show_answer">Errado!</mat-card>
+                <mat-card *ngIf="game_over && show_results_flag">
+                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                        <ng-container matColumnDef="name">
+                          <th mat-header-cell *matHeaderCellDef> Nome </th>
+                          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                        </ng-container>
+            
+                        <ng-container matColumnDef="points">
+                          <th mat-header-cell *matHeaderCellDef> Pontos </th>
+                          <td mat-cell *matCellDef="let element"> {{element.points}} </td>
+                        </ng-container>
+                      
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                      </table>
+                </mat-card>
+                <mat-card *ngIf="game_over">O jogo acabou!</mat-card>
+                <!-- replay button -->
+            </mat-card>
+        </div>
+        
+        <div class="col mt-5">
+            <app-chat [socket_id]="socket_id" [socket]="socket" [room_id]="room_id"></app-chat>
         </div>
     </div>
-    <mat-card *ngIf="show_answer && !correct_answer">Resposta Correta: {{answer}}</mat-card>
-    <mat-card *ngIf="correct_answer && show_answer">Correto!</mat-card>
-    <mat-card *ngIf="!correct_answer && show_answer">Errado!</mat-card>
-    <mat-card *ngIf="game_over && show_results_flag">
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-            <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef> Nome </th>
-              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="points">
-              <th mat-header-cell *matHeaderCellDef> Pontos </th>
-              <td mat-cell *matCellDef="let element"> {{element.points}} </td>
-            </ng-container>
-          
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
-    </mat-card>
-    <mat-card *ngIf="game_over">O jogo acabou!</mat-card>
-    <!-- replay button -->
-</mat-card>
+</div>

@@ -87,15 +87,20 @@ export class SharedService {
 
   /* Initialize the classroom information */
   private classroomSource = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('class')!));
-  classroomOpened = this.classroomSource.asObservable()
+  classroomOpened = this.classroomSource.asObservable();
 
   /* Initialize the type of user information */
   private userSource = new BehaviorSubject<string>(localStorage.getItem('user') === 'Teacher' ? 'Teacher' : 'Student');
-  userStatus = this.userSource.asObservable()
+  userStatus = this.userSource.asObservable();
 
   /* Initialize the exam information */
   private examSource = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('exam')!));
-  examStatus = this.examSource.asObservable()
+  examStatus = this.examSource.asObservable();
+
+  /* Initialize the game information */
+  private gameSource = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('game')!));
+  gameOpened = this.gameSource.asObservable();
+
 
   constructor(private _http: HttpClient) { }
 
@@ -109,6 +114,12 @@ export class SharedService {
   openExam(info: any) {
     this.examSource.next(info);
     localStorage.setItem('exam', JSON.stringify(info));
+  }
+
+  /* Change the opened game information */
+  openGame(info: any) {
+    this.gameSource.next(info);
+    localStorage.setItem('game', JSON.stringify(info));
   }
 
   /* Change log status used across the app*/

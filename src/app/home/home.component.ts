@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() :void{
     this.subscription = this._service.currentLogStatus.subscribe(logStatus => this.loggedIn = logStatus);
+    this.theme = this._overlay.getContainerElement().classList.contains('darkMode') ? 0.5 : 0;
   }
   
   ngAfterContentInit(): void {

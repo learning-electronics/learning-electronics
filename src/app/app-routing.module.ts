@@ -13,10 +13,10 @@ import { FaqComponent } from './faq/faq.component';
 import { SuccessRegisterComponent } from './success-register/success-register.component';
 import { FailedRegisterComponent } from './failed-register/failed-register.component';
 import { ShowClassComponent } from './classes/show-class/show-class.component';
-import { RoomComponent } from './game/room/room.component';
 import { MyExercisesComponent } from './my-exercises/my-exercises.component';
 import { MyExamsComponent } from './my-exams/my-exams.component';
 import { ShowQuizzComponent } from './quizz/show-quizz/show-quizz.component';
+import { ShowGameComponent } from './game/show-game/show-game.component';
 
 const routes: Routes = [
   { path: 'show-quizz', component: ShowQuizzComponent },
@@ -30,7 +30,7 @@ const routes: Routes = [
   { path: 'my_exams', component: MyExamsComponent },
   { path: 'quizz', component: QuizzComponent },
   { path: 'rooms', component: GameComponent },
-  { path: 'game', component: RoomComponent },
+  { path: 'game', component: ShowGameComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'success-register', component: SuccessRegisterComponent },
   { path: 'failed-register', component: FailedRegisterComponent },
