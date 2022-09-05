@@ -9,7 +9,7 @@ import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@ang
 })
 export class TimePickerComponent implements OnInit {
   @Output() onTimerPicked = new EventEmitter<any>();
-  minutes: number = 10;
+  minutes: number = 5;
   seconds: number = 0;
 
   constructor() { }
@@ -18,22 +18,26 @@ export class TimePickerComponent implements OnInit {
   }
 
   checkMinuteValue(input: any) {
+    this.onTimerPicked.emit({minutes: Number(input.value), seconds: this.seconds});
+
     setTimeout(() => {
       if (input.value == '') {
         input.value = 0; 
         this.minutes = 0;
-        this.onTimerPicked.emit({minutes: this.minutes, seconds: this.seconds});
       }
+      this.onTimerPicked.emit({minutes: Number(input.value), seconds: this.seconds});
     }, 2000);
   }
 
   checkSecondValue(input: any) {
+    this.onTimerPicked.emit({minutes: this.minutes, seconds: Number(input.value)});
+
     setTimeout(() => {
       if (input.value == '') {
         input.value = 0;
         this.seconds = 0;
-        this.onTimerPicked.emit({minutes: this.minutes, seconds: this.seconds});
       }
+      this.onTimerPicked.emit({minutes: this.minutes, seconds: Number(input.value)});
     }, 2000);
   }
 

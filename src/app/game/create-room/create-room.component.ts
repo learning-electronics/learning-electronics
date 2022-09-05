@@ -9,7 +9,7 @@ import { DialogData } from '../game.component';
   styleUrls: ['./create-room.component.scss']
 })
 export class CreateRoomComponent implements OnInit {
-  minutes: number = 10;
+  minutes: number = 5;
   seconds: number = 0;
   form!: UntypedFormGroup;
   

@@ -1,36 +1,94 @@
-:host {
-    display: block;
-    background-color: #F7F7F7;
-}
-
-h2 {
+h1 {
     text-align: center;
+    font-weight: 550;  
 }
 
-.spinner-background{
+p {
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.spinner-background {
     .mat-progress-spinner{
         display: inline;
     }
 }
 
+.spinner-background-timer {
+    .mat-progress-spinner{
+        display: inline;
+    }
+
+    padding-right: 50px;
+    flex: 0 !important;
+}
+
 .spinner-grey {
     ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
         stroke: lightgrey;
-    } 
-}
-
-@media screen and (max-width: 1400px) {
-    .game {
-        width: 100% !important;
-        margin-bottom: 0px !important;
     }
 }
 
-#showGame {
-    text-align: center;
-    height: 100%;
+.chat {
+    min-width: 250px !important;
 }
 
+.game  {
+    min-width: 400px !important;
+}
+
+.mat-icon-button.large {
+    width: 90px;
+    height: 90px;
+    line-height: 90px;
+
+    .mat-icon {
+      font-size: 90px;
+      width: 90px;
+      height: 90px;
+      line-height: 90px;
+    }
+}
+
+mat-card {
+    border-radius: 10px;
+}
+
+.time-left {
+    position: absolute;
+    float: inline-end;
+    align-self: center;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+@media screen and (max-width: 750px) {
+    .game {
+        min-width: 0px !important;
+        width: 100% !important;
+        margin-bottom: 0px !important;
+    }
+
+    .chat {
+        min-width: 0px !important;
+        width: 100% !important;
+        padding-bottom: 20px;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    title {
+        padding-left: 0px !important;
+    }
+
+    .spinner-background-timer {
+        padding-right: 12px;
+    }
+
+    .title {
+        padding-left: 0px !important;
+    }
+}
 
 #options{
     font-size: large;

@@ -1,12 +1,10 @@
 import io from "socket.io-client";
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SharedService, person } from '../shared.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateRoomComponent } from './create-room/create-room.component';
 import { Router } from "@angular/router";
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { MatGridList } from "@angular/material/grid-list";
-
 export interface DialogData {
   rooms: any;
   name: "";
@@ -23,7 +21,7 @@ export class GameComponent implements OnInit {
   user_info!: person;
   socket: any;
   connections: string[] = [];
-  rooms: {name: string, exercises: number, time: string, owner: string}[] = [];
+  rooms: {name: string, exercises: number, time_str: string, total_time: number, owner: string}[] = [];
   selected_room: string = "";
   last_room: string = "";
   socket_id: string = "";
@@ -57,7 +55,13 @@ export class GameComponent implements OnInit {
 
           for (var info in rooms) {
             var total_time = rooms[info].time * rooms[info].numExercises;
-            this.rooms.push({name: info, exercises: rooms[info].numExercises, time: Math.floor(total_time/60) + "m " + total_time%60 + "s", owner: rooms[info].owner});
+            this.rooms.push({
+              name: info, 
+              exercises: rooms[info].numExercises, 
+              time_str: (Math.floor(total_time/60) == 0 ? "" : Math.floor(total_time/60) + "m ") + total_time%60 + "s",
+              owner: rooms[info].owner,
+              total_time: total_time
+            });
           }
         });
       }
@@ -113,7 +117,15 @@ export class GameComponent implements OnInit {
     this.last_room = this.selected_room;
     this.selected_room = room.name;
 
-    this._service.openGame({room_id: this.selected_room, last_room: this.last_room, username: this.user_info.first_name + " " + this.user_info.last_name});
+    this._service.openGame({
+      room_id: this.selected_room,
+      last_room: this.last_room,
+      username: this.user_info.first_name + " " + this.user_info.last_name,
+      time: this.rooms.find(x => x.name == this.selected_room)?.total_time! / this.rooms.find(x => x.name == this.selected_room)?.exercises!,
+      exercises: this.rooms.find(x => x.name == this.selected_room)?.exercises
+    });
+
+    this.socket.disconnect();
     this._router.navigate(['/game']);
   }
 }
