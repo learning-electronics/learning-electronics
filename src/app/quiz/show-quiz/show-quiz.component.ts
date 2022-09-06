@@ -6,11 +6,11 @@ import { SharedService } from 'src/app/shared.service';
 
 
 @Component({
-  selector: 'app-show-quizz',
-  templateUrl: './show-quizz.component.html',
-  styleUrls: ['./show-quizz.component.scss']
+  selector: 'app-show-quiz',
+  templateUrl: './show-quiz.component.html',
+  styleUrls: ['./show-quiz.component.scss']
 })
-export class ShowQuizzComponent implements OnInit {
+export class ShowQuizComponent implements OnInit {
   subscription: Subscription = new Subscription();
   options: string[] = [];
   exs:any[] = [];

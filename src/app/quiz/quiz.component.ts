@@ -1,4 +1,3 @@
-import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, Validators,  ValidationErrors, ValidatorFn, AbstractControl, UntypedFormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -7,11 +6,11 @@ import { exercise, SharedService, theme } from '../shared.service';
 
 
 @Component({
-  selector: 'app-quizz',
-  templateUrl: './quizz.component.html',
-  styleUrls: ['./quizz.component.scss']
+  selector: 'app-quiz',
+  templateUrl: './quiz.component.html',
+  styleUrls: ['./quiz.component.scss']
 })
-export class QuizzComponent implements OnInit {
+export class QuizComponent implements OnInit {
 
   createTestForm!: UntypedFormGroup;
   all_themes: theme [] = [];

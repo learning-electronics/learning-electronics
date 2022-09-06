@@ -1,0 +1,96 @@
+<!-- <div class="row d-flex justify-content-center w-100 h-100">
+    
+</div> -->
+
+<div class="container-fluid">
+    <div class="row">
+        <p class="my-5 title">Autotestes</p>
+    </div>
+
+    <div class="row">
+        <div class="col-7 info">
+            <div class="row h-100 align-items-center justify-content-center">
+                <div class="col">
+                    <img src="../../assets/img/exam.png" style="float: right">
+                </div>
+    
+                <div class="col">
+                    <h1>Quiz</h1>
+                    <p class="text-start">Teste os seus conhecimentos sobre eletrónica</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col quiz">
+            <div class="row align-items-center justify-content-center">
+                <mat-card [class.mat-elevation-z5]="true">
+                    <h2 class="text-center" mat-dialog-title>Teste recomendado</h2>
+                    <p>mais infos aqui</p>
+
+                    <div class="row mt-4 mb-1 mx-auto">
+                        <button mat-raised-button color="accent" type="submit" mat-button>Criar</button>
+                    </div>
+                </mat-card>
+            </div>
+
+            <div class="row align-items-center justify-content-center">
+                <mat-card [class.mat-elevation-z5]="true">
+                    <h2 class="text-center" mat-dialog-title>Teste personalizado</h2>
+
+                    <form [formGroup]="createTestForm" (ngSubmit)="submit()">
+                        <div class="row mb-3 justify-content-center">
+                            <mat-form-field class="mx-auto">
+                                <mat-label>Nº de perguntas</mat-label>
+                                <input matInput appearance="fill" formControlName="nQuestions" required>
+                                <mat-error *ngIf="createTestForm.controls['nQuestions'].invalid && !createTestForm.controls['nQuestions'].hasError('required')">Apenas números</mat-error>
+                                <mat-error *ngIf="createTestForm.controls['nQuestions'].hasError('required')">Você deve escolher o número de pergutnas</mat-error>
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="row my-3 justify-content-center">
+                            <mat-form-field class="mx-auto">
+                                <mat-label>Temas das Perguntas</mat-label>
+                                <mat-select formControlName="themes" required multiple>
+                                    <mat-option *ngFor="let theme of all_themes" [value]="theme.id">
+                                        {{theme.name}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="createTestForm.controls['themes'].hasError('required')">Você deve escolher pelo menos um tema</mat-error>
+                            </mat-form-field>
+                        </div>
+        
+                        <div class="row my-3 justify-content-center">
+                            <mat-form-field id="mat-form-field">
+                                <mat-label>Duraçao</mat-label>
+                                <input matInput formControlName="duration" required>
+                                <mat-error *ngIf="createTestForm.controls['duration'].invalid && !createTestForm.controls['duration'].hasError('required') ">Apenas números</mat-error>
+                                <mat-error *ngIf="createTestForm.controls['duration'].hasError('required')">Você deve escolher o tempo para o teste</mat-error>
+                            </mat-form-field>
+                        </div>
+        
+                        <div class="row my-3 justify-content-center">
+                            <mat-form-field >
+                                <mat-label>Desconto</mat-label>
+                                <mat-select formControlName="deduct" name="Desconto" required>
+                                    <mat-option [value]="point.value" *ngFor="let point of points">
+                                    {{point.name}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="createTestForm.controls['deduct'].hasError('required')">Escolha um valor de desconto</mat-error>
+                            </mat-form-field>
+                        </div>
+                    
+        
+                        <div class="row mt-4 mb-1 mx-auto">
+                            <button mat-raised-button color="accent" type="submit" mat-button>Criar</button>
+                        </div>
+                    </form>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+
+    <div class="container pt-5 pb-2">
+        <app-footer></app-footer>
+    </div>
+</div>

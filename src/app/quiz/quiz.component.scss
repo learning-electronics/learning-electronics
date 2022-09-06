@@ -1,0 +1,51 @@
+.title {
+    font-size: 2rem;
+    font-weight: 450;
+    text-align: center;
+}
+
+p {
+    text-align: center;
+}
+
+.info {
+    min-width: 375px !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.quiz {
+    min-width: 375px !important;
+    align-items: center;
+    justify-content: center;
+}
+
+img {
+    width: 100%;
+    max-width: 380px;
+    min-width: 200px;
+}
+
+mat-card {
+    border-radius: 20px;
+    max-width: 400px;
+}
+
+@media screen and (max-width: 968px) {
+    .info {
+        min-width: 100% !important;
+    }
+
+    .quiz {
+        min-width: 100% !important;
+    }
+}
+
+.mat-raised-button {
+    margin: auto;
+    width: 20%;
+}
+
+.mat-form-field {
+    width: 90%;
+}

@@ -6,7 +6,7 @@ import { RegisterComponent } from './register/register.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LibraryComponent } from './library/library.component';
 import { ProfileComponent } from './profile/profile.component';
-import { QuizzComponent } from './quizz/quizz.component';
+import { QuizComponent } from './quiz/quiz.component';
 import { ClassesComponent } from './classes/classes.component';
 import { GameComponent } from './game/game.component';
 import { FaqComponent } from './faq/faq.component';
@@ -15,11 +15,11 @@ import { FailedRegisterComponent } from './failed-register/failed-register.compo
 import { ShowClassComponent } from './classes/show-class/show-class.component';
 import { MyExercisesComponent } from './my-exercises/my-exercises.component';
 import { MyExamsComponent } from './my-exams/my-exams.component';
-import { ShowQuizzComponent } from './quizz/show-quizz/show-quizz.component';
+import { ShowQuizComponent } from './quiz/show-quiz/show-quiz.component';
 import { ShowGameComponent } from './game/show-game/show-game.component';
 
 const routes: Routes = [
-  { path: 'show-quizz', component: ShowQuizzComponent },
+  { path: 'show-quizz', component: ShowQuizComponent },
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'library', component: LibraryComponent },
@@ -28,7 +28,7 @@ const routes: Routes = [
   { path: 'class', component: ShowClassComponent },
   { path: 'my_exercises', component: MyExercisesComponent },
   { path: 'my_exams', component: MyExamsComponent },
-  { path: 'quizz', component: QuizzComponent },
+  { path: 'quiz', component: QuizComponent },
   { path: 'rooms', component: GameComponent },
   { path: 'game', component: ShowGameComponent },
   { path: 'faq', component: FaqComponent },

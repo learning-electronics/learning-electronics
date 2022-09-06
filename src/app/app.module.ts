@@ -24,7 +24,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { HttpClientModule } from '@angular/common/http';
 import { LibraryComponent } from './library/library.component';
 import { ProfileComponent } from './profile/profile.component';
-import { QuizzComponent } from './quizz/quizz.component';
+import { QuizComponent } from './quiz/quiz.component';
 import { ClassesComponent } from './classes/classes.component';
 import { ChangePasswordComponent } from './profile/change-password/change-password.component';
 import { DeleteAccountComponent } from './profile/delete-account/delete-account.component';
@@ -77,7 +77,7 @@ import { PageSizeClassMembersDirective } from './directive/page-size-class-membe
 import { MyExamsComponent } from './my-exams/my-exams.component';
 import { AddExamComponent } from './my-exams/add-exam/add-exam.component';
 import { DeleteConfirmationExamComponent } from './my-exams/delete-confirmation-exam/delete-confirmation-exam.component';
-import { ShowQuizzComponent } from './quizz/show-quizz/show-quizz.component';
+import { ShowQuizComponent } from './quiz/show-quiz/show-quiz.component';
 import { PageSizeExamsDirective } from './directive/page-size-exams.directive';
 import { PageSizeClassExamsDirective } from './directive/page-size-class-exams.directive';
 import { EditExamComponent } from './my-exams/edit-exam/edit-exam.component';
@@ -95,7 +95,7 @@ import { TimePickerComponent } from './time-picker/time-picker.component';
     RegisterComponent,
     LibraryComponent,
     ProfileComponent,
-    QuizzComponent,
+    QuizComponent,
     ClassesComponent,
     ChangePasswordComponent,
     DeleteAccountComponent,
@@ -132,7 +132,7 @@ import { TimePickerComponent } from './time-picker/time-picker.component';
     MyExamsComponent,
     AddExamComponent,
     DeleteConfirmationExamComponent,
-    ShowQuizzComponent,
+    ShowQuizComponent,
     PageSizeExamsDirective,
     PageSizeClassExamsDirective,
     EditExamComponent,

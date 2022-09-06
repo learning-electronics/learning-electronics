@@ -88,7 +88,9 @@ export class AppComponent {
   public onRouterOutletActivate(event : any) {
     if (event.constructor.name == "ProfileComponent" || event.constructor.name == "RegisterComponent") {
       this.currentComponent = "profile";
-    } else if (event.constructor.name == "HomeComponent" || event.constructor.name == "FaqComponent" || event.constructor.name == "GameComponent" || event.constructor.name == "ShowGameComponent") {
+    } else if (event.constructor.name == "HomeComponent" || event.constructor.name == "FaqComponent" || 
+      event.constructor.name == "GameComponent" || event.constructor.name == "ShowGameComponent" ||
+      event.constructor.name == "QuizComponent" || event.constructor.name == "ShowQuizComponent") {
       this.currentComponent = "none";
     } else {
       this.currentComponent = "other";
@@ -111,7 +113,7 @@ export class AppComponent {
   /* Check if the quizz component is available */
   quizzRouting() {
     if (this.loggedIn == true) {
-      this._router.navigate(['/quizz']);
+      this._router.navigate(['/quiz']);
     } else {
       this.login();
     }
