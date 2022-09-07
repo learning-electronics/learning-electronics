@@ -47,8 +47,12 @@ export class ShowQuizComponent implements OnInit {
         if (this.timeLeft == null) {
           this.timeLeft = 10;
         }
+
+        this.timeLeft = this.timeLeft*60; 
       } else if (data.answers != undefined) {
         // this.exs = data.
+
+        this.timeLeft = this.timeLeft*60; 
       } else {
         this.nquestions = data.nquestions;
         this.timeLeft=data.duration;
@@ -57,7 +61,6 @@ export class ShowQuizComponent implements OnInit {
         this.getRandomExs(this.nquestions);
       }
 
-      this.timeLeft = this.timeLeft*60;  
       this.questionValue = 20 / this.nquestions;
     });
   }

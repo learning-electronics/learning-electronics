@@ -1,49 +1,48 @@
-<!-- <div class="row d-flex justify-content-center w-100 h-100">
-    
-</div> -->
-
 <div class="container-fluid">
-    <div class="row">
-        <p class="my-5 title">Autotestes</p>
-    </div>
+    <p class="my-5 title">Autotestes</p>
 
     <div class="row">
         <div class="col-7 info">
             <div class="row h-100 align-items-center justify-content-center">
-                <div class="col">
-                    <img src="../../assets/img/exam.png" style="float: right">
+                <div class="col-7 info text-center">
+                    <img src="../../assets/img/exam.png">
                 </div>
     
-                <div class="col">
-                    <h1>Quiz</h1>
-                    <p class="text-start">Teste os seus conhecimentos sobre eletrónica</p>
+                <div class="col p-4">
+                    <h1 class="mb-4">Testa as tuas capacidades sobre eletrónica quando quiseres e como quiseres!</h1>
+                    <ul>
+                        <li class="my-1">Escolhe quais as temáticas que queres treinar.</li>
+
+                        <li class="my-1">Faz as coisas ao teu ritmo! Decide quanto tempo tens para realizar o teste.</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
         <div class="col quiz">
-            <div class="row align-items-center justify-content-center">
-                <mat-card [class.mat-elevation-z5]="true">
+            <div class="row my-4 align-items-center justify-content-center">
+                <mat-card [class.mat-elevation-z4]="true">
                     <h2 class="text-center" mat-dialog-title>Teste recomendado</h2>
-                    <p>mais infos aqui</p>
+                    <p>Resolve 20 perguntas de variados temas.</p>
+                    <p>A duração do teste é de 2h 00min.</p>
 
-                    <div class="row mt-4 mb-1 mx-auto">
+                    <div class="row  mt-4 mb-1 mx-auto">
                         <button mat-raised-button color="accent" type="submit" mat-button>Criar</button>
                     </div>
                 </mat-card>
             </div>
 
-            <div class="row align-items-center justify-content-center">
-                <mat-card [class.mat-elevation-z5]="true">
+            <div class="row my-4 align-items-center justify-content-center">
+                <mat-card [class.mat-elevation-z4]="true">
                     <h2 class="text-center" mat-dialog-title>Teste personalizado</h2>
 
-                    <form [formGroup]="createTestForm" (ngSubmit)="submit()">
+                    <form [formGroup]="form" (ngSubmit)="submit()">
                         <div class="row mb-3 justify-content-center">
                             <mat-form-field class="mx-auto">
                                 <mat-label>Nº de perguntas</mat-label>
-                                <input matInput appearance="fill" formControlName="nQuestions" required>
-                                <mat-error *ngIf="createTestForm.controls['nQuestions'].invalid && !createTestForm.controls['nQuestions'].hasError('required')">Apenas números</mat-error>
-                                <mat-error *ngIf="createTestForm.controls['nQuestions'].hasError('required')">Você deve escolher o número de pergutnas</mat-error>
+                                <input matInput type="number" formControlName="questions" (input)="onQuestionsInput()" required>
+                                <mat-error *ngIf="numQuestions?.hasError('required')">Introduza o número de questões</mat-error>
+                                <mat-error *ngIf="numQuestions?.invalid && !numQuestions?.hasError('required')">Número de Questões deve ser entre 1 e 50</mat-error>
                             </mat-form-field>
                         </div>
                         
@@ -55,31 +54,21 @@
                                         {{theme.name}}
                                     </mat-option>
                                 </mat-select>
-                                <mat-error *ngIf="createTestForm.controls['themes'].hasError('required')">Você deve escolher pelo menos um tema</mat-error>
+                                <mat-error *ngIf="form.controls['themes'].hasError('required')">Você deve escolher pelo menos um tema</mat-error>
                             </mat-form-field>
                         </div>
         
                         <div class="row my-3 justify-content-center">
-                            <mat-form-field id="mat-form-field">
-                                <mat-label>Duraçao</mat-label>
-                                <input matInput formControlName="duration" required>
-                                <mat-error *ngIf="createTestForm.controls['duration'].invalid && !createTestForm.controls['duration'].hasError('required') ">Apenas números</mat-error>
-                                <mat-error *ngIf="createTestForm.controls['duration'].hasError('required')">Você deve escolher o tempo para o teste</mat-error>
-                            </mat-form-field>
+                            <app-time-picker [type]="'teste'" [minutes]="30" [maxMinutes]="150" (onTimerPicked)="getTimerValue($event)"></app-time-picker>
                         </div>
         
                         <div class="row my-3 justify-content-center">
-                            <mat-form-field >
-                                <mat-label>Desconto</mat-label>
-                                <mat-select formControlName="deduct" name="Desconto" required>
-                                    <mat-option [value]="point.value" *ngFor="let point of points">
+                            <mat-radio-group class="mx-auto" formControlName="deduct" name="Desconto" required>
+                                <mat-radio-button class="mx-2" *ngFor="let point of points" [value]="point.value" [checked]="point.value == 0">
                                     {{point.name}}
-                                    </mat-option>
-                                </mat-select>
-                                <mat-error *ngIf="createTestForm.controls['deduct'].hasError('required')">Escolha um valor de desconto</mat-error>
-                            </mat-form-field>
+                                </mat-radio-button>
+                            </mat-radio-group>
                         </div>
-                    
         
                         <div class="row mt-4 mb-1 mx-auto">
                             <button mat-raised-button color="accent" type="submit" mat-button>Criar</button>

@@ -21,17 +21,25 @@ p {
 }
 
 img {
+    float: right;
     width: 100%;
-    max-width: 380px;
+    max-width: 400px;
     min-width: 200px;
 }
 
 mat-card {
-    border-radius: 20px;
     max-width: 400px;
 }
 
+mat-radio-group {
+    width: fit-content;
+}
+
 @media screen and (max-width: 968px) {
+    h1 {
+        text-align: center;
+    }
+
     .info {
         min-width: 100% !important;
     }
@@ -39,13 +47,21 @@ mat-card {
     .quiz {
         min-width: 100% !important;
     }
+
+    img {
+        float: unset;
+    }
+
+    mat-card {
+        width: 90%;
+    }
 }
 
 .mat-raised-button {
     margin: auto;
-    width: 20%;
+    width: fit-content;
 }
 
 .mat-form-field {
-    width: 90%;
+    width: 85%;
 }

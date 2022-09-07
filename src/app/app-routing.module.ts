@@ -19,7 +19,7 @@ import { ShowQuizComponent } from './quiz/show-quiz/show-quiz.component';
 import { ShowGameComponent } from './game/show-game/show-game.component';
 
 const routes: Routes = [
-  { path: 'show-quizz', component: ShowQuizComponent },
+  { path: 'show-quiz', component: ShowQuizComponent },
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'library', component: LibraryComponent },

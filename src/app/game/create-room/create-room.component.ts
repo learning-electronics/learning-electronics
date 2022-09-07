@@ -34,7 +34,7 @@ export class CreateRoomComponent implements OnInit {
       this.room?.setErrors(null);
   }
 
-  /* Update validation when the questgions input changes */
+  /* Update validation when the questions input changes */
   onQuestionsInput() {
     if (this.form.hasError('numQuestionsWrong'))
       this.numQuestions?.setErrors([{'numQuestionsWrong': true}]);

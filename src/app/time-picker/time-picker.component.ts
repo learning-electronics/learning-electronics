@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 
 
 @Component({
@@ -8,8 +8,10 @@ import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@ang
   encapsulation : ViewEncapsulation.None,
 })
 export class TimePickerComponent implements OnInit {
+  @Input() type: string = 'pergunta';
+  @Input() minutes: number = 5;
+  @Input() maxMinutes: number = 60;
   @Output() onTimerPicked = new EventEmitter<any>();
-  minutes: number = 5;
   seconds: number = 0;
 
   constructor() { }
@@ -26,7 +28,7 @@ export class TimePickerComponent implements OnInit {
         this.minutes = 0;
       }
       this.onTimerPicked.emit({minutes: Number(input.value), seconds: this.seconds});
-    }, 2000);
+    }, 3000);
   }
 
   checkSecondValue(input: any) {
@@ -38,14 +40,14 @@ export class TimePickerComponent implements OnInit {
         this.seconds = 0;
       }
       this.onTimerPicked.emit({minutes: this.minutes, seconds: Number(input.value)});
-    }, 2000);
+    }, 3000);
   }
 
   changeMinute(input: any, operation: string) {
     if (operation == 'add') {
-      this.minutes = (this.minutes == 60) ?  0 : this.minutes + 1;
+      this.minutes = (this.minutes == this.maxMinutes) ?  0 : this.minutes + 1;
     } else {
-      this.minutes = (this.minutes == 0) ? 60 : this.minutes - 1;
+      this.minutes = (this.minutes == 0) ? this.maxMinutes : this.minutes - 1;
     }
 
     input.value = this.minutes;
@@ -69,7 +71,7 @@ export class TimePickerComponent implements OnInit {
     }
 
     if (!isNaN(Number(event.key))) {
-      if (this.minutes * 10 + Number(event.key) > 60) {
+      if (this.minutes * 10 + Number(event.key) > this.maxMinutes) {
         event.preventDefault();
       }
     }

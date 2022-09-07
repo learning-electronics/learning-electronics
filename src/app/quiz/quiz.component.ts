@@ -11,13 +11,13 @@ import { exercise, SharedService, theme } from '../shared.service';
   styleUrls: ['./quiz.component.scss']
 })
 export class QuizComponent implements OnInit {
-
-  createTestForm!: UntypedFormGroup;
+  form!: UntypedFormGroup;
   all_themes: theme [] = [];
   all_exs: any[] = [];
   possible_exs: exercise[] = [];
   points: any[] = [{name: 'Nada', value: 0}, {name: '25%', value: 0.25}, {name: '33%', value: 1/3}, {name: '50%', value: 0.5}];
-
+  minutes: number = 30;
+  seconds: number = 0;
 
   constructor(private _snackBar: MatSnackBar,private _formBuilder: UntypedFormBuilder,private _service: SharedService, private _router: Router) {
     this._service.getThemes().subscribe((data: any) => {
@@ -29,36 +29,50 @@ export class QuizComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.createTestForm = this._formBuilder.group({
-      nQuestions: new UntypedFormControl('', [Validators.required, Validators.min(1),Validators.max(30), Validators.pattern('^[0-9]*$')]),
+    this.form = this._formBuilder.group({
+      questions: new UntypedFormControl('', [Validators.required]),
       themes: new UntypedFormControl('', [Validators.required]),
-      duration: new UntypedFormControl('', [Validators.required,Validators.min(1),Validators.max(60), Validators.pattern('^[0-9]*$')]),
       deduct: new UntypedFormControl('', [Validators.required]),    
-    });
-    
-   
+    }, {validator: numQuestionsValidator});
   }
 
+  /* Shorthands for form controls (used from within template) */
+  get numQuestions() { return this.form.get('questions'); }
+
   submit() {
-    console.log(this.createTestForm.value);
-    if (this.createTestForm.valid) {
-      this.createTestForm.controls['themes'].value.forEach((theme_id: number)  => {
+    console.log(this.form.value);
+    if (this.form.valid) {
+      this.form.controls['themes'].value.forEach((theme_id: number)  => {
         this.filterExs(theme_id).forEach((e: any) => {
           this.possible_exs.push(e); 
         });
       });
-      console.log(this.possible_exs);
+
       var exam_data: any = { 
-        nquestions: this.createTestForm.controls['nQuestions'].value, 
-        themes: this.createTestForm.controls['themes'].value, 
-        duration: this.createTestForm.controls['duration'].value, 
-        deduct: this.createTestForm.controls['deduct'].value,
+        questions: this.form.controls['questions'].value, 
+        themes: this.form.controls['themes'].value, 
+        duration: (this.minutes*60 + this.seconds) * this.form.controls['questions'].value,
+        deduct: this.form.controls['deduct'].value,
         exs: this.possible_exs
       };
+
       /* Redirect to home */
       this._service.openExam(exam_data);
-      this._router.navigate(['/show-quizz']);
+      this._router.navigate(['/show-quiz']);
     }
+  }
+
+  /* Update validation when the questions input changes */
+  onQuestionsInput() {
+    if (this.form.hasError('numQuestionsWrong'))
+      this.numQuestions?.setErrors([{'numQuestionsWrong': true}]);
+    else
+      this.numQuestions?.setErrors(null);
+  }
+
+  getTimerValue(resp: any) {
+    this.minutes = resp.minutes;
+    this.seconds = resp.seconds;
   }
 
   //filter exs by theme
@@ -66,6 +80,7 @@ export class QuizComponent implements OnInit {
     return (this.all_exs.filter((ex: any) => ex.theme.includes(theme_id)));
   }
 }
+
 export const numQuestionsValidator: ValidatorFn = (formGroup: AbstractControl ): ValidationErrors | null  => {
   var numQuestions = formGroup.get('questions')?.value;
 
