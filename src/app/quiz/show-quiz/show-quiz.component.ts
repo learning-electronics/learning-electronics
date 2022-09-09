@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { SharedService } from 'src/app/shared.service';
 import { HostListener } from '@angular/core';
-import { ComponentCanDeactivate } from 'src/app/pending-changes.guard';    
+import { ComponentCanDeactivate } from 'src/app/pending-changes.guard';   
 
 @Component({
   selector: 'app-show-quiz',
@@ -19,12 +19,11 @@ export class ShowQuizComponent implements OnInit, ComponentCanDeactivate {
   studentAnswer: Map<number, string> = new Map<number, string>();
   exsOptions: Map <number, string[]> = new Map <number, string[]>();;
   grade: number = 0;
+  end: boolean = false;
+  interval: any;
 
   currentQuestion: any;
   currentQuestionId: number;
-  selectedValue: any;
-  end: boolean = false;
-  interval: any;
 
   constructor(private _service: SharedService, private _router: Router, private _snackBar: MatSnackBar) {
     this.subscription = this._service.examStatus.subscribe((data: any) => {
@@ -109,11 +108,9 @@ export class ShowQuizComponent implements OnInit, ComponentCanDeactivate {
     if (this.studentAnswer.get(id) === el.value) {
       el.checked = false;
       this.studentAnswer.delete(id);
-      this.selectedValue = '';
     } else {
       el.checked = true;
       this.studentAnswer.set(id, el.value);
-      this.selectedValue = el.value;
     }
   }
 
@@ -138,7 +135,7 @@ export class ShowQuizComponent implements OnInit, ComponentCanDeactivate {
     // Stop the exam
     if (this.data.exam == undefined && this.data.class == undefined) {
       this.end = true;
-      this.pauseTimer();
+      clearInterval(this.interval);
       this.currentQuestionId = -1;
       this.getNextQuestion();
     } else {
@@ -151,7 +148,7 @@ export class ShowQuizComponent implements OnInit, ComponentCanDeactivate {
       this._service.submitExam(this.data.class, this.data.exam, submit).subscribe((data: any) => {
         if (data.v) {
           this.end = true;
-          this.pauseTimer();
+          clearInterval(this.interval);
           this.currentQuestionId = -1;
           this.getNextQuestion();
 
@@ -168,13 +165,13 @@ export class ShowQuizComponent implements OnInit, ComponentCanDeactivate {
     this._router.navigate(['/home']);
   }
 
-  //get 1 question from exs list and remove it from the list
+  //Go for the Next Question
   getNextQuestion(){
     this.currentQuestionId++;
     this.currentQuestion = this.data.exercises.find((x: any) => x.id == Array.from(this.exsOptions.keys())[this.currentQuestionId]);
   }
 
-  //get previous question
+  //Go for the Previous Question
   getPreviousQuestion() {
     this.currentQuestionId--;
     this.currentQuestion = this.data.exercises.find((x: any) => x.id == Array.from(this.exsOptions.keys())[this.currentQuestionId]);
@@ -186,18 +183,14 @@ export class ShowQuizComponent implements OnInit, ComponentCanDeactivate {
         this.counter--;
         this.time_str = (Math.floor(this.counter/60) == 0 ? "" : Math.floor(this.counter/60) + "m ") + this.counter%60 + "s"
       } else {
-        this.pauseTimer();
+        clearInterval(this.interval);
         this.checkAnswers();
       }
     },1000);
     
     if (this.counter == 0) {
-      this.pauseTimer();
+      clearInterval(this.interval);
       this.checkAnswers();
     }
-  }
-
-  pauseTimer() {
-    clearInterval(this.interval);
   }
 }

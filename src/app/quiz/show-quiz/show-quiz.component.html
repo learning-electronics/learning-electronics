@@ -1,10 +1,12 @@
 <div class="container h-100">
-
-    <!-- While solving the Exam -->
-    <div class="col main-col" *ngIf="!end">
+    <div class="col main-col">
         <mat-card class="w-100 mx-1 my-4" id="quizz">
             <div class="row">
-                <div class="col"></div>
+                <div class="col">
+                    <div class="col d-flex align-items-center justify-content-center" *ngIf="end">
+                        <h1 class="grade">Classificação: {{grade}} valores</h1>
+                    </div>
+                </div>
 
                 <!-- Timer Counter -->
                 <div class="col- pr-4 spinner-background-timer">
@@ -16,8 +18,10 @@
                     <div class="time-left text-center">{{time_str}}</div>
                 </div>
             </div>
-
-            <div class="row mx-auto">
+            
+            <h1>Pergunta {{currentQuestionId+1}}/{{data.nquestions}}</h1>
+            
+            <div class="row my-4 mx-auto">
                 <div class="col-2 arrow">
                     <button mat-icon-button [disabled]="currentQuestionId==0 " (click)="getPreviousQuestion()">
                         <mat-icon>arrow_back_ios</mat-icon>
@@ -35,80 +39,26 @@
                 </div>
             </div>
      
-            <h1>Pergunta {{currentQuestionId+1}}/{{data.nquestions}}</h1>
-            <h1 style="text-align: center;">{{currentQuestion.question}}</h1>
+            <h1>{{currentQuestion.question}}</h1>
 
-            <div class="row justify-content-center">
+            <div class="row mt-5 mb-2 justify-content-center">
                 <mat-radio-group class="mx-auto">
-                    <mat-radio-button #button class="mx-1 my-3" color="primary" [value]="option" [checked]="studentAnswer.get(this.currentQuestion.id) == option"
-                        *ngFor="let option of exsOptions.get(currentQuestion.id)" (click)="chooseOption($event, currentQuestion.id, button)">
-                        {{option}}
-                     </mat-radio-button>
-                 </mat-radio-group>
-             </div>
-             
-             <!-- Finish Button -->
-             <button mat-raised-button *ngIf="currentQuestionId==data.nquestions-1" style="width: 40%;" color="primary" (click)="checkAnswers()">Finish</button>
-         </mat-card>
-    </div>
-
-    <!-- After solving the Exam -->
-    <div class="col main-col" *ngIf="end">
-        <mat-card class="w-100 mx-1 my-4" id="quizz">
-            <div class="row">
-                <div class="col d-flex align-items-center justify-content-center">
-                    <h1 class="grade">Classificação: {{grade}} valores</h1>
-                </div>
-
-                <!-- Timer Counter -->
-                <div class="col- pr-4 spinner-background-timer" *ngIf="end">
-                    <div class="spinner-grey">
-                        <mat-spinner class="background" [diameter]="80" mode="determinate" value="100"></mat-spinner>
-                    </div>
-                    
-                    <mat-spinner [diameter]="80" color="accent" mode="determinate" [value]="(counter)/(data.duration)*100"></mat-spinner>
-                    <div class="time-left text-center">{{time_str}}</div>
-                </div>
-            </div>
-
-            <div class="row mx-auto">
-                <div class="col-2 arrow">
-                    <button mat-icon-button [disabled]="currentQuestionId==0 " (click)="getPreviousQuestion()">
-                        <mat-icon>arrow_back_ios</mat-icon>
-                    </button>
-                </div>
-
-                <div class="col">
-                    <img *ngIf="currentQuestion.img != null" [src]="'http://localhost:8000' + currentQuestion.img" alt="Exercise Image">
-                </div>
-
-                <div class="col-2 arrow">
-                    <button mat-icon-button [disabled]="currentQuestionId==data.nquestions-1" (click)="getNextQuestion()">
-                        <mat-icon>arrow_forward_ios</mat-icon>
-                    </button>
-                </div>
-            </div>
-     
-            <h1>Pergunta {{currentQuestionId+1}}/{{data.nquestions}}</h1>
-            <h1 style="text-align: center;">{{currentQuestion.question}}</h1>
-
-            <div class="row justify-content-center">
-                <mat-radio-group class="mx-auto">
-                    <mat-radio-button #button class="mx-1 my-3" color="primary" [value]="option" [checked]="studentAnswer.get(this.currentQuestion.id) == option"
+                    <mat-radio-button #button class="mx-1 my-3" [disabled]="end" color="primary" [value]="option" [checked]="studentAnswer.get(this.currentQuestion.id) == option"
                         *ngFor="let option of exsOptions.get(currentQuestion.id)" (click)="chooseOption($event, currentQuestion.id, button)">
                         {{option}}
                      </mat-radio-button>
                  </mat-radio-group>
              </div>
 
-             <div class="row mx-auto mt-5">
-                <h2>Resposta dada: {{studentAnswer.get(currentQuestion.id)}}</h2>
+            <div class="row mx-auto mt-3 mb-1" *ngIf="end">
                 <h2>Resposta correta: {{currentQuestion.correct}}</h2> 
             </div>
              
-             <!-- Finish Button -->
-             <button mat-raised-button *ngIf="currentQuestionId==data.nquestions-1" color="primary" [routerLink]="'/home'">Voltar para a Home</button>
+            <!-- Home Button -->
+            <button mat-raised-button *ngIf="currentQuestionId==data.nquestions-1 && end" color="primary" [routerLink]="'/home'">Voltar para a página inicial</button>
+             
+            <!-- Finish Button -->
+            <button mat-raised-button *ngIf="currentQuestionId==data.nquestions-1 && !end" color="primary" (click)="checkAnswers()">Finalizar o teste</button>
          </mat-card>
     </div>
-
 </div>
