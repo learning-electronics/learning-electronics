@@ -85,6 +85,7 @@ import { WordComponent } from './my-exercises/add-exercise/word/word.component';
 import { StartExamComponent } from './classes/start-exam/start-exam.component';
 import { FooterComponent } from './footer/footer.component';
 import { TimePickerComponent } from './time-picker/time-picker.component';
+import { PendingChangesGuard } from './pending-changes.guard';
 
 @NgModule({
   declarations: [
@@ -187,7 +188,7 @@ import { TimePickerComponent } from './time-picker/time-picker.component';
       subtitle: "progresso"
     })
   ],
-  providers: [SharedService],
+  providers: [SharedService, PendingChangesGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -22,6 +22,7 @@ export class QuizComponent implements OnInit {
   constructor(private _snackBar: MatSnackBar,private _formBuilder: UntypedFormBuilder,private _service: SharedService, private _router: Router) {
     this._service.getThemes().subscribe((data: any) => {
       this.all_themes = data as theme[];
+
       this._service.getExercises().subscribe((data: any) => {
         this.all_exs = data as exercise[];
       });
@@ -32,7 +33,7 @@ export class QuizComponent implements OnInit {
     this.form = this._formBuilder.group({
       questions: new UntypedFormControl('', [Validators.required]),
       themes: new UntypedFormControl('', [Validators.required]),
-      deduct: new UntypedFormControl('', [Validators.required]),    
+      deduct: new UntypedFormControl(0, [Validators.required]),    
     }, {validator: numQuestionsValidator});
   }
 
@@ -40,7 +41,6 @@ export class QuizComponent implements OnInit {
   get numQuestions() { return this.form.get('questions'); }
 
   submit() {
-    console.log(this.form.value);
     if (this.form.valid) {
       this.form.controls['themes'].value.forEach((theme_id: number)  => {
         this.filterExs(theme_id).forEach((e: any) => {
@@ -49,16 +49,16 @@ export class QuizComponent implements OnInit {
       });
 
       var exam_data: any = { 
-        questions: this.form.controls['questions'].value, 
+        nquestions: this.form.controls['questions'].value, 
         themes: this.form.controls['themes'].value, 
-        duration: (this.minutes*60 + this.seconds) * this.form.controls['questions'].value,
+        duration: this.minutes*60 + this.seconds,
         deduct: this.form.controls['deduct'].value,
-        exs: this.possible_exs
+        exercises: this.possible_exs
       };
 
       /* Redirect to home */
       this._service.openExam(exam_data);
-      this._router.navigate(['/show-quiz']);
+      this._router.navigate(['/show-quiz']);   
     }
   }
 

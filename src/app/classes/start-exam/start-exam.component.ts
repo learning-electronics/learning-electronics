@@ -34,7 +34,7 @@ export class StartExamComponent implements OnInit {
         data.exam = this.data.exam.id;
 
         this._service.openExam(data);
-        this._router.navigate(['/show-quizz']);
+        this._router.navigate(['/show-quiz']);
       } else {
         this.form.reset();
         this._snackBar.open("Password errada", 'Fechar', { duration: 2500 });

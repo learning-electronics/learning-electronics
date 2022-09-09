@@ -1,67 +1,114 @@
-<!-- //mat card to show question -->
-<mat-card *ngIf="!end" id="quizz">
-    <div class="col d-flex justify-content-center" *ngIf="!end">
-        <div class="col d-flex justify-content-start">
-            <button mat-raised-button style="height: 100%;" [disabled]="currentQuestionId==0 " (click)="getPreviousQuestion()">
-                <mat-icon>arrow_back_ios</mat-icon>
-            </button>
-        </div>
+<div class="container h-100">
 
-        <div class="row mx-auto my-5">
-            <h1>Pergunta {{currentQuestionId+1}}/{{nquestions}}</h1>
+    <!-- While solving the Exam -->
+    <div class="col main-col" *ngIf="!end">
+        <mat-card class="w-100 mx-1 my-4" id="quizz">
+            <div class="row">
+                <div class="col"></div>
+
+                <!-- Timer Counter -->
+                <div class="col- pr-4 spinner-background-timer">
+                    <div class="spinner-grey">
+                        <mat-spinner class="background" [diameter]="80" mode="determinate" value="100"></mat-spinner>
+                    </div>
+                    
+                    <mat-spinner [diameter]="80" color="accent" mode="determinate" [value]="(counter)/(data.duration)*100"></mat-spinner>
+                    <div class="time-left text-center">{{time_str}}</div>
+                </div>
+            </div>
+
+            <div class="row mx-auto">
+                <div class="col-2 arrow">
+                    <button mat-icon-button [disabled]="currentQuestionId==0 " (click)="getPreviousQuestion()">
+                        <mat-icon>arrow_back_ios</mat-icon>
+                    </button>
+                </div>
+
+                <div class="col">
+                    <img *ngIf="currentQuestion.img != null" [src]="'http://localhost:8000' + currentQuestion.img" alt="Exercise Image">
+                </div>
+
+                <div class="col-2 arrow">
+                    <button mat-icon-button [disabled]="currentQuestionId==data.nquestions-1" (click)="getNextQuestion()">
+                        <mat-icon>arrow_forward_ios</mat-icon>
+                    </button>
+                </div>
+            </div>
+     
+            <h1>Pergunta {{currentQuestionId+1}}/{{data.nquestions}}</h1>
             <h1 style="text-align: center;">{{currentQuestion.question}}</h1>
-            <!-- show time left -->
-            <h2>Tempo restante: {{minutes}}:{{seconds}}</h2>
-            <img id="image" *ngIf="currentQuestion.img != null" [src]="'http://localhost:8000'+currentQuestion.img" alt="Exercise Image">
-            <mat-radio-group class="my-4"[(ngModel)]="selectedValue">
-                <mat-radio-button  *ngFor="let option of exsOptions.get(currentQuestion.question)" (change)="chooseOption(currentQuestion.id,option)" [value]="option">
-                    {{option}}
-                </mat-radio-button>
-            </mat-radio-group>
-        </div>
-        
-        <!-- button to next question -->
-        <div class="col d-flex justify-content-end">
-            <button mat-raised-button  style="height: 100%;"[disabled]="currentQuestionId==nquestions-1" (click)="getNextQuestion()">
-                <mat-icon>arrow_forward_ios</mat-icon>
-            </button>
-        </div>
+
+            <div class="row justify-content-center">
+                <mat-radio-group class="mx-auto">
+                    <mat-radio-button #button class="mx-1 my-3" color="primary" [value]="option" [checked]="studentAnswer.get(this.currentQuestion.id) == option"
+                        *ngFor="let option of exsOptions.get(currentQuestion.id)" (click)="chooseOption($event, currentQuestion.id, button)">
+                        {{option}}
+                     </mat-radio-button>
+                 </mat-radio-group>
+             </div>
+             
+             <!-- Finish Button -->
+             <button mat-raised-button *ngIf="currentQuestionId==data.nquestions-1" style="width: 40%;" color="primary" (click)="checkAnswers()">Finish</button>
+         </mat-card>
     </div>
 
-    <button mat-raised-button *ngIf="currentQuestionId==nquestions-1" style="width: 40%;" color="primary" (click)="checkAnswers()">Finish</button>
-    <!-- display results of the tests -->
-</mat-card>
-<!-- //mat card to show answer -->
+    <!-- After solving the Exam -->
+    <div class="col main-col" *ngIf="end">
+        <mat-card class="w-100 mx-1 my-4" id="quizz">
+            <div class="row">
+                <div class="col d-flex align-items-center justify-content-center">
+                    <h1 class="grade">Classificação: {{grade}} valores</h1>
+                </div>
 
+                <!-- Timer Counter -->
+                <div class="col- pr-4 spinner-background-timer" *ngIf="end">
+                    <div class="spinner-grey">
+                        <mat-spinner class="background" [diameter]="80" mode="determinate" value="100"></mat-spinner>
+                    </div>
+                    
+                    <mat-spinner [diameter]="80" color="accent" mode="determinate" [value]="(counter)/(data.duration)*100"></mat-spinner>
+                    <div class="time-left text-center">{{time_str}}</div>
+                </div>
+            </div>
 
-<mat-card *ngIf="end" id="quizz">
-    <div class="col d-flex justify-content-center">
-        <div class="col d-flex justify-content-start">
-            <button mat-raised-button style="height: 100%;" [disabled]="currentQuestionId==0 " (click)="getPreviousQuestion()">
-                <mat-icon>arrow_back_ios</mat-icon>
-            </button>
-        </div>
+            <div class="row mx-auto">
+                <div class="col-2 arrow">
+                    <button mat-icon-button [disabled]="currentQuestionId==0 " (click)="getPreviousQuestion()">
+                        <mat-icon>arrow_back_ios</mat-icon>
+                    </button>
+                </div>
 
-        <div class="row mx-auto my-5">
-            <h1>Classificação obtida foi: {{grade}}</h1>
-            <h1>Pergunta {{currentQuestionId+1}}/{{nquestions}}</h1>
+                <div class="col">
+                    <img *ngIf="currentQuestion.img != null" [src]="'http://localhost:8000' + currentQuestion.img" alt="Exercise Image">
+                </div>
+
+                <div class="col-2 arrow">
+                    <button mat-icon-button [disabled]="currentQuestionId==data.nquestions-1" (click)="getNextQuestion()">
+                        <mat-icon>arrow_forward_ios</mat-icon>
+                    </button>
+                </div>
+            </div>
+     
+            <h1>Pergunta {{currentQuestionId+1}}/{{data.nquestions}}</h1>
             <h1 style="text-align: center;">{{currentQuestion.question}}</h1>
-            <!-- show time left -->
-            <h2>Tempo restante: {{minutes}}:{{seconds}}</h2>
-            <img id="image" *ngIf="currentQuestion.img != null" [src]="'http://localhost:8000'+currentQuestion.img" alt="Exercise Image">
-            <div class="row mx-auto mt-5">
+
+            <div class="row justify-content-center">
+                <mat-radio-group class="mx-auto">
+                    <mat-radio-button #button class="mx-1 my-3" color="primary" [value]="option" [checked]="studentAnswer.get(this.currentQuestion.id) == option"
+                        *ngFor="let option of exsOptions.get(currentQuestion.id)" (click)="chooseOption($event, currentQuestion.id, button)">
+                        {{option}}
+                     </mat-radio-button>
+                 </mat-radio-group>
+             </div>
+
+             <div class="row mx-auto mt-5">
                 <h2>Resposta dada: {{studentAnswer.get(currentQuestion.id)}}</h2>
                 <h2>Resposta correta: {{currentQuestion.correct}}</h2> 
             </div>
-        </div>
-
-        <!-- button to next question -->
-        <div class="col d-flex justify-content-end">
-            <button mat-raised-button  style="height: 100%;"[disabled]="currentQuestionId==nquestions-1" (click)="getNextQuestion()">
-                <mat-icon>arrow_forward_ios</mat-icon>
-            </button>
-        </div>
+             
+             <!-- Finish Button -->
+             <button mat-raised-button *ngIf="currentQuestionId==data.nquestions-1" color="primary" [routerLink]="'/home'">Voltar para a Home</button>
+         </mat-card>
     </div>
-    
-    <button mat-raised-button *ngIf="end" style="width: 40%;" color="primary" (click)="goHome()">Voltar para a Home</button>
-</mat-card>
+
+</div>

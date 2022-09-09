@@ -17,9 +17,10 @@ import { MyExercisesComponent } from './my-exercises/my-exercises.component';
 import { MyExamsComponent } from './my-exams/my-exams.component';
 import { ShowQuizComponent } from './quiz/show-quiz/show-quiz.component';
 import { ShowGameComponent } from './game/show-game/show-game.component';
+import { PendingChangesGuard } from './pending-changes.guard';
 
 const routes: Routes = [
-  { path: 'show-quiz', component: ShowQuizComponent },
+  { path: 'show-quiz', component: ShowQuizComponent, canDeactivate: [PendingChangesGuard] },
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'library', component: LibraryComponent },

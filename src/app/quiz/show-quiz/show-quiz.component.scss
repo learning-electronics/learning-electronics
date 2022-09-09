@@ -1,24 +1,87 @@
-#image {
-    display: block;
-    margin: auto;
-    border-radius: 15px;
-    max-width: 300px;
-    min-width: 200px;
+.spinner-background {
+    .mat-progress-spinner{
+        display: inline;
+    }
+}
+
+.spinner-background-timer {
+    .mat-progress-spinner{
+        display: inline;
+    }
+
+    float: inline-end;
+    width: fit-content !important;
+    justify-content: center;
+    display: flex;
+}
+
+.spinner-grey {
+    ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+        stroke: lightgrey;
+    }
+}
+
+.grade {
+    margin-bottom: 0px;
+    padding-left: 104px;
+}
+
+.mat-icon-button {
+    transform: scale(1.5);
+}
+
+.main-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media screen and (max-width: 540px) {
+    .arrow {
+        width: 100% !important;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .main-col {
+        height: unset;
+    }
+
+    .spinner-background-timer {
+        width: 100% !important;
+    }
+
+    .mat-icon-button {
+        transform: unset;
+    }
+
+    .grade {
+        margin-top: 15px;
+        margin-bottom: 30px;
+        padding-left: unset;
+    }
+}
+
+.time-left {
+    position: absolute;
+    float: inline-end;
+    align-self: center;
+    text-align: center;
+    font-size: 0.8rem;
 }
 
 #quizz{
-    margin-top: 5%;
-    margin-left: auto;
-    margin-right: auto;
     text-align: center;
     align-items: center;
-    border-radius: 15px;
-    max-width: 90%;
-    min-width: 80%;
-    max-height: 85%;
-    overflow-y: auto;
 }
 
-.mat-radio-button ~ .mat-radio-button {
+.mat-radio-button .mat-radio-button {
     margin-left: 1.5rem;
 }
