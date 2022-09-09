@@ -43,7 +43,16 @@
     justify-content: center;
 }
 
+mat-card {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 @media screen and (max-width: 540px) {
+    .navigate {
+        width: 100% !important;
+    }
+    
     .arrow {
         width: 100% !important;
         margin-top: 20px;
@@ -67,7 +76,29 @@
         margin-bottom: 30px;
         padding-left: unset;
     }
+
+    mat-card {
+        margin-left: unset;
+        margin-right: unset;
+    }
 }
+
+::ng-deep .greish {
+    &.mat-checkbox-checked .mat-checkbox-background, 
+    &.mat-checkbox-indeterminate .mat-checkbox-background,
+    &.mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element  {
+        background-color: darkgrey !important;
+    }
+}
+
+::ng-deep .blackish {
+    &.mat-checkbox-checked .mat-checkbox-background, 
+    &.mat-checkbox-indeterminate .mat-checkbox-background,
+    &.mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element  {
+        background-color: black !important;
+    }
+}
+
 
 .time-left {
     position: absolute;
@@ -80,8 +111,4 @@
 #quizz{
     text-align: center;
     align-items: center;
-}
-
-.mat-radio-button .mat-radio-button {
-    margin-left: 1.5rem;
 }

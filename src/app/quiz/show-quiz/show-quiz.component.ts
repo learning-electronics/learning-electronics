@@ -33,7 +33,7 @@ export class ShowQuizComponent implements OnInit, ComponentCanDeactivate {
       if (data.class != undefined && data.exam != undefined) {
         this.counter = data.timer;
         this.data.duration = data.timer;
-        this.getRandomExs(data.nquestions);
+        this.getRandomExs(data.nquestions);     //Get random nquestions from the pool with suffled options
         if (this.counter == null) {
           this.counter = 10;
         }
@@ -44,7 +44,7 @@ export class ShowQuizComponent implements OnInit, ComponentCanDeactivate {
         this.counter = this.counter*60; 
       } else {
         this.counter = data.duration;
-        this.getRandomExs(data.nquestions);
+        this.getRandomExs(data.nquestions);     //Get random nquestions from the pool with suffled options
       }
     });
   }
@@ -54,7 +54,7 @@ export class ShowQuizComponent implements OnInit, ComponentCanDeactivate {
     this.getNextQuestion();
     this.startTimer();
 
-    window.onbeforeunload = () => this.ngOnDestroy();
+    window.onbeforeunload = () => this.ngOnDestroy();   //Call ngOnDestroy when the user closes/switches the tab
   }
 
   //@HostListener allows us to also guard against browser refresh, close, etc.
@@ -177,6 +177,24 @@ export class ShowQuizComponent implements OnInit, ComponentCanDeactivate {
     this.currentQuestion = this.data.exercises.find((x: any) => x.id == Array.from(this.exsOptions.keys())[this.currentQuestionId]);
   }
 
+  moveToQuestion(id: number) {
+    for (let i = 0; i < Math.abs(this.currentQuestionId-id); i++) {
+      if (this.currentQuestionId > id)
+        this.currentQuestionId -= Math.abs(this.currentQuestionId-id);
+      else
+        this.currentQuestionId += Math.abs(this.currentQuestionId-id);
+      
+      this.currentQuestion = this.data.exercises.find((x: any) => x.id == Array.from(this.exsOptions.keys())[this.currentQuestionId]);
+    }
+  }
+
+  answeredCorrectly(id: number) {
+    if (this.studentAnswer.get(id) == this.data.exercises.find((x: any) => x.id == id).correct)
+      return true;
+    else
+      return false;
+  }
+
   startTimer() {
     this.interval = setInterval(() => {
       if (this.counter > 0) {
@@ -186,7 +204,7 @@ export class ShowQuizComponent implements OnInit, ComponentCanDeactivate {
         clearInterval(this.interval);
         this.checkAnswers();
       }
-    },1000);
+    }, 1000);
     
     if (this.counter == 0) {
       clearInterval(this.interval);
