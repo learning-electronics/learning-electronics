@@ -25,8 +25,6 @@ export class ShowClassComponent implements OnInit {
   @ViewChild(MatSort) sortExercises: MatSort;
   @ViewChild(MatPaginator) paginatorExams: MatPaginator;
   @ViewChild(MatSort) sortExams: MatSort;
-  @ViewChild(MatPaginator) paginatorStats: MatPaginator;
-  @ViewChild(MatSort) sortStats: MatSort;
 
   displayedColumnsMembers: string[] = ['select', 'type', 'first_name', 'last_name'];
   dataSourceMembers = new MatTableDataSource<any>();
@@ -40,18 +38,12 @@ export class ShowClassComponent implements OnInit {
   dataSourceExams = new MatTableDataSource<any>();
   selectionExams = new SelectionModel<any>(true, []);
 
-  displayedColumnsStats: string[] = ['student', 'exam_name', 'final_mark', 'date_submitted'];
-  dataSourceStats = new MatTableDataSource<any>();
-  selectionStats = new SelectionModel<any>(true, []);
-
   pageSizeMembers: number = 10;
   sortedDataMembers: any[] = [];
   pageSizeExercises: number = 10;
   sortedDataExercises: any[] = [];
   pageSizeExams: number = 10;
   sortedDataExams: any[] = [];
-  pageSizeStats: number = 10;
-  sortedDataStats: any[] = [];
 
   all_members: any[] = [];
   all_exercises: exercise[] = [];
@@ -62,6 +54,7 @@ export class ShowClassComponent implements OnInit {
   name: string = "";
   data: any;
   subscription: Subscription = new Subscription();
+  sorted_stats: any[] = [];
 
   constructor(private _service: SharedService, public popup_dialog: MatDialog, private _snackBar: MatSnackBar, private _router: Router) {
     this.subscription = this._service.classroomOpened.subscribe((data: any) => {
@@ -77,7 +70,6 @@ export class ShowClassComponent implements OnInit {
 
         this._service.getClassroomExams(this.data.id).subscribe((data: any) => {
           this.all_exams = data;
-          console.log(this.all_exams);
         });
 
         if (this.data.type != 'Student') {
@@ -87,9 +79,15 @@ export class ShowClassComponent implements OnInit {
               submited_exam.date_submitted = moment(submited_exam.date_submitted).format('DD-MM-YYYY');
               this.all_stats.push(submited_exam);
             });
-            
-            this.dataSourceStats.data = this.all_stats;
-            console.log(this.all_stats);
+
+            this.sorted_stats = this.all_stats.reduce(function(a: any, b: any) {
+              if(a[b['exam_name']]) {
+                a[b['exam_name']].push( b )
+              } else {
+                a[b['exam_name']] = [ b ]
+              }
+              return a
+            }, {})
           });
         }
       }
@@ -118,8 +116,8 @@ export class ShowClassComponent implements OnInit {
     this.dataSourceExams.sort = this.sortExams;
     this.dataSourceExams.paginator = this.paginatorExams;
 
-    this.dataSourceStats.sort = this.sortStats;
-    this.dataSourceStats.paginator = this.paginatorStats;
+    /* this.dataSourceStats.sort = this.sortStats;
+    this.dataSourceStats.paginator = this.paginatorStats; */
   }
 
   /* Sort Exercises Data for the table */
@@ -191,29 +189,6 @@ export class ShowClassComponent implements OnInit {
     this.dataSourceExams = new MatTableDataSource(this.sortedDataExams);
   }
 
-  /* Sort Stats Data for the table */
-  sortDataStats(sort: Sort) {
-    const data = this.all_stats.slice();
-    if (!sort.active || sort.direction === '') {
-      this.sortedDataStats = data;
-      return;
-    }
-
-    this.sortedDataStats = data.sort((a, b) => {  
-      const isAsc = sort.direction === 'asc';
-      switch (sort.active) {
-        case 'student':
-          return this.compare(a.student, b.student, isAsc);
-        case 'date':
-          return this.compareDate(a.date, b.date, isAsc);
-        default:
-          return 0;
-      }
-    });
-
-    this.dataSourceStats = new MatTableDataSource(this.sortedDataStats);
-  }
-
   /* Compare 2 elements of the table string or number */
   compare(a: number | string, b: number | string, isAsc: boolean) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
@@ -241,11 +216,6 @@ export class ShowClassComponent implements OnInit {
   applyFilterExams(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSourceExams.filter = filterValue.trim().toLowerCase(); 
-  }
-
-  applyFilterStats(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSourceStats.filter = filterValue.trim().toLowerCase(); 
   }
 
   /* Update the table's information */
@@ -420,7 +390,37 @@ export class ShowClassComponent implements OnInit {
         this.dataSourceExams.data.forEach(row => this.selectionExams.select(row));
   }
 
+  /* Last confirmation before starting the exam */
   confirmExam(data:any) {
     this.popup_dialog.open(StartExamComponent, { data: {class: this.data, exam: data} });
+  }
+
+  /* Review the exam */
+  reviewExam(exam: any) {
+    exam.nquestions = exam.exercises.length;
+    
+    exam.studentAnswer = exam.answers;
+    delete exam.answers;
+    
+    exam.grade = exam.final_mark;
+    delete exam.final_mark;
+
+    var exsOptions = new Map<number, string[]>();
+    var studentAnswer = new Map<number, string>();
+
+    for (let ex in exam.exercises) {
+      exsOptions.set(exam.exercises[ex].id, [exam.exercises[ex].ans1, exam.exercises[ex].ans2, exam.exercises[ex].ans3, exam.exercises[ex].correct]);
+    }
+
+    for (let ex in exam.studentAnswer) {
+      studentAnswer.set(Number(ex), exam.studentAnswer[ex]);
+    }
+
+    exam.exsOptions = JSON.stringify([...exsOptions]);
+    exam.studentAnswer = JSON.stringify([...studentAnswer]);
+    exam.time_str = '0s';
+
+    this._service.openExam(exam);
+    this._router.navigate(['/show-quiz']);
   }
 }

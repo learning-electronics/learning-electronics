@@ -21,6 +21,10 @@
     }
 }
 
+h3, h1 {
+    margin-bottom: 0px;
+}
+
 .grade {
     margin-bottom: 0px;
     padding-left: 104px;
@@ -41,6 +45,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.navigate {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 60vh;
+    width: fit-content;
+    padding: 0px;
 }
 
 mat-card {

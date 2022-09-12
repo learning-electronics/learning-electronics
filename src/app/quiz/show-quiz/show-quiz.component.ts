@@ -17,7 +17,7 @@ export class ShowQuizComponent implements OnInit, ComponentCanDeactivate {
   time_str: string;
   counter: number = 0;
   studentAnswer: Map<number, string> = new Map<number, string>();
-  exsOptions: Map <number, string[]> = new Map <number, string[]>();;
+  exsOptions: Map <number, string[]> = new Map <number, string[]>();
   grade: number = 0;
   end: boolean = false;
   interval: any;
@@ -28,23 +28,34 @@ export class ShowQuizComponent implements OnInit, ComponentCanDeactivate {
   constructor(private _service: SharedService, private _router: Router, private _snackBar: MatSnackBar) {
     this.subscription = this._service.examStatus.subscribe((data: any) => {
       this.data = data;
-      
-      //Check if test was automatically generated or made by a teacher and retrieve the data
-      if (data.class != undefined && data.exam != undefined) {
-        this.counter = data.timer;
-        this.data.duration = data.timer;
-        this.getRandomExs(data.nquestions);     //Get random nquestions from the pool with suffled options
-        if (this.counter == null) {
-          this.counter = 10;
-        }
-        
-        this.counter = this.counter*60; 
-      } else if (data.answers != undefined) {
-        // this.exs = data.
-        this.counter = this.counter*60; 
+      console.log(data);
+
+      //Submited exam
+      if (data.exsOptions != undefined) {
+        //this.exsOptions = data.exam_id != undefined ? data.exsOptions : new Map(JSON.parse(data.exsOptions));
+        this.exsOptions = new Map(JSON.parse(data.exsOptions));
+        this.studentAnswer = new Map(JSON.parse(data.studentAnswer));
+        this.counter = data.counter;
+        this.time_str = data.time_str;
+        this.grade = data.grade;
+        this.end = true
       } else {
-        this.counter = data.duration;
-        this.getRandomExs(data.nquestions);     //Get random nquestions from the pool with suffled options
+        //Check if test was automatically generated or made by a teacher and retrieve the data
+        if (data.class != undefined && data.exam != undefined) {
+          this.counter = data.timer;
+          this.data.duration = data.timer;
+          this.getRandomExs(data.nquestions);     //Get random nquestions from the pool with suffled options
+          if (this.counter == null) {
+            this.counter = 10;
+          }
+          
+          this.counter = this.counter*60; 
+        } else {
+          this.counter = data.duration;
+          this.getRandomExs(data.nquestions);     //Get random nquestions from the pool with suffled options
+        }
+
+        this.startTimer();
       }
     });
   }
@@ -52,7 +63,6 @@ export class ShowQuizComponent implements OnInit, ComponentCanDeactivate {
   ngOnInit(): void {
     this.currentQuestionId =- 1;
     this.getNextQuestion();
-    this.startTimer();
 
     window.onbeforeunload = () => this.ngOnDestroy();   //Call ngOnDestroy when the user closes/switches the tab
   }
@@ -63,12 +73,15 @@ export class ShowQuizComponent implements OnInit, ComponentCanDeactivate {
     // insert logic to check if there are pending changes here;
     // returning true will navigate without confirmation
     // returning false will show a confirm dialog before navigating away
-    return false;
+    return this.end;
   }
 
   //Stop timer when the component is destroyed
   ngOnDestroy(): void {
-    clearInterval(this.interval);
+    // If the user is in the middle of the exam, save the data
+    if (!this.end) {
+      this.checkAnswers();
+    }
   }
 
   //Shuffle array and return it
@@ -121,12 +134,13 @@ export class ShowQuizComponent implements OnInit, ComponentCanDeactivate {
 
     // Calculate the grade
     for (let key of this.studentAnswer.keys()) {
-      if (this.data.exercises.find((x: any) => x.id == key).correct == this.studentAnswer.get(key))
+      if (this.data.exercises.find((x: any) => x.id == key).correct == this.studentAnswer.get(key)) {
         this.grade += questionValue;
-      else if ( this.studentAnswer.get(key) == undefined )
-        this.studentAnswer.set(key, "Não respondeu");
-      else 
-        this.grade -= (this.data.deduct * questionValue);
+      } else {
+        if (this.studentAnswer.get(key) != undefined) {
+          this.grade -= (this.data.deduct * questionValue);
+        }
+      }
     }
     
     //Display grade with only 2 decimal places
@@ -138,6 +152,16 @@ export class ShowQuizComponent implements OnInit, ComponentCanDeactivate {
       clearInterval(this.interval);
       this.currentQuestionId = -1;
       this.getNextQuestion();
+      
+      //Save the exam data
+      this.data.exsOptions = JSON.stringify([...this.exsOptions]);
+      this.data.studentAnswer = JSON.stringify([...this.studentAnswer]);
+      this.data.time_str = this.time_str;
+      this.data.grade = this.grade; 
+      this.data.counter = this.counter;
+      this.data.exercises = this.data.exercises;
+
+      this._service.openExam(this.data);
     } else {
       // Submit the Exam
       var submit: any = {'final_mark': this.grade < 0 ? 0 : this.grade, 'answers': {}};
@@ -149,6 +173,8 @@ export class ShowQuizComponent implements OnInit, ComponentCanDeactivate {
         if (data.v) {
           this.end = true;
           clearInterval(this.interval);
+          
+          //Go to the first Question
           this.currentQuestionId = -1;
           this.getNextQuestion();
 
@@ -178,14 +204,12 @@ export class ShowQuizComponent implements OnInit, ComponentCanDeactivate {
   }
 
   moveToQuestion(id: number) {
-    for (let i = 0; i < Math.abs(this.currentQuestionId-id); i++) {
-      if (this.currentQuestionId > id)
+    if (this.currentQuestionId > id)
         this.currentQuestionId -= Math.abs(this.currentQuestionId-id);
-      else
-        this.currentQuestionId += Math.abs(this.currentQuestionId-id);
-      
-      this.currentQuestion = this.data.exercises.find((x: any) => x.id == Array.from(this.exsOptions.keys())[this.currentQuestionId]);
-    }
+    else
+      this.currentQuestionId += Math.abs(this.currentQuestionId-id);
+
+    this.currentQuestion = this.data.exercises.find((x: any) => x.id == Array.from(this.exsOptions.keys())[this.currentQuestionId]);
   }
 
   answeredCorrectly(id: number) {
@@ -193,6 +217,11 @@ export class ShowQuizComponent implements OnInit, ComponentCanDeactivate {
       return true;
     else
       return false;
+  }
+
+  //Display Map in insert order
+  asIsOrder(a: any, b: any) {
+    return 1;
   }
 
   startTimer() {
@@ -205,10 +234,5 @@ export class ShowQuizComponent implements OnInit, ComponentCanDeactivate {
         this.checkAnswers();
       }
     }, 1000);
-    
-    if (this.counter == 0) {
-      clearInterval(this.interval);
-      this.checkAnswers();
-    }
   }
 }

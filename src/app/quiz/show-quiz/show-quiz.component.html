@@ -2,20 +2,20 @@
     <div class="col main-col">
         <div class="row w-100">
             <!-- Navigation -->
-            <div class="col- navigate mx-1 my-4" style="padding: 0px; width: fit-content;">
+            <div class="col-2 navigate mx-1 p-3 my-4">
                 <div *ngIf="!end">
-                    <div class="row py-2" *ngFor="let question of exsOptions.keys(); let i=index" (click)="moveToQuestion(i)">
-                        <mat-checkbox [checked]="true" [indeterminate]="studentAnswer.get(question) == undefined"  (click)="$event.preventDefault()"
-                            [ngClass]="{'blackish': studentAnswer.get(question) != undefined, 'greish': studentAnswer.get(question) == undefined}">
+                    <div class="row py-2" *ngFor="let question of exsOptions | keyvalue: asIsOrder; let i=index" (click)="moveToQuestion(i)">
+                        <mat-checkbox [checked]="true" [indeterminate]="studentAnswer.get(question.key) == undefined"  (click)="$event.preventDefault()"
+                            [ngClass]="{'blackish': studentAnswer.get(question.key) != undefined, 'greish': studentAnswer.get(question.key) == undefined}">
                             {{'Pergunta ' + (i+1)}}
                         </mat-checkbox>
                     </div>
                 </div>
                 
                 <div *ngIf="end">
-                    <div class="row py-2" *ngFor="let question of exsOptions.keys(); let i=index" (click)="moveToQuestion(i)">
-                        <mat-checkbox [checked]="true" [indeterminate]="!answeredCorrectly(question)"  (click)="$event.preventDefault()"
-                            [color]="answeredCorrectly(question) ? 'primary' : 'warn'">
+                    <div class="row py-2" *ngFor="let question of exsOptions | keyvalue: asIsOrder; let i=index" (click)="moveToQuestion(i)">
+                        <mat-checkbox [checked]="true" [indeterminate]="!answeredCorrectly(question.key)"  (click)="$event.preventDefault()"
+                            [color]="answeredCorrectly(question.key) ? 'primary' : 'warn'">
                             {{'Pergunta ' + (i+1)}}
                         </mat-checkbox>
                     </div>
@@ -25,10 +25,14 @@
             <!-- Question -->
             <div class="col" style="padding: 0px">
                 <mat-card class="my-4" id="quizz">
+                    <div class="row" *ngIf="end && data.exam_id != undefined">
+                        <h3>Realizado em {{data.date_submitted}} por {{data.student}}</h3>
+                    </div>
+
                     <div class="row">
                         <div class="col">
                             <div class="col d-flex align-items-center justify-content-center" *ngIf="end">
-                                <h1 class="grade">Classificação: {{grade}} valores</h1>
+                                <h1 class="grade">Classificação: {{grade.toString().replace('.', ',')}} valores</h1>
                             </div>
                         </div>
         
@@ -44,7 +48,6 @@
                     </div>
                     
                     <h1>Pergunta {{currentQuestionId+1}}/{{data.nquestions}}</h1>
-                    
                 
                     <div class="row my-4 mx-auto">
                         <div class="col-2 arrow">

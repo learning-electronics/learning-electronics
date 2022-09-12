@@ -195,51 +195,59 @@
         </mat-tab>
 
         <mat-tab *ngIf="data.type != 'Student'" label="Estatísticas">
-            <div class="row mx-5 mt-3">
-                <mat-toolbar>
+            <mat-accordion class="mt-2">
+                <mat-toolbar class="mt-2" style="max-width: 700px">
                     <div class="col-2 mt-2">
                         <mat-form-field style="font-size: 0.95rem;">
                             <mat-label>Filtrar</mat-label>
-                            <input matInput (keyup)="applyFilterStats($event)" #inputStats>
+                            <input matInput #inputStat>
                             <mat-icon>search</mat-icon>
                         </mat-form-field>
                     </div>
-                    
+    
                     <div class="col"></div>
                 </mat-toolbar>
-                
-                    <table mat-table [dataSource]="dataSourceStats" matSort (matSortChange)="sortDataStats($event)" class="mat-elevation-z8">
-                    <ng-container matColumnDef="student">
-                        <th [style.width]="'40%'" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Nome">Nome</th>
-                        <td [style.width]="'40%'" mat-cell *matCellDef="let element"> {{element.student}} </td>
-                    </ng-container>
-                    
-                    <ng-container matColumnDef="exam_name">
-                        <th mat-header-cell *matHeaderCellDef>Teste Realizado</th>
-                        <td mat-cell *matCellDef="let element"> {{element.exam_name}} </td>
-                    </ng-container>
-    
-                    <ng-container matColumnDef="final_mark">
-                        <th [style.width]="'15%'" mat-header-cell *matHeaderCellDef>Classificação</th>
-                        <td [style.width]="'15%'" mat-cell *matCellDef="let element"> {{element.final_mark}} </td>
-                    </ng-container>
 
-                    <ng-container matColumnDef="date_submitted">
-                        <th [style.width]="'15%'" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Data">Data Submissão</th>
-                        <td [style.width]="'15%'" mat-cell *matCellDef="let element"> {{element.date_submitted}} </td>
-                    </ng-container>
+                <mat-expansion-panel *ngFor="let exam of sorted_stats | keyvalue">
+                    <mat-expansion-panel-header *ngIf="inputStat.value != '' ? exam.key.includes(inputStat.value) : true">
+                        <mat-panel-title>{{exam.key}}</mat-panel-title>
                     
-                    <tr mat-header-row *matHeaderRowDef="displayedColumnsStats"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumnsStats;"></tr>
-    
-                    <!-- Row shown when there is no matching data. -->
-                    <tr class="mat-row" *matNoDataRow>
-                        <td class="mat-cell" colspan="4">Não há estudantes que correspondam ao filtro "{{inputExam.value}}"</td>
-                    </tr>
-                </table>
-                <mat-paginator appPageSizeClassExs [length]="pageSizeExams" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Seleciona página dos Testes">
-                </mat-paginator>
-            </div>
+                        <mat-panel-description>{{exam.value.length + ' submiss'}}{{exam.value.length == 1 ? 'ão' : 'ões'}}</mat-panel-description>
+                    </mat-expansion-panel-header>
+                    
+                    <mat-selection-list #submittedExam [multiple]="false">
+                        <mat-list-option [disabled]="true">
+                            <div class="row">
+                                <div class="col-4 d-flex align-items-center justify-content-center">
+                                    <h5>Nome</h5>
+                                </div>
+                                <div class="col-4 d-flex align-items-center justify-content-center">
+                                    <h5>Classificação</h5>
+                                </div>
+                                <div class="col-4 d-flex align-items-center justify-content-center">
+                                    <h5>Data de Submissão</h5>
+                                </div>
+                            </div>
+                        </mat-list-option>
+
+                        <mat-list-option *ngFor="let element of exam.value" [value]="submittedExam" (click)="reviewExam(element)">
+                            <div class="row">
+                                <div class="col d-flex align-items-center justify-content-center">
+                                    {{element.student}}
+                                </div>
+                                
+                                <div class="col d-flex align-items-center justify-content-center">
+                                    {{element.final_mark}}
+                                </div>
+
+                                <div class="col d-flex align-items-center justify-content-center">
+                                    {{element.date_submitted}}
+                                </div>
+                            </div>
+                        </mat-list-option>
+                    </mat-selection-list>
+                </mat-expansion-panel>
+            </mat-accordion>
         </mat-tab>
 
         <mat-tab label="Definições">

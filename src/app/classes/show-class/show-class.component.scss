@@ -2,7 +2,7 @@ p {
     font-size: 2rem;
     font-weight: 500;
     text-align: center;
-    line-height: 1.2;
+    line-height: 27px;
 }
 
 table, .mat-toolbar, .mat-paginator {
@@ -16,6 +16,25 @@ table, .mat-toolbar, .mat-paginator {
 
 .mat-paginator {
     margin-bottom: 20px !important;
+}
+
+mat-expansion-panel {
+    max-width: 700px !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h5 {
+    margin-bottom: 0px;
+}
+
+::ng-deep .mat-tab-label .mat-tab-label-content {
+    font-size: 0.95rem;
+    font-weight: 580 !important;
+}
+
+::ng-deep.mat-tab-label-active{
+    opacity: 1.0!important;
 }
 
 @media screen and (max-width: 750px) {
@@ -33,5 +52,10 @@ table, .mat-toolbar, .mat-paginator {
 
     mat-form-field {
         width: 90px;
+    }
+
+    ::ng-deep .mat-expansion-panel-body {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
     }
 }
