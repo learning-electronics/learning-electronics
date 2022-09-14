@@ -18,20 +18,22 @@ import { MyExamsComponent } from './my-exams/my-exams.component';
 import { ShowQuizComponent } from './quiz/show-quiz/show-quiz.component';
 import { ShowGameComponent } from './game/show-game/show-game.component';
 import { PendingChangesGuard } from './pending-changes.guard';
+import { LoginGuard } from './login.guard';
+import { PermissionGuard } from './permission.guard';
 
 const routes: Routes = [
-  { path: 'show-quiz', component: ShowQuizComponent, canDeactivate: [PendingChangesGuard] },
+  { path: 'show-quiz', component: ShowQuizComponent, canActivate: [LoginGuard], canDeactivate: [PendingChangesGuard] },
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'library', component: LibraryComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'classes', component: ClassesComponent },
-  { path: 'class', component: ShowClassComponent },
-  { path: 'my_exercises', component: MyExercisesComponent },
-  { path: 'my_exams', component: MyExamsComponent },
-  { path: 'quiz', component: QuizComponent },
-  { path: 'rooms', component: GameComponent },
-  { path: 'game', component: ShowGameComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [LoginGuard] },
+  { path: 'classes', component: ClassesComponent, canActivate: [LoginGuard] },
+  { path: 'class', component: ShowClassComponent, canActivate: [LoginGuard] },
+  { path: 'my_exercises', component: MyExercisesComponent, canActivate: [LoginGuard, PermissionGuard] },
+  { path: 'my_exams', component: MyExamsComponent, canActivate: [LoginGuard, PermissionGuard]  },
+  { path: 'quiz', component: QuizComponent, canActivate: [LoginGuard] },
+  { path: 'rooms', component: GameComponent, canActivate: [LoginGuard] },
+  { path: 'game', component: ShowGameComponent, canActivate: [LoginGuard] },
   { path: 'faq', component: FaqComponent },
   { path: 'success-register', component: SuccessRegisterComponent },
   { path: 'failed-register', component: FailedRegisterComponent },

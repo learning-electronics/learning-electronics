@@ -103,38 +103,22 @@ export class AppComponent {
 
   /* Check if the profile component is available */
   profileRouting() {
-    if (this.loggedIn == true) {
-      this._router.navigate(['/profile']);
-    } else {
-      this.login();
-    }
+    this._router.navigate(['/profile']);
   }
 
   /* Check if the quizz component is available */
   quizzRouting() {
-    if (this.loggedIn == true) {
-      this._router.navigate(['/quiz']);
-    } else {
-      this.login();
-    }
+    this._router.navigate(['/quiz']);
   }
 
   /* Check if the class component is available */
   classRouting() {
-    if (this.loggedIn == true) {
-      this._router.navigate(['/classes']);
-    } else {
-      this.login();
-    }
+    this._router.navigate(['/classes']);
   }
 
   /* Check if the class component is available */
   gameRouting() {
-    if (this.loggedIn == true) {
-      this._router.navigate(['/rooms']);
-    } else {
-      this.login();
-    }
+    this._router.navigate(['/rooms']);
   }
 
   /* Open Login Dialog */

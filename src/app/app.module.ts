@@ -86,6 +86,8 @@ import { StartExamComponent } from './classes/start-exam/start-exam.component';
 import { FooterComponent } from './footer/footer.component';
 import { TimePickerComponent } from './time-picker/time-picker.component';
 import { PendingChangesGuard } from './pending-changes.guard';
+import { LoginGuard } from './login.guard';
+import { PermissionGuard } from './permission.guard';
 
 @NgModule({
   declarations: [
@@ -188,7 +190,7 @@ import { PendingChangesGuard } from './pending-changes.guard';
       subtitle: "progresso"
     })
   ],
-  providers: [SharedService, PendingChangesGuard],
+  providers: [SharedService, PendingChangesGuard, LoginGuard, PermissionGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
