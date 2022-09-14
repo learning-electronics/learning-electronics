@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { SharedService } from 'src/app/shared.service';
-import { HostListener } from '@angular/core';
 import { ComponentCanDeactivate } from 'src/app/pending-changes.guard';   
 
 @Component({
@@ -64,15 +63,12 @@ export class ShowQuizComponent implements OnInit, ComponentCanDeactivate {
     this.currentQuestionId =- 1;
     this.getNextQuestion();
 
-    window.onbeforeunload = () => this.ngOnDestroy();   //Call ngOnDestroy when the user closes/switches the tab
+    //window.onbeforeunload = () => this.ngOnDestroy();   //Call ngOnDestroy when the user closes/switches the tab
   }
-
-  //@HostListener allows us to also guard against browser refresh, close, etc.
-  @HostListener('window:beforeunload')
+  
+  // @HostListener allows us to also guard against browser refresh, close, etc.
+  @HostListener('window:beforeunload', ['$event'])
   canDeactivate(): Observable<boolean> | boolean {
-    // insert logic to check if there are pending changes here;
-    // returning true will navigate without confirmation
-    // returning false will show a confirm dialog before navigating away
     return this.end;
   }
 

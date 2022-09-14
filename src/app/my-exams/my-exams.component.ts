@@ -157,9 +157,6 @@ export class MyExamsComponent implements OnInit {
 
   addExam() {
     const dialogRef = this.add_edit_ex_dialog.open(AddExamComponent, {
-      width: '60%',
-      height: '75%', 
-      minWidth: '700px',
       data: {
         'themes': this.all_themes,
         'classrooms': this.all_classrooms
@@ -169,9 +166,6 @@ export class MyExamsComponent implements OnInit {
 
   editExam(exam_data: any) {
     const dialogRef = this.add_edit_ex_dialog.open(EditExamComponent, {
-      width: '60%',
-      height: '75%', 
-      minWidth: '700px',
       data: {
         'exam': exam_data,
         'themes': this.all_themes,

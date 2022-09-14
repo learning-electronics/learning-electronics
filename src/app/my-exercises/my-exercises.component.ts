@@ -169,9 +169,6 @@ export class MyExercisesComponent implements OnInit{
   /* Open Add or Edit Exercise Dialog */
   addEx() {
     const dialogRef = this.add_edit_ex_dialog.open(AddExerciseComponent, {
-      width: '50%',
-      height: '75%', 
-      minWidth: '500px',
       data: {
         'ModalTitle': "Adicionar Exercício",
         'themes': this.all_themes,
