@@ -30,7 +30,8 @@ export class ShowQuizComponent implements OnInit, ComponentCanDeactivate {
       console.log(data);
 
       //Submited exam
-      if (data.exsOptions != undefined) {
+      if (data.exsOptions != undefined || data.refreshed != undefined) {
+        this.data.refreshed = false;
         //this.exsOptions = data.exam_id != undefined ? data.exsOptions : new Map(JSON.parse(data.exsOptions));
         this.exsOptions = new Map(JSON.parse(data.exsOptions));
         this.studentAnswer = new Map(JSON.parse(data.studentAnswer));
@@ -62,13 +63,14 @@ export class ShowQuizComponent implements OnInit, ComponentCanDeactivate {
   ngOnInit(): void {
     this.currentQuestionId =- 1;
     this.getNextQuestion();
-
-    //window.onbeforeunload = () => this.ngOnDestroy();   //Call ngOnDestroy when the user closes/switches the tab
+    
+    window.onunload = () => this.ngOnDestroy();   //Call ngOnDestroy when the user closes/switches the tab
   }
   
   // @HostListener allows us to also guard against browser refresh, close, etc.
-  @HostListener('window:beforeunload', ['$event'])
+  @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
+    this.data.refreshed = true;
     return this.end;
   }
 
